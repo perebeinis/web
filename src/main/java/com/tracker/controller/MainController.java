@@ -1,7 +1,9 @@
 package com.tracker.controller;
 
+import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.unbescape.html.HtmlEscape;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
 /**
  * Application home page and login.
@@ -21,6 +26,9 @@ public class MainController {
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    private FrontElementConfigurationParser frontElementConfigurationParser;
+
     @RequestMapping("/")
     public String root(Locale locale) {
         return "redirect:/welcome";
@@ -28,11 +36,13 @@ public class MainController {
 
     /** Home page. */
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
-    public String printWelcome(Locale locale, ModelMap model) {
+    public String printWelcome(Locale locale, ModelMap model, Authentication authentication) {
         String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
         model.addAttribute("title", welcome);
         String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
         model.addAttribute("loginMsg", loginMsg);
+        model.addAttribute("list", frontElementConfigurationParser.parseConfigurationFiles(authentication));
+
         return "welcome";
     }
 

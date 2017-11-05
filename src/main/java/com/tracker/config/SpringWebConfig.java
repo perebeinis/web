@@ -19,15 +19,19 @@
  */
 package com.tracker.config;
 
+import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
@@ -144,6 +148,19 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.defaultContentType(MediaType.APPLICATION_JSON);
+    }
+
+    @Bean
+    public PropertiesFactoryBean mailProperties() {
+        PropertiesFactoryBean bean = new PropertiesFactoryBean();
+        bean.setLocation(new ClassPathResource("com/tracker/dynamic/frontElementConfigFilesPaths.properties"));
+        return bean;
+    }
+
+    @Bean
+    public FrontElementConfigurationParser frontElementConfigurationParser(){
+        FrontElementConfigurationParser bean = new FrontElementConfigurationParser();
+        return bean;
     }
 
 }

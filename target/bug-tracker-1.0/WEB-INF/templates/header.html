@@ -5,8 +5,8 @@
         <link rel="stylesheet" type="text/css"
               href="css/bootstrap.min.css" />
 
-        <link rel="stylesheet" th:href="@{/static/css/main.css}"
-              href="css/main.css" />
+        <link rel="stylesheet" th:href="@{/css/tracker.css}"
+              href="css/tracker.css" />
     </div>
 </head>
 <body>
@@ -14,6 +14,11 @@
     <!-- this is header -->
     <nav class="navbar navbar-inverse">
         <div class="container">
+
+            <div class="navbar-header" th:each="currentClient : ${list}">
+                <a class="navbar-brand" th:href="@{/}" th:text="${currentClient.getElementName()}" ></a>
+            </div>
+
             <div class="navbar-header">
                 <a class="navbar-brand" th:href="@{/}">Spring Boot</a>
             </div>
@@ -24,6 +29,7 @@
             </div>
         </div>
     </nav>
+
 </div>
 
 </body>
