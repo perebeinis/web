@@ -19,6 +19,9 @@
  */
 package com.tracker.config;
 
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -161,6 +164,13 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     public FrontElementConfigurationParser frontElementConfigurationParser(){
         FrontElementConfigurationParser bean = new FrontElementConfigurationParser();
         return bean;
+    }
+
+    @Bean
+    public MongoDatabase database(){
+        MongoClient mongo = new MongoClient( "localhost" , 27017 );
+        MongoDatabase database = mongo.getDatabase("tracker");
+        return database;
     }
 
 }

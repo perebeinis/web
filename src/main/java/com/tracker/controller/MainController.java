@@ -1,5 +1,7 @@
 package com.tracker.controller;
 
+import com.mongodb.client.MongoDatabase;
+import com.tracker.dao.UserData;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -29,6 +31,9 @@ public class MainController {
     @Autowired
     private FrontElementConfigurationParser frontElementConfigurationParser;
 
+    @Autowired
+    private MongoDatabase database;
+
     @RequestMapping("/")
     public String root(Locale locale) {
         return "redirect:/welcome";
@@ -41,7 +46,11 @@ public class MainController {
         model.addAttribute("title", welcome);
         String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
         model.addAttribute("loginMsg", loginMsg);
-        model.addAttribute("list", frontElementConfigurationParser.parseConfigurationFiles(authentication));
+        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons(authentication));
+        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons(authentication));
+
+        UserData userData = new UserData();
+        userData.getUserData(database);
 
         return "welcome";
     }
