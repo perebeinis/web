@@ -36,6 +36,7 @@
           <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver:3.5.0" />
           <element id="library" level="project" name="Maven: org.mongodb:bson:3.5.0" />
           <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver-core:3.5.0" />
+          <element id="library" level="project" name="Maven: org.json:json:20171018" />
         </element>
       </element>
       <element id="directory" name="META-INF">

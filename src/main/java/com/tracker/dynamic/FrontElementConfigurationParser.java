@@ -23,7 +23,7 @@ import java.util.Properties;
 public class FrontElementConfigurationParser {
 
     @Autowired
-    private Properties mailProperties;
+    private Properties pathsConfigProperties;
     private static final String EMPTY_ATTRIBUTE_CONSTANT = "#text";
     private static final String ELEMENTS_CONSTANT = "elements";
     private static final String HEADER_ELEMENT_CONSTANT = "header-element";
@@ -38,7 +38,7 @@ public class FrontElementConfigurationParser {
     public List<MenuElements> parseMenuButtons(Authentication authentication){
         try {
             List<MenuElements> menuElementsList = new ArrayList<MenuElements>();
-            InputStream inputStream = this.getClass().getResourceAsStream(mailProperties.getProperty(MENU_ELEMENT_CONSTANT));
+            InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(MENU_ELEMENT_CONSTANT));
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(inputStream);
             document.getDocumentElement().normalize();
@@ -67,7 +67,7 @@ public class FrontElementConfigurationParser {
     public List<HeaderElements> parseHeaderMenuButtons(Authentication authentication){
         try {
             List<HeaderElements> headerElementsList = new ArrayList<HeaderElements>();
-            InputStream inputStream = this.getClass().getResourceAsStream(mailProperties.getProperty(HEADER_ELEMENT_CONSTANT));
+            InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(HEADER_ELEMENT_CONSTANT));
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(inputStream);
             document.getDocumentElement().normalize();

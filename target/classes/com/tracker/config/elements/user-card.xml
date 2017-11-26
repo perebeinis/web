@@ -1,0 +1,8 @@
+<elements>
+
+    <property name="user:user_id" title="user.card.user_id"/>
+    <property name="user:firstName" title="user.card.firstName"/>
+    <property name="user:lastName" title="user.card.lastName"/>
+
+
+</elements>

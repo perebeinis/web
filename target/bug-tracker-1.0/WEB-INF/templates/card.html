@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="card">
+    <!-- this is menu -->
+
+        <div class="card-attributes">
+
+            <div id = "card-attributes-container">
+                <script>
+                    var cardAttributes = "[[${cardData}]]";
+                    var card = new CardCreator("card-attributes-container",cardAttributes);
+
+                </script>
+            </div>
+        </div>
+
+
+</div>
+
+</body>
+</html>

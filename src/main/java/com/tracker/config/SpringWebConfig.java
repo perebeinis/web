@@ -22,8 +22,10 @@ package com.tracker.config;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import com.tracker.cards.user.UserCard;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -49,6 +51,7 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import java.io.IOException;
 import java.util.Locale;
 
 @Configuration
@@ -154,9 +157,9 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     @Bean
-    public PropertiesFactoryBean mailProperties() {
+    public PropertiesFactoryBean pathsConfigProperties() {
         PropertiesFactoryBean bean = new PropertiesFactoryBean();
-        bean.setLocation(new ClassPathResource("com/tracker/dynamic/frontElementConfigFilesPaths.properties"));
+        bean.setLocation(new ClassPathResource("com/tracker/config/properties/paths.properties"));
         return bean;
     }
 
@@ -171,6 +174,14 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         MongoClient mongo = new MongoClient( "localhost" , 27017 );
         MongoDatabase database = mongo.getDatabase("tracker");
         return database;
+    }
+
+    @Bean
+    public UserCard userCard(PropertiesFactoryBean pathsConfigProperties){
+        UserCard userCard = new UserCard();
+        userCard.setPathsConfigProperties(pathsConfigProperties);
+        userCard.createUserData();
+        return userCard;
     }
 
 }

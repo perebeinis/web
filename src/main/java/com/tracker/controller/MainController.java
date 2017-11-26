@@ -1,8 +1,10 @@
 package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
+import com.tracker.cards.user.UserCard;
 import com.tracker.dao.UserData;
 import com.tracker.dynamic.FrontElementConfigurationParser;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.unbescape.html.HtmlEscape;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 /**
  * Application home page and login.
@@ -33,6 +37,9 @@ public class MainController {
 
     @Autowired
     private MongoDatabase database;
+
+    @Autowired
+    private UserCard userCard;
 
     @RequestMapping("/")
     public String root(Locale locale) {
@@ -51,6 +58,9 @@ public class MainController {
 
         UserData userData = new UserData();
         userData.getUserData(database);
+
+        JSONArray jsonArray = userCard.getUserData();
+        model.addAttribute("cardData", jsonArray);
 
         return "welcome";
     }
@@ -130,5 +140,12 @@ public class MainController {
         return "403";
     }
 
+
+    @RequestMapping(value = "/create-new-user", method = RequestMethod.POST)
+    public void createNewUser(HttpServletRequest request) throws IOException {
+        String body = request.getReader().lines().collect(Collectors.joining());
+        UserData userData = new UserData();
+        userData.createNewUser();
+    }
 
 }

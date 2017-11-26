@@ -4,7 +4,9 @@ function HeaderButton(headerButtonId, buttonName) {
 
 
     this.createNewTask = function() {
-       alert("createNewTask");
+        $.post("http://localhost:8080/create-new-user", {test: "asdasd"}, function(result){
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        });
     };
 
     this.createNewUser = function() {
