@@ -30,6 +30,7 @@ public class UserCard {
     private static final String PROPERTY_CONSTANT = "property";
     private static final String TITLE_CONSTANT = "title";
     private static final String NAME_CONSTANT = "name";
+    private static final String TYPE_CONSTANT = "type";
 
 
     public UserCard() {
@@ -48,9 +49,11 @@ public class UserCard {
                 Node headerElementNode = nodeList.item(i);
                 String elementName = headerElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
                 String title = headerElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
+                String type = headerElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put(NAME_CONSTANT,elementName);
                 jsonObject.put(TITLE_CONSTANT,title);
+                jsonObject.put(TYPE_CONSTANT,type);
                 attributeList.put(jsonObject);
 
             }

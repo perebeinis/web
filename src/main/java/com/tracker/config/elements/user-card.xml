@@ -1,8 +1,8 @@
 <elements>
 
-    <property name="user:user_id" title="user.card.user_id"/>
-    <property name="user:firstName" title="user.card.firstName"/>
-    <property name="user:lastName" title="user.card.lastName"/>
+    <property name="user_id" title="user.card.user_id" type="textField"/>
+    <property name="firstName" title="user.card.firstName" type="textField"/>
+    <property name="lastName" title="user.card.lastName" type="textField"/>
 
 
 </elements>
