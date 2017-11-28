@@ -12,3 +12,30 @@
     float: right;
     width: 80%;
 }
+
+.left-menu-tree .container {
+    width: 18% !important;
+}
+
+.card-attributes-tabs {
+    margin-bottom: 20px !important;
+    width: 100%;
+    padding: 5px 25px 5px 5px ;
+    background-color: #337ab7;
+}
+
+.card-attributes-tabs > span {
+    padding: 5px 25px 5px 5px ;
+    background-color: #337ab7;
+    color: white;
+    cursor: pointer;
+}
+
+.card-attributes-tabs > span:hover {
+    background-color: red !important;
+    padding: 5px 25px 5px 5px ;
+}
+
+.tab-selected {
+    background-color: #479a1f !important;
+}

@@ -1,8 +1,14 @@
 <elements>
 
-    <property name="user_id" title="user.card.user_id" type="textField"/>
-    <property name="firstName" title="user.card.firstName" type="textField"/>
-    <property name="lastName" title="user.card.lastName" type="textField"/>
+    <set name="common" title="common">
+         <property name="user_id" title="user.card.user_id" type="textField" />
+         <property name="firstName" title="user.card.firstName" type="textField"/>
+         <property name="lastName" title="user.card.lastName" type="textField"/>
+    </set>
 
+    <set name="test" title="test">
+        <property name="user_id" title="user.card.user_id" type="textField" />
+        <property name="firstName" title="user.card.firstName" type="textField"/>
+    </set>
 
 </elements>

@@ -7,10 +7,14 @@
 
         <div class="card-attributes">
 
-            <div id = "card-attributes-container">
+            <div id = "card-attributes-tabs" class="card-attributes-tabs">
+
+            </div>
+
+            <div id = "card-attributes-container" class="card-attributes-container">
                 <script>
                     var cardAttributes = "[[${cardData}]]";
-                    var card = new CardCreator("card-attributes-container",cardAttributes);
+                    var card = new CardCreator("card-attributes-container",cardAttributes,"card-attributes-tabs");
                     card.createCardElements();
 
                 </script>

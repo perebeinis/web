@@ -28,6 +28,7 @@ public class UserCard {
 
     private static final String USER_CARD = "user-card";
     private static final String PROPERTY_CONSTANT = "property";
+    private static final String SET_CONSTANT = "set";
     private static final String TITLE_CONSTANT = "title";
     private static final String NAME_CONSTANT = "name";
     private static final String TYPE_CONSTANT = "type";
@@ -38,26 +39,45 @@ public class UserCard {
 
     public void createUserData() {
         try {
-            JSONArray attributeList = new JSONArray();
+            JSONArray setList = new JSONArray();
             InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(USER_CARD));
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(inputStream);
             document.getDocumentElement().normalize();
 
-            NodeList nodeList = document.getElementsByTagName(PROPERTY_CONSTANT);
+            NodeList nodeList = document.getElementsByTagName(SET_CONSTANT);
             for (int i = 0; i < nodeList.getLength(); i++){
-                Node headerElementNode = nodeList.item(i);
-                String elementName = headerElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
-                String title = headerElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
-                String type = headerElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put(NAME_CONSTANT,elementName);
-                jsonObject.put(TITLE_CONSTANT,title);
-                jsonObject.put(TYPE_CONSTANT,type);
-                attributeList.put(jsonObject);
+                Node setElementNode = nodeList.item(i);
+                String setName = setElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
+                String setTitle = setElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
+                JSONObject jsonSetObject = new JSONObject();
+                jsonSetObject.put(NAME_CONSTANT, setName );
+                jsonSetObject.put(TITLE_CONSTANT, setTitle);
 
+
+
+                NodeList nodeAttributesList = setElementNode.getChildNodes();
+                JSONArray attributeList = new JSONArray();
+                for (int j = 0; j < nodeAttributesList.getLength(); j++){
+                    Node attributeElementNode = nodeAttributesList.item(j);
+                    if(attributeElementNode.getAttributes()!=null){
+                        String elementName = attributeElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
+                        String title = attributeElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
+                        String type = attributeElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put(NAME_CONSTANT,elementName);
+                        jsonObject.put(TITLE_CONSTANT,title);
+                        jsonObject.put(TYPE_CONSTANT,type);
+                        attributeList.put(jsonObject);
+                    }
+                }
+
+                jsonSetObject.put(SET_CONSTANT, attributeList);
+                setList.put(jsonSetObject);
             }
-            userData =  attributeList;
+
+
+            userData =  setList;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,6 +85,9 @@ public class UserCard {
     }
 
     public JSONArray getUserData() {
+//        if(userData.length()<=0){
+            createUserData();
+//        }
         return userData;
     }
 
