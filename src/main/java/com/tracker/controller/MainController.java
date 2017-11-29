@@ -5,6 +5,7 @@ import com.tracker.cards.user.UserCard;
 import com.tracker.dao.UserData;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
@@ -59,7 +60,7 @@ public class MainController {
         UserData userData = new UserData();
         userData.getUserData(database);
 
-        JSONArray jsonArray = userCard.getUserData();
+        JSONObject jsonArray = userCard.getUserData();
         model.addAttribute("cardData", jsonArray);
 
         return "welcome";

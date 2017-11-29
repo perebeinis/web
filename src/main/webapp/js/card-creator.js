@@ -8,8 +8,9 @@ function CardCreator(cardId, data, tabsId) {
     this.createCardElements = function () {
         var tabsCounter = 0;
         //create set
-        for (var i in this.dataArray){
-            var set = this.dataArray[i];
+        var sets = this.dataArray.set;
+        for (var i in sets){
+            var set = sets[i];
             var name = set["name"];
             var title = set["title"];
 
@@ -24,12 +25,7 @@ function CardCreator(cardId, data, tabsId) {
                     $(this).addClass("tab-selected");
                     $("#"+setId).addClass("set-selected").removeClass("hidden");
                 }
-                console.log("clickkkkkkkk");
-                console.log(this);
             }).html(title));
-
-
-
 
             var classNameSet = tabsCounter != 0 ? name+" hidden": name+" set-selected";
             $('#'+cardId).append($('<div>', {class: classNameSet+"", id: setId}));
@@ -44,18 +40,46 @@ function CardCreator(cardId, data, tabsId) {
             tabsCounter++;
 
         }
+    }
 
 
+    this.createCardButtons = function () {
+        var tabsCounter = 0;
+        //create set
+        var buttons = this.dataArray.buttons;
+        for (var i in buttons){
+            var set = buttons[i];
+            var name = set["name"];
+            var title = set["title"];
 
+            var subArray = set["set"];
+            for (var j in subArray){
+                var attribute = subArray[j];
+                var elementType = attribute["type"];
+                this[elementType](attribute, cardId);
+            }
 
+            tabsCounter++;
+
+        }
     }
 
     this.textField = function (data, parentElementId) {
         console.log("eeeeeeeeeeeeeeeeee");
         $('#'+parentElementId)
-            .append($('<div>', {class: "textField"}).
+            .append($('<div>', {class: "textField"+" "+data["customClassName"]}).
+            append($('<label>', {value: data["title"]}).html(data["title"])).
             append($('<input>', {class: data["name"], value: data["name"], type: 'text'})));
     }
+
+
+    this.button = function (data, parentElementId) {
+        console.log("button");
+        $('#'+parentElementId)
+            .append($('<div>', {class: "card-button"+" "+data["customClassName"]}).
+            append($('<button>', {value: data["title"]}).html(data["title"])));
+    }
+
 
 
 };
