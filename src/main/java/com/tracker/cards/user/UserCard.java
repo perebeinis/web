@@ -34,6 +34,7 @@ public class UserCard {
     private static final String TYPE_CONSTANT = "type";
     private static final String BUTTONS_CONSTANT = "buttons";
     private static final String CUSTOM_CLASS_NAME_CONSTANT = "customClassName";
+    private static final String MANDATORY_CONDITIONS_CONSTANT = "mandatoryCondition";
 
 
     public UserCard() {
@@ -90,11 +91,17 @@ public class UserCard {
                     String title = attributeElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
                     String type = attributeElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
                     String className = attributeElementNode.getAttributes().getNamedItem(CUSTOM_CLASS_NAME_CONSTANT).getTextContent();
+                    String mandatoryCondition = "";
+                    if(attributeElementNode.getAttributes().getNamedItem(MANDATORY_CONDITIONS_CONSTANT)!=null){
+                        mandatoryCondition = attributeElementNode.getAttributes().getNamedItem(MANDATORY_CONDITIONS_CONSTANT).getTextContent();
+                    }
+
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put(NAME_CONSTANT,elementName);
                     jsonObject.put(TITLE_CONSTANT,title);
                     jsonObject.put(TYPE_CONSTANT,type);
                     jsonObject.put(CUSTOM_CLASS_NAME_CONSTANT,className);
+                    jsonObject.put(MANDATORY_CONDITIONS_CONSTANT,mandatoryCondition);
                     attributeList.put(jsonObject);
                 }
             }

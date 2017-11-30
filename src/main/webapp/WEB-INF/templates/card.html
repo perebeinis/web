@@ -7,27 +7,22 @@
 
         <div class="card-attributes">
 
-            <div id = "card-attributes-tabs" class="card-attributes-tabs">
+            <div id = "card-attributes-tabs" class="card-attributes-tabs"></div>
 
-            </div>
+            <div id = "card-attributes-container" class="card-attributes-container"></div>
 
-            <div id = "card-attributes-container" class="card-attributes-container">
-                <script>
-                    var cardAttributes = "[[${cardData}]]";
-                    var card = new CardCreator("card-attributes-container",cardAttributes,"card-attributes-tabs");
-                    card.createCardElements();
+            <div id = "card-attributes-buttons" class="card-attributes-buttons"></div>
 
-                </script>
-            </div>
+            <script>
+                var cardAttributes = "[[${cardData}]]";
+                var cardAttrs = new CardAttributesCreator("card-attributes-container",cardAttributes,"card-attributes-tabs");
+                cardAttrs.createCardElements();
 
-            <div id = "card-attributes-buttons" class="card-attributes-buttons">
-                <script>
-                    var cardAttributes = "[[${cardData}]]";
-                    var card = new CardCreator("card-attributes-buttons",cardAttributes,"card-attributes-tabs");
-                    card.createCardButtons();
+                var cardButtons = "[[${cardData}]]";
+                var cardButton = new CardButtonsCreator("card-attributes-buttons",cardAttributes, cardAttrs);
+                cardButton.createCardButtons();
 
-                </script>
-            </div>
+            </script>
 
         </div>
 

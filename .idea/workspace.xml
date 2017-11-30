@@ -8,17 +8,15 @@
   <component name="ChangeListManager">
     <list default="true" id="3fbdabb4-db89-4427-aff6-6161b0acc20d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/cards/user/UserCard.class" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/cards/user/UserCard.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/MainController.class" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/MainController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/cards/user/UserCard.class" afterPath="$PROJECT_DIR$/target/classes/com/tracker/cards/user/UserCard.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/controller/MainController.class" afterPath="$PROJECT_DIR$/target/classes/com/tracker/controller/MainController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/cards/user/UserCard.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/cards/user/UserCard.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user-card.xml" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user-card.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/css/tracker.css" afterPath="$PROJECT_DIR$/src/main/webapp/css/tracker.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/card-creator.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/card-creator.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/elements/user-card.xml" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/elements/user-card.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/card.html" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/card.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/css/tracker.css" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/css/tracker.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/js/card-creator.js" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/js/card-creator.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/config/elements/user-card.xml" afterPath="$PROJECT_DIR$/target/classes/com/tracker/config/elements/user-card.xml" />
@@ -37,7 +35,7 @@
       <file leaf-file-name="MainController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
+            <state relative-caret-position="15">
               <caret line="62" column="18" lean-forward="false" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
               <folding />
             </state>
@@ -70,8 +68,18 @@
       <file leaf-file-name="card-creator.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/card-creator.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="77" column="30" lean-forward="true" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
+            <state relative-caret-position="197">
+              <caret line="124" column="24" lean-forward="false" selection-start-line="124" selection-start-column="24" selection-end-line="124" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user-card.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user-card.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" column="82" lean-forward="false" selection-start-line="13" selection-start-column="82" selection-end-line="13" selection-end-column="82" />
               <folding />
             </state>
           </provider>
@@ -90,31 +98,21 @@
       <file leaf-file-name="tracker.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/css/tracker.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="870">
-              <caret line="58" column="1" lean-forward="false" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
+            <state relative-caret-position="1350">
+              <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserCard.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserCard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/cards/user/UserCard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+            <state relative-caret-position="165">
+              <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user-card.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user-card.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="65" lean-forward="false" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="65" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -132,8 +130,8 @@
       <file leaf-file-name="card.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
+            <state relative-caret-position="375">
+              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -216,10 +214,10 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/header.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/menu.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/tracker.css" />
-        <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user-card.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/tracker/cards/user/UserCard.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/tracker/cards/user/UserCard.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user-card.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/card-creator.js" />
       </list>
     </option>
@@ -244,7 +242,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="357" />
     <option name="y" value="58" />
     <option name="width" value="1396" />
@@ -744,15 +742,15 @@
       <workItem from="1510422438103" duration="15710000" />
       <workItem from="1510994494777" duration="628000" />
       <workItem from="1511461552096" duration="26421000" />
-      <workItem from="1511983933333" duration="1193000" />
+      <workItem from="1511983933333" duration="6243000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69741000" />
+    <option name="totallyTimeSpent" value="74791000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="357" y="58" width="1926" height="1058" extended-state="6" />
+    <frame x="357" y="58" width="1926" height="1058" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -805,7 +803,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/tracker/cards/user/UserCard.java</url>
-          <line>55</line>
+          <line>56</line>
           <properties />
           <option name="timeStamp" value="50" />
         </line-breakpoint>
@@ -1158,51 +1156,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/css/tracker.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="58" column="1" lean-forward="false" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
+        <state relative-caret-position="1350">
+          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
+        <state relative-caret-position="15">
           <caret line="62" column="18" lean-forward="false" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user-card.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="65" lean-forward="false" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/card-creator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="77" column="30" lean-forward="true" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/cards/user/UserCard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+        <state relative-caret-position="165">
+          <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/card-creator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="124" column="24" lean-forward="false" selection-start-line="124" selection-start-column="24" selection-end-line="124" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user-card.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="82" lean-forward="false" selection-start-line="13" selection-start-column="82" selection-end-line="13" selection-end-column="82" />
+          <folding />
         </state>
       </provider>
     </entry>

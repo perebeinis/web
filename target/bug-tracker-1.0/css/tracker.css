@@ -1,3 +1,12 @@
+* {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+}
+
+* input {
+    padding: 0px 0px 0px 5px;
+}
+
 .left-menu-tree {
     height: 90vh;
     width: 20%;
@@ -22,12 +31,12 @@
 .card-attributes-tabs {
     margin-bottom: 20px !important;
     width: 100%;
-    padding: 5px 25px 5px 5px ;
+    padding: 5px;
     background-color: #337ab7;
 }
 
 .card-attributes-tabs > span {
-    padding: 5px 25px 5px 5px ;
+    padding: 7px 5px 7px 5px;
     background-color: #337ab7;
     color: white;
     cursor: pointer;
@@ -35,7 +44,7 @@
 
 .card-attributes-tabs > span:hover {
     background-color: red !important;
-    padding: 5px 25px 5px 5px ;
+    padding: 7px 5px 7px 5px;
 }
 
 .tab-selected {
@@ -44,7 +53,7 @@
 
 .card-attributes-container {
     padding: 10px 0 10px 10px;
-    border: 1px solid;
+    border: 1px solid #3379b7;
 }
 
 .card-attributes-container > div .half {
@@ -56,4 +65,26 @@
 
 .card-attributes-container > div label {
     width: 100%;
+}
+
+.card-attributes-buttons {
+    padding: 10px 0 10px 0px;
+}
+
+.card-attributes-buttons .card-button {
+    display: inline-block;
+    padding-right: 10px;
+}
+
+.card-attributes-buttons .card-button button {
+    background-color: #479a20;
+    border: 1px solid #479a20;
+    color: white;
+}
+
+span.popup {
+    position: absolute;
+    background: black;
+    padding: 0px 10px 0px 10px;
+    color: white;
 }
