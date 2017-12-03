@@ -52,7 +52,7 @@ public class UserDataCreator implements DataCreator{
         BasicDBObject helperAssociation = new BasicDBObject();
         helperAssociation.put("elementNode","11111111111");
         helperAssociation.put("elementType","user");
-        helperAssociation.put("name","aaaaaaaaaaaa");
+        helperAssociation.put("name","aassss");
         helperAssociation.put("title","bbbbbbbbbbb");
         jsonArray.add(helperAssociation);
 

@@ -23,6 +23,7 @@ import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.user.UserCard;
+import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -182,6 +183,11 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         userCard.setPathsConfigProperties(pathsConfigProperties);
         userCard.createUserData();
         return userCard;
+    }
+
+    @Bean
+    public DataSearchFactory dataSearchFactory(){
+        return new DataSearchFactory();
     }
 
 }

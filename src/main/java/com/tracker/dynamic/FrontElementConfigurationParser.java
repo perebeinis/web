@@ -1,23 +1,17 @@
 package com.tracker.dynamic;
 
-import com.tracker.dynamic.header.HeaderElements;
-import com.tracker.dynamic.menu.MenuElements;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 
 public class FrontElementConfigurationParser {
@@ -35,9 +29,9 @@ public class FrontElementConfigurationParser {
 
 
 
-    public List<MenuElements> parseMenuButtons(Authentication authentication){
+    public JSONArray parseMenuButtons(Authentication authentication){
         try {
-            List<MenuElements> menuElementsList = new ArrayList<MenuElements>();
+            JSONArray menuElementsList = new JSONArray();
             InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(MENU_ELEMENT_CONSTANT));
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(inputStream);
@@ -51,8 +45,14 @@ public class FrontElementConfigurationParser {
                 String userRoles = headerElementNode.getAttributes().getNamedItem(ENABLE_FOR_USER_ROLES_CONSTANT).getTextContent();
                 String searchParams = headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT) == null? "" : headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT).getTextContent();
 
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("name",headerElementName);
+                jsonObject.put("title",title);
+                jsonObject.put("enableForRoles",userRoles);
+                jsonObject.put("searchParams", searchParams);
+
                 if(containsAny(authentication,userRoles.split(","))){
-                    menuElementsList.add(new MenuElements(headerElementName,title,searchParams,userRoles));
+                    menuElementsList.put(jsonObject);
                 }
             }
             return menuElementsList;
@@ -60,13 +60,13 @@ public class FrontElementConfigurationParser {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ArrayList<MenuElements>();
+        return new JSONArray();
     }
 
 
-    public List<HeaderElements> parseHeaderMenuButtons(Authentication authentication){
+    public JSONArray parseHeaderMenuButtons(Authentication authentication){
         try {
-            List<HeaderElements> headerElementsList = new ArrayList<HeaderElements>();
+            JSONArray headerElementsList = new JSONArray();
             InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(HEADER_ELEMENT_CONSTANT));
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(inputStream);
@@ -78,9 +78,16 @@ public class FrontElementConfigurationParser {
                 String headerElementName = headerElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
                 String title = headerElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
                 String userRoles = headerElementNode.getAttributes().getNamedItem(ENABLE_FOR_USER_ROLES_CONSTANT).getTextContent();
+//                String searchParams = headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT).getTextContent();
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("name",headerElementName);
+                jsonObject.put("title",title);
+                jsonObject.put("enableForRoles",userRoles);
+//                jsonObject.put("searchParams", searchParams);
 
                 if(containsAny(authentication,userRoles.split(","))){
-                    headerElementsList.add(new HeaderElements(headerElementName,title,userRoles));
+                    headerElementsList.put(jsonObject);
                 }
             }
             return headerElementsList;
@@ -88,7 +95,7 @@ public class FrontElementConfigurationParser {
         } catch (Exception e) {
             e.printStackTrace();
         }
-       return new ArrayList<HeaderElements>();
+       return new JSONArray();
     }
 
     private boolean containsAny(Authentication authentication, String[] userRoles){

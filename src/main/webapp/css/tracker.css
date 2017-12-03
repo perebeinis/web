@@ -26,6 +26,11 @@
 
 .left-menu-tree .container {
     width: 18% !important;
+    float: left;
+}
+
+.left-menu-tree .container a {
+    cursor: pointer;
 }
 
 .card-attributes-tabs {

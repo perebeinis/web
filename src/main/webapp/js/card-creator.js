@@ -96,10 +96,17 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
     }
 
     this.button = function (data, parentElementId) {
-        console.log("button");
         $('#'+parentElementId)
             .append($('<div>', {class: "card-button"+" "+data[this.customClassName]}).
-             append($('<button>', {value: data[this.title]}).click(this.mandatoryEventCheck).html(data[this.title])));
+             append($('<button>', {value: data[this.title]}).click(this,this[data[this.name]]).html(data[this.title])));
+    }
+
+    this.save = function(e, data){
+        e.data.mandatoryEventCheck();
+    }
+
+    this.close = function(){
+        window.open("http://localhost:8080/welcome", "_self");
     }
 
     this.mandatoryEventCheck = function(){

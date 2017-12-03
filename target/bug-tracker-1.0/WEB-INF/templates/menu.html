@@ -5,18 +5,13 @@
 <div th:fragment="menu">
     <!-- this is menu -->
     <nav class="navbar navbar-inverse">
-        <div class="container">
+        <div id="menu-items-list" class="container">
 
-            <div class="test1" th:each="menuButton : ${menuList}">
-                <a class="test2" th:id="'menu-button-' + ${menuButton.getElementName()}" th:text="${menuButton.getElementName()}" ></a>
-                <script>
-                    var headerButtonId = 'header-button-'+"[[${menuButton.getElementName()}]]";
-                    var headerButtonName = "[[${menuButton.getElementName()}]]";
-                    console.log(headerButtonName);
-//                    var headerButton = new HeaderButton(headerButtonId,headerButtonName);
-//                    headerButton.createClickListener(headerButtonId,headerButtonName);
-                </script>
-            </div>
+            <script>
+                var cardAttributes = "[[${menuList}]]";
+                var menu = new MenuElementsCretor("menu-items-list",cardAttributes);
+                menu.createMenuElements();
+            </script>
 
         </div>
     </nav>

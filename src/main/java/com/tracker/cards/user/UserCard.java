@@ -1,23 +1,15 @@
 package com.tracker.cards.user;
 
-import com.tracker.config.SpringWebConfig;
-import com.tracker.dynamic.menu.MenuElements;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.security.core.Authentication;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class UserCard {

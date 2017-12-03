@@ -9,7 +9,7 @@
     <header-element name="test" title="header.buttons.test"  enableForRoles="ADMIN,USER">
     </header-element>
 
-    <header-element name="vasya" title="header.buttons.vasya"  enableForRoles="ADMIN,USER">
+    <header-element name="searchData" title="header.buttons.searchData"  enableForRoles="ADMIN,USER">
     </header-element>
 
 </elements>

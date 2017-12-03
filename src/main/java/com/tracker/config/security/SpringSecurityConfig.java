@@ -53,6 +53,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/shared/**").hasAnyRole("USER","ADMIN")
                 .antMatchers("/welcome/**").hasAnyRole("USER","ADMIN")
                 .antMatchers("/create-new-user/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/search-data/**").hasAnyRole("USER","ADMIN")
             .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403");

@@ -3,21 +3,31 @@ package com.tracker.controller;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.user.UserCard;
 import com.tracker.dao.UserData;
+import com.tracker.dao.search.DataSearchFactory;
+import com.tracker.dao.search.SearchDataModel;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.unbescape.html.HtmlEscape;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -42,6 +52,9 @@ public class MainController {
     @Autowired
     private UserCard userCard;
 
+    @Autowired
+    private DataSearchFactory dataSearchFactory;
+
     @RequestMapping("/")
     public String root(Locale locale) {
         return "redirect:/welcome";
@@ -65,6 +78,43 @@ public class MainController {
 
         return "welcome";
     }
+
+
+    /** Home page. */
+    @RequestMapping(value = "/createNewUser", method = RequestMethod.GET)
+    public String createNewUser(Locale locale, ModelMap model, Authentication authentication) {
+        String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
+        model.addAttribute("title", welcome);
+        String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
+        model.addAttribute("loginMsg", loginMsg);
+        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons(authentication));
+        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons(authentication));
+
+        UserData userData = new UserData();
+        userData.getUserData(database);
+
+        JSONObject jsonArray = userCard.getUserData();
+        model.addAttribute("cardData", jsonArray);
+
+        return "create-user-card";
+    }
+
+    @RequestMapping(value = "/search-data", method = RequestMethod.POST)
+    public ResponseEntity<JSONArray> searchData(@RequestBody String searchData) {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            String encodeURL= URLDecoder.decode( searchData, "UTF-8" );
+            JSONObject jsonObj = new JSONObject(encodeURL);
+             jsonArray = dataSearchFactory.getData(jsonObj);
+            System.out.println("*****");
+        } catch (UnsupportedEncodingException e) {
+
+        }
+        System.out.println("aaaaaaaaaaaa");
+        return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.OK);
+//        return  new ResponseEntity(dataSearchFactory.getData(new JSONObject()), HttpStatus.OK);
+    }
+
 
     /** Home page. */
     @RequestMapping("/index")
