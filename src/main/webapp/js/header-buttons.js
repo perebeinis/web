@@ -29,11 +29,11 @@ function HeaderButton(cardId, data) {
 
 
     this.createNewTask = function() {
-        window.open("http://localhost:8080/welcome", "_self");
+        window.open("http://localhost:8082/welcome", "_self");
     };
 
     this.createNewUser = function() {
-        window.open("http://localhost:8080/createNewUser", "_self");
+        window.open("http://localhost:8082/createNewUser", "_self");
     };
 
     this.defaultClick = function() {
