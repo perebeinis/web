@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="menu">
+    <!-- this is menu -->
+    <nav class="navbar navbar-inverse">
+        <div id="menu-items-list" class="container">
+
+            <script>
+                var cardAttributes = "[[${menuList}]]";
+                var menu = new MenuElementsCretor("menu-items-list",cardAttributes);
+                menu.createMenuElements();
+            </script>
+
+        </div>
+    </nav>
+
+</div>
+
+</body>
+</html>

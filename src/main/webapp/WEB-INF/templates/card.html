@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="card">
+    <!-- this is menu -->
+
+        <div class="card-attributes">
+
+            <div id = "card-attributes-tabs" class="card-attributes-tabs"></div>
+
+            <div id = "card-attributes-container" class="card-attributes-container"></div>
+
+            <div id = "card-attributes-buttons" class="card-attributes-buttons"></div>
+
+            <script>
+                var cardAttributes = "[[${cardData}]]";
+                var cardAttrs = new CardAttributesCreator("card-attributes-container",cardAttributes,"card-attributes-tabs");
+                cardAttrs.createCardElements();
+
+                var cardButtons = "[[${cardData}]]";
+                var cardButton = new CardButtonsCreator("card-attributes-buttons",cardAttributes, cardAttrs);
+                cardButton.createCardButtons();
+
+            </script>
+
+        </div>
+
+
+</div>
+
+</body>
+</html>

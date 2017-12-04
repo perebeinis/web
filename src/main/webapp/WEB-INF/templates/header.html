@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:fragment="header-css">
+        <!-- this is header-css -->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" th:href="@{/css/tracker.css}" href="css/tracker.css" />
+
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" th:src="@{/js/header-buttons.js}"></script>
+        <script type="text/javascript" th:src="@{/js/card-creator.js}"></script>
+        <script type="text/javascript" th:src="@{/js/menu-creator.js}"></script>
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+    <!-- this is header -->
+    <nav class="navbar navbar-inverse">
+        <div id="header-buttons" class="container">
+
+            <script>
+                var cardAttributes = "[[${headerList}]]";
+                var menu = new HeaderButton("header-buttons",cardAttributes);
+                menu.createHeaderElements();
+
+            </script>
+
+        </div>
+    </nav>
+
+</div>
+
+</body>
+</html>
