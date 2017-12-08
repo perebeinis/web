@@ -1,5 +1,7 @@
 package com.tracker.dao.search.user;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mongodb.client.FindIterable;
@@ -11,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.mongodb.client.model.Aggregates.sort;
 
@@ -21,23 +24,16 @@ public class UserSearch extends AbstractDataSearch{
         MongoCollection<Document> collection = mongoDatabase.getCollection(userCollection);
         Document query = new Document("firstName","sanok");
 
-        FindIterable it = collection.find(query);
-
+        FindIterable iterator = collection.find(query);
         ArrayList<Document> docs = new ArrayList();
+        iterator.into(docs);
 
-        it.into(docs);
         JSONArray jsonArray = new JSONArray();
+        docs.forEach((document) -> {
+            jsonArray.put(new JSONObject(new JsonParser().parse(document.toJson()).getAsJsonObject().toString()));
+        });
 
-        for (Document doc : docs) {
-            JsonObject gsonData = new JsonParser().parse(doc.toJson()).getAsJsonObject();
-            String res = gsonData.toString();
-            JSONObject jsonObject = new JSONObject(res);
-            System.out.println(doc);
-            jsonArray.put(jsonObject);
-        }
-
-
-        System.out.println("test");
+        System.out.println("finish search users");
         return jsonArray;
     }
 }

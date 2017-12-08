@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="search">
+    <!-- this is menu -->
+
+        <div class="search-block">
+
+            <div id = "search-attributes" class="search-attributes"></div>
+            <div id = "search-buttons" class="search-buttons"></div>
+
+
+            <table id = "search-result-table" class="search-result-table"></table>
+
+
+            <script>
+                var searchData = "[[${searchData}]]";
+                var dataComponent = new SearchDataComponent("search-result-table");
+                dataComponent.searchData();
+
+
+            </script>
+
+        </div>
+
+
+</div>
+
+</body>
+</html>

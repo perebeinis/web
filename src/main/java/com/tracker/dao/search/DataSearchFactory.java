@@ -1,10 +1,14 @@
 package com.tracker.dao.search;
 
+import com.google.gson.JsonArray;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.dao.search.user.UserSearch;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataSearchFactory {
 

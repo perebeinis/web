@@ -1,5 +1,6 @@
 package com.tracker.controller;
 
+import com.google.gson.JsonArray;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.user.UserCard;
 import com.tracker.dao.UserData;
@@ -11,15 +12,13 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.unbescape.html.HtmlEscape;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,20 +98,35 @@ public class MainController {
         return "create-user-card";
     }
 
-    @RequestMapping(value = "/search-data", method = RequestMethod.POST)
-    public ResponseEntity<JSONArray> searchData(@RequestBody String searchData) {
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String search(Locale locale, ModelMap model, Authentication authentication) {
+        String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
+        model.addAttribute("title", welcome);
+        String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
+        model.addAttribute("loginMsg", loginMsg);
+        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons(authentication));
+        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons(authentication));
+
+        UserData userData = new UserData();
+        userData.getUserData(database);
+
+        JSONObject jsonArray = userCard.getUserData();
+        model.addAttribute("searchData", jsonArray);
+
+        return "search-data";
+    }
+
+    @RequestMapping(value = "/search-data", method = RequestMethod.POST , produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> searchData(@RequestBody String searchData) {
         JSONArray jsonArray = new JSONArray();
         try {
             String encodeURL= URLDecoder.decode( searchData, "UTF-8" );
             JSONObject jsonObj = new JSONObject(encodeURL);
-             jsonArray = dataSearchFactory.getData(jsonObj);
-            System.out.println("*****");
+            jsonArray = dataSearchFactory.getData(jsonObj);
         } catch (UnsupportedEncodingException e) {
-
+            System.out.println("error");
         }
-        System.out.println("aaaaaaaaaaaa");
-        return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.OK);
-//        return  new ResponseEntity(dataSearchFactory.getData(new JSONObject()), HttpStatus.OK);
+        return new ResponseEntity<Object>(jsonArray.toString(), HttpStatus.OK);
     }
 
 

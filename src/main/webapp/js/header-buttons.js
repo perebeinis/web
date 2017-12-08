@@ -41,21 +41,7 @@ function HeaderButton(cardId, data) {
     };
 
     this.searchData = function () {
-        var searchType = {};
-        searchType["searchType"] = "user";
-
-        var searchData = {};
-        searchData["aaa"] = "trs";
-
-        searchType["searchData"] = searchData;
-
-        $.ajax({
-            url: '/search-data',
-            type: "POST",
-            contentType: "application/json",
-            data:  JSON.stringify(searchType),
-            dataType: 'json'
-        });
+        window.open("http://localhost:8082/search", "_self");
     }
 
 
