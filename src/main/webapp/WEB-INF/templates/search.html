@@ -11,12 +11,13 @@
             <div id = "search-buttons" class="search-buttons"></div>
 
 
-            <table id = "search-result-table" class="search-result-table"></table>
+            <table id = "search-result-table" class="search-result-table display dataTable"></table>
 
 
             <script>
+                var searchers = "[[${searchers}]]";
                 var searchData = "[[${searchData}]]";
-                var dataComponent = new SearchDataComponent("search-result-table");
+                var dataComponent = new SearchDataComponent("search-result-table",searchers);
                 dataComponent.searchData();
 
 

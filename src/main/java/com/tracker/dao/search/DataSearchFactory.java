@@ -19,20 +19,20 @@ public class DataSearchFactory {
     private static final String searhDataConstant = "searchData";
     private static final String userTypeConstant = "user";
 
-    public JSONArray getData(JSONObject jsonObject){
-        String searchType = (String) jsonObject.get(searhTypeConstant);
-        JSONArray jsonArray = new JSONArray();
+    public JSONObject getData(JSONObject jsonObject){
+        String searchType = (String) ((JSONObject) jsonObject.get("search")).get(searhTypeConstant);
+        JSONObject result = new JSONObject();
 
         switch (searchType){
             case userTypeConstant:
                 UserSearch userSearch = new UserSearch();
-                jsonArray =  userSearch.getData(database, jsonObject.getJSONObject(searhDataConstant));
+                result =  userSearch.getData(database, jsonObject);
                 break;
             default:
                 System.out.println("DEFAULT SEARCH");
         }
 
-        return jsonArray;
+        return result;
     }
 
 }

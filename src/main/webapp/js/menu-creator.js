@@ -20,7 +20,12 @@ function MenuElementsCretor(cardId, data, tabsId) {
 
             $('#'+cardId)
                 .append($('<div>', {class: " menu-item"+" "+set[this.customClassName]}).
-                append($('<a>').html(set[this.title])));
+                append($('<a>', {name: set[this.name]}).html(set[this.title])
+                    .click(function() {
+                        window.open("http://localhost:8082/search?filter="+this.name, "_self");
+                    })
+
+                ));
 
 
         }

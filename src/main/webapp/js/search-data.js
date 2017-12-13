@@ -1,5 +1,7 @@
 function SearchDataComponent(tableDivId, data) {
     this.tableDivId = tableDivId;
+    var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
+    this.searchersArray = JSON.parse(dataStr);
     this.customClassName = "customClassName";
     this.title = "title";
     this.name = "name";
@@ -8,6 +10,7 @@ function SearchDataComponent(tableDivId, data) {
 
 
     this.searchData = function () {
+        this.createSearchers();
         var searchType = {};
         searchType["searchType"] = "user";
 
@@ -18,49 +21,67 @@ function SearchDataComponent(tableDivId, data) {
         console.log("serchhhhhhhhhhhhhhhhhh");
 
         var scope = this;
-        $.ajax({
-            url: '/search-data',
-            type: "POST",
-            contentType: "application/json",
-            data:  JSON.stringify(searchType),
-            success: function(response) {
-                scope.createSearchTable(response);
-            },
-            dataType: 'json'
-        });
+
+        var test = $("#"+tableDivId).append($('<thead>').append($('<tr>')
+            .append($('<td>').html("firstName"))
+            .append($('<td>').html("lastName"))
+            .append($('<td>').html("user_id"))
+        ));
+
+        this.createSearchTable("");
     }
 
-    this.createSearchTable = function (result) {
+    this.createSearchers = function () {
+        var searchersId = "search-attributes";
+        var subArray = this.searchersArray;
+        for (var j in subArray){
+            var attribute = subArray[j];
+            var elementType = attribute[this.type];
+            this[elementType](attribute, searchersId);
+        }
+    }
 
+    this.text = function (data, parentElementId) {
+        $('#'+parentElementId)
+           .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
+            append($('<span>', {class: "hidden popup"}).html(data[this.title])).
+            append($('<label>', {value: data[this.title]}).html(data[this.title])).
+            append($('<input>', {class: data[this.name], name:data[this.name], type: 'text'})));
+
+
+    }
+
+
+    this.createSearchTable = function (result) {
+        var searchType = {};
+        searchType["searchType"] = "user";
+        var searchData = {};
+        searchData["aaa"] = "trs";
+        searchType["searchData"] = searchData;
+        searchType["searchData"] = searchData;
 
         $(document).ready(function(){
-            var data =result;
             var table = $("#"+tableDivId).DataTable( {
-                "aaData": data,
-                "aoColumns": [
-                    { "mData": "firstName"},
-                    { "mData": "lastName"},
-                    { "mData": "user_id"}
-                ],
-                "paging":true,
-                "pageLength":20,
-                "ordering":true,
-                "order":[0,"asc"]
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "/search-data",
+                    "type": "POST",
+                    "contentType": "application/json",
+                    data:function(d){
+                            d.search = searchType;
+                        return JSON.stringify(d);
+                    },
+                    "dataType": 'json'
+                },
+                "columns": [
+                    { "data": "firstName"},
+                    { "data": "lastName"},
+                    { "data": "user_id"}
+                ]
             });
         });
 
-        for (var i in result){
-            var data = result[i];
-            console.log(data);
-
-            /*
-            $('#'+tableDivId)
-                .append($('<div>', {class: " navbar-header "+" "+name}).
-                append($('<a>' ,{class: "navbar-brand "}).click(this[name]).html(set[this.title])));
-
-            */
-
-        }
     }
 
 

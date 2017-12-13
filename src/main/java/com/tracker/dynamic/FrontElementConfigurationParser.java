@@ -25,6 +25,7 @@ public class FrontElementConfigurationParser {
     private static final String ENABLE_FOR_USER_ROLES_CONSTANT = "enableForRoles";
     private static final String SEARCH_PARAMS_CONSTANT = "searchParams";
     private static final String TITLE_CONSTANT = "title";
+    private static final String TYPE_CONSTANT = "type";
     private static final String NAME_CONSTANT = "name";
 
 
@@ -51,11 +52,74 @@ public class FrontElementConfigurationParser {
                 jsonObject.put("enableForRoles",userRoles);
                 jsonObject.put("searchParams", searchParams);
 
+                // Get sub searchers
+                NodeList nodeAttributesList = headerElementNode.getChildNodes();
+                JSONArray attributeList = new JSONArray();
+                for (int j = 0; j < nodeAttributesList.getLength(); j++){
+                    Node attributeElementNode = nodeAttributesList.item(j);
+                    if(attributeElementNode.getAttributes()!=null){
+                        String elementNameSub = attributeElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
+                        String titleSub = attributeElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
+                        String typeSub = attributeElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
+
+                        JSONObject jsonObjectSub = new JSONObject();
+                        jsonObjectSub.put(NAME_CONSTANT,elementNameSub);
+                        jsonObjectSub.put(TITLE_CONSTANT,titleSub);
+                        jsonObjectSub.put(TYPE_CONSTANT,typeSub);
+                        attributeList.put(jsonObjectSub);
+
+                    }
+                }
+                jsonObject.put("searchers", attributeList);
+
                 if(containsAny(authentication,userRoles.split(","))){
                     menuElementsList.put(jsonObject);
                 }
             }
             return menuElementsList;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new JSONArray();
+    }
+
+
+    public JSONArray getFilterSearchers(String filterName){
+        try {
+            JSONArray attributeList = new JSONArray();
+            InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(MENU_ELEMENT_CONSTANT));
+            DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document document = documentBuilder.parse(inputStream);
+            document.getDocumentElement().normalize();
+
+            NodeList nodeList = document.getElementsByTagName(MENU_ELEMENT_CONSTANT);
+            for (int i = 0; i < nodeList.getLength(); i++){
+                Node headerElementNode = nodeList.item(i);
+                String headerElementName = headerElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
+
+                if(headerElementName.equals(filterName)){
+                    NodeList nodeAttributesList = headerElementNode.getChildNodes();
+
+                    for (int j = 0; j < nodeAttributesList.getLength(); j++){
+                        Node attributeElementNode = nodeAttributesList.item(j);
+                        if(attributeElementNode.getAttributes()!=null){
+                            String elementNameSub = attributeElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
+                            String titleSub = attributeElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
+                            String typeSub = attributeElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
+
+                            JSONObject jsonObjectSub = new JSONObject();
+                            jsonObjectSub.put(NAME_CONSTANT,elementNameSub);
+                            jsonObjectSub.put(TITLE_CONSTANT,titleSub);
+                            jsonObjectSub.put(TYPE_CONSTANT,typeSub);
+                            attributeList.put(jsonObjectSub);
+
+                        }
+                    }
+                }
+
+            }
+            return attributeList;
 
         } catch (Exception e) {
             e.printStackTrace();

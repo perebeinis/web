@@ -5,7 +5,6 @@ import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.user.UserCard;
 import com.tracker.dao.UserData;
 import com.tracker.dao.search.DataSearchFactory;
-import com.tracker.dao.search.SearchDataModel;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -98,35 +97,19 @@ public class MainController {
         return "create-user-card";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(Locale locale, ModelMap model, Authentication authentication) {
-        String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
-        model.addAttribute("title", welcome);
-        String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
-        model.addAttribute("loginMsg", loginMsg);
-        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons(authentication));
-        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons(authentication));
 
-        UserData userData = new UserData();
-        userData.getUserData(database);
-
-        JSONObject jsonArray = userCard.getUserData();
-        model.addAttribute("searchData", jsonArray);
-
-        return "search-data";
-    }
 
     @RequestMapping(value = "/search-data", method = RequestMethod.POST , produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> searchData(@RequestBody String searchData) {
-        JSONArray jsonArray = new JSONArray();
+        JSONObject result = new JSONObject();
         try {
             String encodeURL= URLDecoder.decode( searchData, "UTF-8" );
             JSONObject jsonObj = new JSONObject(encodeURL);
-            jsonArray = dataSearchFactory.getData(jsonObj);
+            result = dataSearchFactory.getData(jsonObj);
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
         }
-        return new ResponseEntity<Object>(jsonArray.toString(), HttpStatus.OK);
+        return new ResponseEntity<Object>(result.toString(), HttpStatus.OK);
     }
 
 
