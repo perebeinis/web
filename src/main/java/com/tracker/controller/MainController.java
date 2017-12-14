@@ -59,7 +59,7 @@ public class MainController {
     }
 
     /** Home page. */
-    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String printWelcome(Locale locale, ModelMap model, Authentication authentication) {
         String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
         model.addAttribute("title", welcome);
@@ -79,7 +79,7 @@ public class MainController {
 
 
     /** Home page. */
-    @RequestMapping(value = "/createNewUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/createNewUser", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String createNewUser(Locale locale, ModelMap model, Authentication authentication) {
         String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
         model.addAttribute("title", welcome);
@@ -99,7 +99,7 @@ public class MainController {
 
 
 
-    @RequestMapping(value = "/search-data", method = RequestMethod.POST , produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/search-data", method = RequestMethod.POST , produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object> searchData(@RequestBody String searchData) {
         JSONObject result = new JSONObject();
         try {
@@ -109,6 +109,7 @@ public class MainController {
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
         }
+        result.put("aaa","???????????????");
         return new ResponseEntity<Object>(result.toString(), HttpStatus.OK);
     }
 

@@ -8,6 +8,7 @@ import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -38,14 +39,14 @@ public class SearchInboxesController {
     private DataSearchFactory dataSearchFactory;
 
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String search(Locale locale, ModelMap model, Authentication authentication, @RequestParam("filter") String filter) {
         String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
         model.addAttribute("title", welcome);
         String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
         model.addAttribute("loginMsg", loginMsg);
         model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons(authentication));
-        model.addAttribute("searchers", frontElementConfigurationParser.getFilterSearchers(filter));
+        model.addAttribute("searchers", frontElementConfigurationParser.getFilterSearchers(filter, locale));
         model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons(authentication));
 
         UserData userData = new UserData();

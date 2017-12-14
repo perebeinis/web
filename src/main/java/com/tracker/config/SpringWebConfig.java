@@ -79,24 +79,23 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:/messages/messages");
         messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setCacheSeconds(10);
         return messageSource;
     }
 
     @Bean
-    public LocaleResolver localeResolver(){
-        Locale ukrainian = new Locale("ua");
-
+    public CookieLocaleResolver localeResolver(){
         CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setDefaultLocale(Locale.ENGLISH);
-        resolver.setCookieName("myLocaleCookie");
-        resolver.setCookieMaxAge(4800);
+        resolver.setDefaultLocale(new Locale("uk","UA"));
+        resolver.setCookieName("myAppLocaleCookie");
+        resolver.setCookieMaxAge(100000);
         return resolver;
     }
 
     @Bean
     public LocaleChangeInterceptor localeInterceptor(){
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName("lang");
+        interceptor.setParamName("locale");
         return interceptor;
     }
 

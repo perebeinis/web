@@ -101,3 +101,19 @@ span.popup {
     display: inline-block;
     width: 80%;
 }
+
+.search-attributes {
+    display: block;
+    margin-bottom: 30px;
+    margin-left: 20px;
+}
+
+.search-attributes> div {
+    width: 33%;
+    display: inline-block;
+}
+
+.search-attributes> div > label {
+    width: inherit;
+    display: block;
+}
