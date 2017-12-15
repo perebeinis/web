@@ -44,7 +44,7 @@ public class UserDataCreator implements DataCreator{
         BasicDBObject properties = new BasicDBObject();
         document.put("user_id","test_1");
         document.put("password","test_1");
-        document.put("firstName","TEST 1");
+        document.put("firstName","yra");
         document.put("lastName","test");
 
 

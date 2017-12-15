@@ -106,7 +106,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
     }
 
     this.close = function(){
-        window.open("http://localhost:8080/welcome", "_self");
+        window.open("http://localhost:8082/welcome", "_self");
     }
 
     this.mandatoryEventCheck = function(){

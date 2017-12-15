@@ -74,19 +74,6 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         this.applicationContext = applicationContext;
     }
 
-
-
-    /**
-     *  Message externalization/internationalization
-     */
-    /*
-    @Bean
-    public ResourceBundleMessageSource messageSource() {
-        ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
-        resourceBundleMessageSource.setBasename("Messages");
-        return resourceBundleMessageSource;
-    }
-*/
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();

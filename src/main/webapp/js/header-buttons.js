@@ -29,11 +29,11 @@ function HeaderButton(cardId, data) {
 
 
     this.createNewTask = function() {
-        window.open("http://localhost:8080/welcome", "_self");
+        window.open("http://localhost:8082/welcome", "_self");
     };
 
     this.createNewUser = function() {
-        window.open("http://localhost:8080/createNewUser", "_self");
+        window.open("http://localhost:8082/createNewUser", "_self");
     };
 
     this.defaultClick = function() {
@@ -41,21 +41,7 @@ function HeaderButton(cardId, data) {
     };
 
     this.searchData = function () {
-        var searchType = {};
-        searchType["searchType"] = "user";
-
-        var searchData = {};
-        searchData["aaa"] = "trs";
-
-        searchType["searchData"] = searchData;
-
-        $.ajax({
-            url: '/search-data',
-            type: "POST",
-            contentType: "application/json",
-            data:  JSON.stringify(searchType),
-            dataType: 'json'
-        });
+        window.open("http://localhost:8082/search", "_self");
     }
 
 

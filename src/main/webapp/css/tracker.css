@@ -33,11 +33,13 @@
     cursor: pointer;
 }
 
-.card-attributes-tabs {
+.dataTables_wrapper ,
+.search-block,
+.card-attributes {
     margin-bottom: 20px !important;
     width: 100%;
     padding: 5px;
-    background-color: #337ab7;
+    /*background-color: #337ab7;*/
 }
 
 .card-attributes-tabs > span {
@@ -92,4 +94,10 @@ span.popup {
     background: black;
     padding: 0px 10px 0px 10px;
     color: white;
+}
+
+.left-menu-tree + div {
+    float: right;
+    display: inline-block;
+    width: 80%;
 }
