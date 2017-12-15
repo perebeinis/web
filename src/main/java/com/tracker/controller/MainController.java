@@ -197,4 +197,10 @@ public class MainController {
         userData.createNewUser();
     }
 
+    @RequestMapping("/change-locale")
+    public String changeLocale(Locale locale, ModelMap model) {
+        locale.setDefault(Locale.ENGLISH);
+        return "redirect:welcome";
+    }
+
 }

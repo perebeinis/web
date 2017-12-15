@@ -1,0 +1,15 @@
+<elements>
+
+    <header-element name="createNewTask" title="header.buttons.createNewTask"  enableForRoles="ADMIN,USER">
+    </header-element>
+
+    <header-element name="createNewUser" title="header.buttons.createNewUser"  enableForRoles="ADMIN,USER">
+    </header-element>
+
+    <header-element name="test" title="header.buttons.test"  enableForRoles="ADMIN,USER">
+    </header-element>
+
+    <header-element name="searchData" title="header.buttons.searchData"  enableForRoles="ADMIN,USER">
+    </header-element>
+
+</elements>
