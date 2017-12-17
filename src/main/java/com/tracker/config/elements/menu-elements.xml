@@ -1,9 +1,13 @@
 <elements>
 
     <menu-element name="createNewTask" title="header.buttons.createNewTask"  searchParams="tratete" enableForRoles="ADMIN,USER">
+        <searcher type="text" name="firstName" title="header.buttons.firstName"></searcher>
+        <searcher type="text" name="lastName" title="header.buttons.lastName"></searcher>
     </menu-element>
 
     <menu-element name="createNewUser" title="header.buttons.createNewUser"  searchParams="aaaaaaa" enableForRoles="ADMIN,USER">
+        <searcher type="text" name="firstName" title="header.buttons.firstName"></searcher>
+        <searcher type="text" name="lastName" title="header.buttons.lastName"></searcher>
     </menu-element>
 
     <menu-element name="test" title="header.buttons.test"  enableForRoles="ADMIN,USER">

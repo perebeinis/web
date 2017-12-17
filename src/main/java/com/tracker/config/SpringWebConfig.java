@@ -22,10 +22,12 @@ package com.tracker.config;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
-import com.tracker.cards.user.UserCard;
+import com.tracker.cards.CardDataFactory;
+import com.tracker.cards.CardDataProcessor;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
@@ -35,17 +37,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
@@ -54,6 +56,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
@@ -62,6 +65,8 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
 
 
     private ApplicationContext applicationContext;
+    @Autowired
+    private DatabaseMessageSource databaseMessageSource;
 
 
 
@@ -75,29 +80,34 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     @Bean
-    public MessageSource messageSource() {
+    public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:/messages/messages");
         messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setCacheSeconds(10);
         return messageSource;
     }
 
     @Bean
-    public LocaleResolver localeResolver(){
-        Locale ukrainian = new Locale("ua");
-
-        CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setDefaultLocale(Locale.ENGLISH);
-        resolver.setCookieName("myLocaleCookie");
-        resolver.setCookieMaxAge(4800);
-        return resolver;
+    public CookieLocaleResolver localeResolver() {
+        CookieLocaleResolver slr = new CookieLocaleResolver();
+        slr.setDefaultLocale(Locale.ENGLISH);
+        return slr;
     }
 
+
     @Bean
-    public LocaleChangeInterceptor localeInterceptor(){
-        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName("lang");
-        return interceptor;
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("lang");
+        registry.addInterceptor(localeChangeInterceptor);
     }
 
 
@@ -136,7 +146,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         super.addResourceHandlers(registry);
         registry.addResourceHandler("/images/**").addResourceLocations("/images/");
         registry.addResourceHandler("/css/**").addResourceLocations("/css/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/js/**").addResourceLocations("/js/");
     }
 
     @Override
@@ -145,15 +155,16 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     @Bean
-    public PropertiesFactoryBean pathsConfigProperties() {
+    public Properties pathsConfigProperties() throws IOException {
         PropertiesFactoryBean bean = new PropertiesFactoryBean();
         bean.setLocation(new ClassPathResource("com/tracker/config/properties/paths.properties"));
-        return bean;
+        return bean.getObject();
     }
 
     @Bean
-    public FrontElementConfigurationParser frontElementConfigurationParser(){
+    public FrontElementConfigurationParser frontElementConfigurationParser(Properties pathsConfigProperties){
         FrontElementConfigurationParser bean = new FrontElementConfigurationParser();
+        bean.setPathsConfigProperties(pathsConfigProperties);
         return bean;
     }
 
@@ -164,13 +175,46 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         return database;
     }
 
+
     @Bean
-    public UserCard userCard(PropertiesFactoryBean pathsConfigProperties){
-        UserCard userCard = new UserCard();
-        userCard.setPathsConfigProperties(pathsConfigProperties);
-        userCard.createUserData();
-        return userCard;
+    public SpringTemplateEngine thymeleafTemplateEngine() {
+        SpringTemplateEngine engine = new SpringTemplateEngine();
+        // ...
+        engine.setTemplateEngineMessageSource(databaseMessageSource);
+        return engine;
     }
+
+    @Bean
+    public CardDataFactory cardDataFactory(){
+        return new CardDataFactory();
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+    public CardDataProcessor cardDataProcessor(Properties pathsConfigProperties,
+                                               FrontElementConfigurationParser frontElementConfigurationParser,
+                                               MessageSource messageSource,
+                                               MongoDatabase database){
+
+        CardDataProcessor cardDataProcessor = new CardDataProcessor();
+        cardDataProcessor.setPathsConfigProperties(pathsConfigProperties);
+        cardDataProcessor.setDatabase(database);
+        cardDataProcessor.setFrontElementConfigurationParser(frontElementConfigurationParser);
+        cardDataProcessor.setMessageSource(messageSource);
+        return cardDataProcessor;
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer properties(){
+        PropertySourcesPlaceholderConfigurer pspc =
+                new PropertySourcesPlaceholderConfigurer();
+        Resource[] resources = new ClassPathResource[ ]
+                { new ClassPathResource( "com/tracker/config/properties/paths.properties" ) };
+        pspc.setLocations( resources );
+        pspc.setIgnoreUnresolvablePlaceholders( true );
+        return pspc;
+    }
+
 
     @Bean
     public DataSearchFactory dataSearchFactory(){

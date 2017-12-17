@@ -2,7 +2,6 @@ package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.user.UserCard;
-import com.tracker.dao.UserData;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONObject;
@@ -31,28 +30,21 @@ public class SearchInboxesController {
     @Autowired
     private MongoDatabase database;
 
-    @Autowired
-    private UserCard userCard;
 
     @Autowired
     private DataSearchFactory dataSearchFactory;
 
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET, produces = {"application/xml; charset=UTF-8"})
     public String search(Locale locale, ModelMap model, Authentication authentication, @RequestParam("filter") String filter) {
         String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
         model.addAttribute("title", welcome);
         String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
         model.addAttribute("loginMsg", loginMsg);
-        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons(authentication));
-        model.addAttribute("searchers", frontElementConfigurationParser.getFilterSearchers(filter));
-        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons(authentication));
+        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons());
+        model.addAttribute("searchers", frontElementConfigurationParser.getFilterSearchers(filter, locale));
+        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons());
 
-        UserData userData = new UserData();
-        userData.getUserData(database);
-
-        JSONObject jsonArray = userCard.getUserData();
-        model.addAttribute("searchData", jsonArray);
 
         return "search-data";
     }

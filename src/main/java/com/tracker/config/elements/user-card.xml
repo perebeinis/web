@@ -2,18 +2,24 @@
 
     <set name="common" title="common">
          <property name="user_id" title="user.card.user_id" type="textField" mandatoryCondition="*" customClassName = "half"/>
-         <property name="firstName" title="user.card.firstName" type="textField" customClassName = "half"/>
-         <property name="lastName" title="user.card.lastName" type="textField" customClassName = "half"/>
+         <property name="firstName" title="user.card.firstName" type="textField" mandatoryCondition="*" customClassName = "half"/>
+         <property name="lastName" title="user.card.lastName" type="textField" mandatoryCondition="*" customClassName = "half"/>
     </set>
 
     <set name="test" title="test">
         <property name="user_pass"
-                  title="user.card.user_id"
+                  title="user.card.user_pass"
                   type="textField"
                   customClassName = "half"
-                  mandatoryCondition="{ 'user_id': ' IN (a) ', 'firstName': ' NOT IN (a,b)'}"/>
+                  mandatoryCondition="*" />
+                 <!-- mandatoryCondition="{ 'user_id': ' IN (a) ', 'firstName': ' NOT IN (a,b)'}" />-->
 
-        <property name="email" title="user.card.email" type="textField" customClassName = "half"/>
+
+
+        <property name="email" title="user.card.email" type="textField" mandatoryCondition="*" customClassName = "half"/>
+
+        <property name="birthDay" title="user.card.birthDay" type="date" mandatoryCondition="*" customClassName = "half"/>
+
     </set>
 
     <buttons name="buttons" title="buttons">

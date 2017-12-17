@@ -33,11 +33,13 @@
     cursor: pointer;
 }
 
-.card-attributes-tabs {
+.dataTables_wrapper ,
+.search-block,
+.card-attributes {
     margin-bottom: 20px !important;
     width: 100%;
     padding: 5px;
-    background-color: #337ab7;
+    /*background-color: #337ab7;*/
 }
 
 .card-attributes-tabs > span {
@@ -92,4 +94,64 @@ span.popup {
     background: black;
     padding: 0px 10px 0px 10px;
     color: white;
+}
+
+.left-menu-tree + div {
+    float: right;
+    display: inline-block;
+    width: 80%;
+}
+
+.search-buttons,
+.search-attributes {
+    display: block;
+    margin-bottom: 30px;
+    margin-left: 20px;
+}
+
+.search-buttons > button {
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.search-attributes> div {
+    width: 33%;
+    display: inline-block;
+}
+
+.search-attributes> div > label {
+    width: inherit;
+    display: block;
+}
+
+.search-attributes input {
+    width: 90% !important;
+}
+
+
+table.dataTable {
+    width: 100% !important;
+}
+
+
+.search-block .dataTables_filter{
+    display: none;
+}
+
+.half input {
+    width :90%;
+}
+
+.half .input-group .form-control {
+    width: 85%;
+}
+
+.half .input-group-addon {
+    width: initial;
+    /* padding: 0; */
+    padding: 7px 12px;
+}
+
+.half.date > input.form-control  {
+    width: 85% !important;
 }

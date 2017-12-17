@@ -105,9 +105,9 @@ public class UserCard {
         return setList;
     }
 
-    public void setPathsConfigProperties(PropertiesFactoryBean pathsConfigProperties) {
+    public void setPathsConfigProperties(Properties pathsConfigProperties) {
         try {
-            this.pathsConfigProperties = pathsConfigProperties.getObject();
+            this.pathsConfigProperties = pathsConfigProperties;
         }catch (Exception e){
             System.out.println("eee");
         }

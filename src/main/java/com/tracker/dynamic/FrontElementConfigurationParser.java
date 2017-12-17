@@ -3,8 +3,10 @@ package com.tracker.dynamic;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -12,12 +14,17 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Properties;
 
 public class FrontElementConfigurationParser {
 
     @Autowired
+    private MessageSource messageSource;
+
+
     private Properties pathsConfigProperties;
+
     private static final String EMPTY_ATTRIBUTE_CONSTANT = "#text";
     private static final String ELEMENTS_CONSTANT = "elements";
     private static final String HEADER_ELEMENT_CONSTANT = "header-element";
@@ -30,8 +37,9 @@ public class FrontElementConfigurationParser {
 
 
 
-    public JSONArray parseMenuButtons(Authentication authentication){
+    public JSONArray parseMenuButtons(){
         try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             JSONArray menuElementsList = new JSONArray();
             InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(MENU_ELEMENT_CONSTANT));
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -85,7 +93,7 @@ public class FrontElementConfigurationParser {
     }
 
 
-    public JSONArray getFilterSearchers(String filterName){
+    public JSONArray getFilterSearchers(String filterName, Locale locale){
         try {
             JSONArray attributeList = new JSONArray();
             InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(MENU_ELEMENT_CONSTANT));
@@ -110,7 +118,7 @@ public class FrontElementConfigurationParser {
 
                             JSONObject jsonObjectSub = new JSONObject();
                             jsonObjectSub.put(NAME_CONSTANT,elementNameSub);
-                            jsonObjectSub.put(TITLE_CONSTANT,titleSub);
+                            jsonObjectSub.put(TITLE_CONSTANT,messageSource.getMessage(titleSub, new Object[]{""}, locale));
                             jsonObjectSub.put(TYPE_CONSTANT,typeSub);
                             attributeList.put(jsonObjectSub);
 
@@ -128,8 +136,9 @@ public class FrontElementConfigurationParser {
     }
 
 
-    public JSONArray parseHeaderMenuButtons(Authentication authentication){
+    public JSONArray parseHeaderMenuButtons(){
         try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             JSONArray headerElementsList = new JSONArray();
             InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(HEADER_ELEMENT_CONSTANT));
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -176,4 +185,7 @@ public class FrontElementConfigurationParser {
         return containRole;
     }
 
+    public void setPathsConfigProperties(Properties pathsConfigProperties) {
+        this.pathsConfigProperties = pathsConfigProperties;
+    }
 }
