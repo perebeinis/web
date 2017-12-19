@@ -1,12 +1,8 @@
 package com.tracker.controller;
 
-import com.google.gson.JsonArray;
 import com.mongodb.client.MongoDatabase;
-import com.tracker.cards.user.UserCard;
-import com.tracker.dao.UserData;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -21,16 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.unbescape.html.HtmlEscape;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.Response;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
-import java.util.stream.Collectors;
 
 /**
  * Application home page and login.
@@ -47,8 +36,6 @@ public class MainController {
     @Autowired
     private MongoDatabase database;
 
-    @Autowired
-    private UserCard userCard;
 
     @Autowired
     private DataSearchFactory dataSearchFactory;
@@ -65,36 +52,10 @@ public class MainController {
         model.addAttribute("title", welcome);
         String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
         model.addAttribute("loginMsg", loginMsg);
-        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons(authentication));
-        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons(authentication));
-
-        UserData userData = new UserData();
-        userData.getUserData(database);
-
-        JSONObject jsonArray = userCard.getUserData();
-        model.addAttribute("cardData", jsonArray);
+        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons());
+        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons());
 
         return "welcome";
-    }
-
-
-    /** Home page. */
-    @RequestMapping(value = "/createNewUser", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String createNewUser(Locale locale, ModelMap model, Authentication authentication) {
-        String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
-        model.addAttribute("title", welcome);
-        String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
-        model.addAttribute("loginMsg", loginMsg);
-        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons(authentication));
-        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons(authentication));
-
-        UserData userData = new UserData();
-        userData.getUserData(database);
-
-        JSONObject jsonArray = userCard.getUserData();
-        model.addAttribute("cardData", jsonArray);
-
-        return "create-user-card";
     }
 
 
@@ -105,7 +66,7 @@ public class MainController {
         try {
             String encodeURL= URLDecoder.decode( searchData, "UTF-8" );
             JSONObject jsonObj = new JSONObject(encodeURL);
-            result = dataSearchFactory.getData(jsonObj);
+            result = dataSearchFactory.searchData("element",jsonObj);
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
         }
@@ -189,13 +150,6 @@ public class MainController {
         return "403";
     }
 
-
-    @RequestMapping(value = "/create-new-user", method = RequestMethod.POST)
-    public void createNewUser(HttpServletRequest request) throws IOException {
-        String body = request.getReader().lines().collect(Collectors.joining());
-        UserData userData = new UserData();
-        userData.createNewUser();
-    }
 
     @RequestMapping("/change-locale")
     public String changeLocale(Locale locale, ModelMap model) {

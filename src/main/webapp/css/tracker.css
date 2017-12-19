@@ -102,10 +102,16 @@ span.popup {
     width: 80%;
 }
 
+.search-buttons,
 .search-attributes {
     display: block;
     margin-bottom: 30px;
     margin-left: 20px;
+}
+
+.search-buttons > button {
+    margin-right: 20px;
+    font-size: 16px;
 }
 
 .search-attributes> div {
@@ -116,4 +122,40 @@ span.popup {
 .search-attributes> div > label {
     width: inherit;
     display: block;
+}
+
+.search-attributes input {
+    width: 90% !important;
+}
+
+
+table.dataTable {
+    width: 100% !important;
+}
+
+
+.search-block .dataTables_filter{
+    display: none;
+}
+
+.half input {
+    width :90%;
+}
+
+.half .input-group .form-control {
+    width: 85%;
+}
+
+.half .input-group-addon {
+    width: initial;
+    /* padding: 0; */
+    padding: 7px 12px;
+}
+
+.half.date > input.form-control  {
+    width: 85% !important;
+}
+
+.search-result-table tr:hover {
+    cursor: pointer;
 }

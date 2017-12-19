@@ -1,6 +1,8 @@
-function CardAttributesCreator(cardId, data, tabsId) {
+function UserCardCreator(cardId, data, tabsId, cardFiledValues) {
     this.cardId = cardId;
-    var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
+    this.tabsId = tabsId;
+    this.cardFiledValues = cardFiledValues!=null ? JSON.parse( cardFiledValues.replace(new RegExp('&quot;', 'g'), '"')) : null;
+    var dataStr = data.replace(new RegExp('&quot;', 'g'), '"');
     this.dataArray = JSON.parse(dataStr);
     this.customClassName = "customClassName";
     this.title = "title";
@@ -8,8 +10,13 @@ function CardAttributesCreator(cardId, data, tabsId) {
     this.type = "type";
     this.mandatoryCondition = "mandatoryCondition";
     this.mandatoryCondtitions = {};
+    return this;
+}
 
-    this.createCardElements = function () {
+UserCardCreator.prototype = Object.create(FormElements.prototype);
+UserCardCreator.prototype.constructor = UserCardCreator;
+
+UserCardCreator.prototype.createCardElements = function () {
         var tabsCounter = 0;
         //create set for tabs
         var sets = this.dataArray.set;
@@ -18,11 +25,11 @@ function CardAttributesCreator(cardId, data, tabsId) {
             var name = set[this.name];
             var title = set[this.title];
 
-            var setId = cardId+"-"+name;
+            var setId = this.cardId+"-"+name;
             var classNameTab = tabsCounter == 0 ? name+" tab-selected": name;
 
             // Event when tad selected
-            $('#'+tabsId).append($('<span>', {class: classNameTab, setId: setId}).click(function() {
+            $('#'+this.tabsId).append($('<span>', {class: classNameTab, setId: setId}).click(function() {
                 var setId = this.attributes.setid.value;
                 if(!$(this).hasClass("tab-selected")){
                     $(".tab-selected").removeClass("tab-selected");
@@ -35,35 +42,21 @@ function CardAttributesCreator(cardId, data, tabsId) {
 
             // Create set for tab
             var classNameSet = tabsCounter != 0 ? name+" hidden": name+" set-selected";
-            $('#'+cardId).append($('<div>', {class: classNameSet+"", id: setId}));
+            $('#'+this.cardId).append($('<div>', {class: classNameSet+"", id: setId}));
 
             //Create card fields
             var subArray = set["set"];
             for (var j in subArray){
                 var attribute = subArray[j];
                 var elementType = attribute[this.type];
-                this[elementType](attribute,setId);
+                var elementValue = this.cardFiledValues!=null && this.cardFiledValues[attribute[this.name]]!=null ? this.cardFiledValues[attribute[this.name]] : null;
+                this[elementType](attribute,setId,elementValue);
             }
             tabsCounter++;
 
         }
     }
 
-    this.textField = function (data, parentElementId) {
-        $('#'+parentElementId)
-            .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
-            append($('<span>', {class: "hidden popup"}).html(data[this.title])).
-            append($('<label>', {value: data[this.title]}).html(data[this.title])).
-            append($('<input>', {class: data[this.name], name:data[this.name], type: 'text'})));
-
-        if(data[this.mandatoryCondition]!=""){
-            this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
-        }
-
-    }
-
-    return this;
-};
 
 
 function CardButtonsCreator(parentId, data, cardAttributesObject) {
@@ -98,11 +91,34 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
     this.button = function (data, parentElementId) {
         $('#'+parentElementId)
             .append($('<div>', {class: "card-button"+" "+data[this.customClassName]}).
-             append($('<button>', {value: data[this.title]}).click(this,this[data[this.name]]).html(data[this.title])));
+            append($('<button>', {value: data[this.title] , class: "btn btn-primary btn-md"}).click(this,this[data[this.name]]).html(data[this.title])));
     }
 
     this.save = function(e, data){
-        e.data.mandatoryEventCheck();
+        var foundEmpty = e.data.mandatoryEventCheck();
+
+        if(!foundEmpty){
+            var postParams = {};
+
+            $('.card-attributes-container input').each(function(data){
+                if(this.name!=""){
+                    postParams[this.name] = this.value;
+                }
+            });
+
+
+
+
+            $.ajax ({
+                url: '/create-new-element?type=user',
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(postParams),
+                dataType: 'json'
+            })
+        }
+
+
     }
 
     this.close = function(){
@@ -110,12 +126,12 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
     }
 
     this.mandatoryEventCheck = function(){
-       var conditionsList =  cardAttributesObject.mandatoryCondtitions;
-       for(var i in conditionsList){
-           var fieldName = i;
-           var condition = conditionsList[i];
-           var attribute = $('*[name=\''+fieldName+'\']')[0];
-           var mandatoryFound = false;
+        var conditionsList =  cardAttributesObject.mandatoryCondtitions;
+        for(var i in conditionsList){
+            var fieldName = i;
+            var condition = conditionsList[i];
+            var attribute = $('*[name=\''+fieldName+'\']')[0];
+            var mandatoryFound = false;
             if(condition == "*"){
                 if(attribute.value == ""){
                     mandatoryFound = true;
@@ -128,7 +144,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
                     var regExp = /\(([^)]+)\)/;
                     var valuesArray = regExp.exec(conditionValue)[1].split(",");
                     var result = (conditionValue.indexOf("NOT IN") == -1) ?
-                         valuesArray.indexOf(conditionAttribute.value)!=-1
+                        valuesArray.indexOf(conditionAttribute.value)!=-1
                         : valuesArray.indexOf(conditionAttribute.value)==-1;
 
                     if(conditionAttribute.value=="" || result){
@@ -148,12 +164,10 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
                 $('.set-selected').removeClass("set-selected").addClass("hidden")
 
 
-                 $(attribute.parentNode.parentNode).removeClass("hidden").addClass("set-selected");
+                $(attribute.parentNode.parentNode).removeClass("hidden").addClass("set-selected");
                 $('*[setid=\''+attribute.parentNode.parentNode.id+'\']').removeClass("hidden").addClass("tab-selected");
 
                 // Select new tabs
-
-
                 attribute.focus();
                 $(attribute.parentNode).find('span.popup').removeClass("hidden");
 
@@ -161,9 +175,13 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
                     $(attribute.parentNode).find('span.popup').addClass("hidden");
                 }, 2000);
 
-                break;
+                return true;
             }
-       }
+        }
+
+        return false;
+
+
     }
 
 

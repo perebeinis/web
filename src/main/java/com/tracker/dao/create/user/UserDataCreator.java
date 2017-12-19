@@ -17,11 +17,17 @@ public class UserDataCreator implements DataCreator{
     private static final String USER_DETAILS_TABLE = "userdetails";
 
     @Override
-    public void createData(MongoDatabase database) {
+    public void createData(MongoDatabase database, JSONObject incomingData) {
         System.out.println("aa");
         MongoCollection<Document> collection = database.getCollection(USER_DETAILS_TABLE);
-//        collection.insertOne(generateNewDocumentData());
+        Document document = new Document();
+        Iterator<?> keys = incomingData.keys();
+        while(keys.hasNext() ) {
+            String key = (String)keys.next();
+            document.put(key,incomingData.get(key));
+        }
 
+        collection.insertOne(document);
         System.out.println("data inserted");
 
     }

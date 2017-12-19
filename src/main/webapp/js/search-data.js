@@ -19,9 +19,6 @@ function SearchDataComponent(tableDivId, data) {
         searchData["aaa"] = "trs";
 
         searchType["searchData"] = searchData;
-        console.log("serchhhhhhhhhhhhhhhhhh");
-
-        var scope = this;
 
         var test = $("#"+tableDivId).append($('<thead>').append($('<tr>')
             .append($('<td>').html("firstName"))
@@ -35,6 +32,9 @@ function SearchDataComponent(tableDivId, data) {
         var searchData = {};
         searchType["searchData"] = searchData;
         this.createSearchTable(searchType, this);
+        $("#"+tableDivId).on('click', 'tr', function () {
+            window.open("http://localhost:8082/get-element?type=user&id="+this.id, "_blank");
+        });
     }
 
     this.createSearchers = function () {
@@ -52,7 +52,7 @@ function SearchDataComponent(tableDivId, data) {
            .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
             append($('<span>', {class: "hidden popup"}).html(data[this.title])).
             append($('<label>', {value: data[this.title]}).html(data[this.title])).
-            append($('<input>', {class: data[this.name], name:data[this.name], type: 'text', value : ''})));
+            append($('<input>', {class: "form-control "+data[this.name], name:data[this.name], type: 'text', value : ''})));
 
 
     }
@@ -61,13 +61,13 @@ function SearchDataComponent(tableDivId, data) {
         var scope = this;
         var searchButtonsDiv = "search-buttons";
         // search button
-        $('#'+searchButtonsDiv).append($('<button>', {class: "searchButton", value: "Search"}).html("Search").
+        $('#'+searchButtonsDiv).append($('<button>', {class: "searchButton btn btn-primary", value: "Search"}).html("Search").
         click(this, function(e) {
             e.data.searchDataEv();
         }));
 
         // search button
-        $('#'+searchButtonsDiv).append($('<button>', {class: "clearButton", value: "Clear"}).html("Clear").
+        $('#'+searchButtonsDiv).append($('<button>', {class: "clearButton btn btn-primary", value: "Clear"}).html("Clear").
         click(this, function(e) {
             e.data.clearDataEv();
         }));
@@ -111,6 +111,10 @@ function SearchDataComponent(tableDivId, data) {
                     },
                     "dataType": 'json'
                 },
+                "createdRow": function ( row, data, index ) {
+                    row.id = data["_id"]["$oid"];
+                },
+
                 "columns": [
                     { "data": "firstName"},
                     { "data": "lastName"},

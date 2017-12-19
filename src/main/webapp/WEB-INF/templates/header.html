@@ -1,16 +1,20 @@
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:fragment="header-css">
         <!-- this is header-css -->
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="css/bootstrap.css" />
         <link rel="stylesheet" th:href="@{/css/tracker.css}" href="css/tracker.css" />
-        <link rel="stylesheet"  type="text/css" href="css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" href="css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}" href="css/bootstrap-datetimepicker.min.css" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
         <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" th:src="@{/js/header-buttons.js}"></script>
-        <script type="text/javascript" th:src="@{/js/card-creator.js}"></script>
+        <script type="text/javascript" th:src="@{/js/classes/FormElements.js}"></script>
+        <script type="text/javascript" th:src="@{/js/classes/UserCard.js}"></script>
         <script type="text/javascript" th:src="@{/js/menu-creator.js}"></script>
         <script type="text/javascript" th:src="@{/js/search-data.js}"></script>
+        <script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap-datetimepicker.js}"></script>
 
         <script type="text/javascript" th:src="@{/js/jquery.dataTables.min.js}"></script>
 

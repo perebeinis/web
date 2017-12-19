@@ -33,7 +33,7 @@ function HeaderButton(cardId, data) {
     };
 
     this.createNewUser = function() {
-        window.open("http://localhost:8082/createNewUser", "_self");
+        window.open("http://localhost:8082/create-element?type=user", "_self");
     };
 
     this.defaultClick = function() {

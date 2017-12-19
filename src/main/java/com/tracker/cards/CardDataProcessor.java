@@ -1,8 +1,11 @@
-package com.tracker.cards.user;
+package com.tracker.cards;
 
+import com.mongodb.client.MongoDatabase;
+import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -12,13 +15,21 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class UserCard {
+public abstract class CardDataProcessor {
+
+    @Autowired
+    protected MessageSource messageSource;
+
+    @Autowired
+    protected FrontElementConfigurationParser frontElementConfigurationParser;
+
+    @Autowired
+    protected MongoDatabase database;
 
     private Properties pathsConfigProperties;
 
-    private JSONObject userData = new JSONObject();
-
     private static final String USER_CARD = "user-card";
+    private static final String ISSUE = "issue";
     private static final String PROPERTY_CONSTANT = "property";
     private static final String SET_CONSTANT = "set";
     private static final String TITLE_CONSTANT = "title";
@@ -27,38 +38,6 @@ public class UserCard {
     private static final String BUTTONS_CONSTANT = "buttons";
     private static final String CUSTOM_CLASS_NAME_CONSTANT = "customClassName";
     private static final String MANDATORY_CONDITIONS_CONSTANT = "mandatoryCondition";
-
-
-    public UserCard() {
-    }
-
-    public void createUserData() {
-        try {
-            InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(USER_CARD));
-            DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document document = documentBuilder.parse(inputStream);
-            document.getDocumentElement().normalize();
-
-            JSONArray setList = parseData(document, SET_CONSTANT);
-            JSONArray buttons = parseData(document, BUTTONS_CONSTANT);
-
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(SET_CONSTANT, setList);
-            jsonObject.put(BUTTONS_CONSTANT, buttons);
-
-            userData =  jsonObject;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public JSONObject getUserData() {
-//        if(userData.length()<=0){
-            createUserData();
-//        }
-        return userData;
-    }
 
 
     public JSONArray  parseData(Document document, String parentTagName){
@@ -105,9 +84,51 @@ public class UserCard {
         return setList;
     }
 
-    public void setPathsConfigProperties(PropertiesFactoryBean pathsConfigProperties) {
+
+    public  JSONObject createCardData(String elementType) {
+        JSONObject jsonObject = new JSONObject();
         try {
-            this.pathsConfigProperties = pathsConfigProperties.getObject();
+            InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(elementType));
+            DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document document = documentBuilder.parse(inputStream);
+            document.getDocumentElement().normalize();
+
+            JSONArray setList = parseData(document, SET_CONSTANT);
+            JSONArray buttons = parseData(document, BUTTONS_CONSTANT);
+
+
+            jsonObject.put(SET_CONSTANT, setList);
+            jsonObject.put(BUTTONS_CONSTANT, buttons);
+
+            return jsonObject;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
+
+    public MessageSource getMessageSource() {
+        return messageSource;
+    }
+
+    public FrontElementConfigurationParser getFrontElementConfigurationParser() {
+        return frontElementConfigurationParser;
+    }
+
+    public MongoDatabase getDatabase() {
+        return database;
+    }
+
+    public Properties getPathsConfigProperties() {
+        return pathsConfigProperties;
+    }
+
+    public void setPathsConfigProperties(Properties pathsConfigProperties) {
+        try {
+            this.pathsConfigProperties = pathsConfigProperties;
         }catch (Exception e){
             System.out.println("eee");
         }

@@ -3,15 +3,18 @@ package com.tracker.dynamic;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import java.util.Properties;
@@ -20,7 +23,8 @@ public class FrontElementConfigurationParser {
 
     @Autowired
     private MessageSource messageSource;
-    @Autowired
+
+
     private Properties pathsConfigProperties;
 
     private static final String EMPTY_ATTRIBUTE_CONSTANT = "#text";
@@ -35,8 +39,9 @@ public class FrontElementConfigurationParser {
 
 
 
-    public JSONArray parseMenuButtons(Authentication authentication){
+    public JSONArray parseMenuButtons(){
         try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             JSONArray menuElementsList = new JSONArray();
             InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(MENU_ELEMENT_CONSTANT));
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -133,8 +138,9 @@ public class FrontElementConfigurationParser {
     }
 
 
-    public JSONArray parseHeaderMenuButtons(Authentication authentication){
+    public JSONArray parseHeaderMenuButtons(){
         try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             JSONArray headerElementsList = new JSONArray();
             InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(HEADER_ELEMENT_CONSTANT));
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -181,4 +187,7 @@ public class FrontElementConfigurationParser {
         return containRole;
     }
 
+    public void setPathsConfigProperties(PropertiesFactoryBean pathsConfigProperties) throws IOException {
+        this.pathsConfigProperties = pathsConfigProperties.getObject();
+    }
 }
