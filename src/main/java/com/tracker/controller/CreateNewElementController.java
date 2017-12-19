@@ -5,6 +5,7 @@ import com.tracker.dao.create.DataCreator;
 import com.tracker.dao.create.user.UserDataCreator;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
+import com.tracker.news.impl.NewsObserver;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -35,6 +36,9 @@ public class CreateNewElementController {
     private MongoDatabase database;
 
     @Autowired
+    private NewsObserver newsObserver;
+
+    @Autowired
     private DataSearchFactory dataSearchFactory;
 
     private static final String userType = "user";
@@ -59,7 +63,7 @@ public class CreateNewElementController {
             case userType:
                 DataCreator userDataCreator = new UserDataCreator();
                 userDataCreator.createData(database, incomingData);
-
+                newsObserver.createNews(incomingData);
                 break;
             default:
                 break;

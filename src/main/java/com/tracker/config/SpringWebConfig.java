@@ -27,6 +27,7 @@ import com.tracker.cards.CardDataProcessor;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dao.search.GetElementFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
+import com.tracker.news.impl.NewsObserver;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -227,6 +228,11 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     @Bean
     public GetElementFactory getElementFactory(){
         return new GetElementFactory();
+    }
+
+    @Bean
+    public NewsObserver newsObserver(){
+        return new NewsObserver();
     }
 
 }
