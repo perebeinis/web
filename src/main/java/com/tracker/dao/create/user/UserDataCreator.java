@@ -28,6 +28,7 @@ public class UserDataCreator implements DataCreator{
         }
 
         collection.insertOne(document);
+        Object id = document.get("_id");
         System.out.println("data inserted");
 
     }
@@ -41,37 +42,5 @@ public class UserDataCreator implements DataCreator{
     public void removeData(MongoDatabase database) {
 
     }
-
-    private Document generateNewDocumentData(){
-
-        Document document = new Document();
-
-
-        BasicDBObject properties = new BasicDBObject();
-        document.put("user_id","test_1");
-        document.put("password","test_1");
-        document.put("firstName","yra");
-        document.put("lastName","test");
-
-
-        BasicDBList jsonArray = new BasicDBList();
-        BasicDBObject helperAssociation = new BasicDBObject();
-        helperAssociation.put("elementNode","11111111111");
-        helperAssociation.put("elementType","user");
-        helperAssociation.put("name","aassss");
-        helperAssociation.put("title","bbbbbbbbbbb");
-        jsonArray.add(helperAssociation);
-
-        document.put("assocHelp", jsonArray);
-
-
-
-        document.put("properties",properties);
-
-          return  document;
-    }
-
-
-
 
 }

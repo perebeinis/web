@@ -1,7 +1,7 @@
 function UserCardCreator(cardId, data, tabsId, cardFiledValues) {
     this.cardId = cardId;
     this.tabsId = tabsId;
-    this.cardFiledValues = cardFiledValues!=null ? JSON.parse( cardFiledValues.replace(new RegExp('&quot;', 'g'), '"')) : null;
+    this.cardFiledValues = cardFiledValues!=undefined && cardFiledValues!=null ? JSON.parse( cardFiledValues.replace(new RegExp('&quot;', 'g'), '"')) : null;
     var dataStr = data.replace(new RegExp('&quot;', 'g'), '"');
     this.dataArray = JSON.parse(dataStr);
     this.customClassName = "customClassName";

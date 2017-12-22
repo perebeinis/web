@@ -31,6 +31,7 @@ public class NewsSubscriber implements Observer {
             System.out.println(subscriberName + ":: No new news");
         } else
             System.out.println(subscriberName + ":: Consuming message::" + news.toString());
+            createNewNews(news);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class NewsSubscriber implements Observer {
     }
 
     private JSONObject createNewNews(JSONObject news){
-        MongoCollection<Document> collection = database.getCollection(NEWS_TABLE);
+        MongoCollection<Document> collection = this.database.getCollection(NEWS_TABLE);
         Document document = new Document();
         Iterator<?> keys = news.keys();
         while(keys.hasNext() ) {

@@ -231,8 +231,11 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     @Bean
-    public NewsObserver newsObserver(){
-        return new NewsObserver();
+    public NewsObserver newsObserver(MongoDatabase database){
+        NewsObserver newsObserver = new NewsObserver();
+        newsObserver.setDatabase(database);
+        newsObserver.init();
+        return newsObserver;
     }
 
 }

@@ -11,10 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class NewsObserver {
     private News news;
 
-    @Autowired
     private MongoDatabase database;
 
-    public NewsObserver() {
+    public void init() {
         this.news = new News();
         Observer newsObserver = new NewsSubscriber("news", database);
         news.register(newsObserver);
@@ -23,5 +22,9 @@ public class NewsObserver {
 
     public void createNews(JSONObject jsonObject){
         news.postData(jsonObject);
+    }
+
+    public void setDatabase(MongoDatabase database) {
+        this.database = database;
     }
 }

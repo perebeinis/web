@@ -25,6 +25,8 @@ public class UserCardData extends CardDataProcessor implements CardData{
         model.addAttribute(menuListConst, frontElementConfigurationParser.parseMenuButtons());
         if(!StringUtils.isEmpty(elementType) && !StringUtils.isEmpty(elementId)){
             model.addAttribute(cardFiledValuesConst, getElementFactory.searchData(elementType, elementId));
+        }else{
+            model.addAttribute(cardFiledValuesConst, new JSONObject());
         }
 
         JSONObject jsonArray = createCardData(elementType);
