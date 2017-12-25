@@ -14,8 +14,9 @@
             <div id = "card-attributes-buttons" class="card-attributes-buttons"></div>
 
             <script>
+                var cardFiledValues = "[[${cardFiledValues}]]";
                 var cardAttributes = "[[${cardData}]]";
-                var cardAttrs = new UserCardCreator("card-attributes-container",cardAttributes,"card-attributes-tabs");
+                var cardAttrs = new UserCardCreator("card-attributes-container",cardAttributes,"card-attributes-tabs",cardFiledValues);
                 cardAttrs.createCardElements();
 
                 var cardButtons = "[[${cardData}]]";

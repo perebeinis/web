@@ -2,8 +2,8 @@ package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.CardDataFactory;
-import com.tracker.cards.user.UserCard;
 import com.tracker.dao.search.DataSearchFactory;
+import com.tracker.dao.search.GetElementFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,9 @@ public class GetElementCardController {
 
     @Autowired
     private CardDataFactory cardDataFactory;
+
+    @Autowired
+    private GetElementFactory getElementFactory;
 
     private static final String userType = "user";
 

@@ -3,18 +3,31 @@
 </head>
 <body>
 <div th:fragment="menu">
-    <!-- this is menu -->
-    <nav class="navbar navbar-inverse">
-        <div id="menu-items-list" class="container">
 
-            <script>
-                var cardAttributes = "[[${menuList}]]";
-                var menu = new MenuElementsCretor("menu-items-list",cardAttributes);
-                menu.createMenuElements();
-            </script>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="well no-padding">
+                    <div>
+                        <ul id="menu-items-list" class="nav nav-list nav-menu-list-style">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-    </nav>
+    </div>
+
+
+    <script>
+        var cardAttributes = "[[${menuList}]]";
+        var menu = new MenuElementsCretor("menu-items-list",cardAttributes);
+        menu.createMenuElements();
+        menu.createMenuEvents();
+    </script>
+
+
 
 </div>
 

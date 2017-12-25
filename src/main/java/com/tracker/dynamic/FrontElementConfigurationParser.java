@@ -3,6 +3,7 @@ package com.tracker.dynamic;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import java.util.Properties;
@@ -51,6 +53,7 @@ public class FrontElementConfigurationParser {
                 Node headerElementNode = nodeList.item(i);
                 String headerElementName = headerElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
                 String title = headerElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
+                String type = headerElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
                 String userRoles = headerElementNode.getAttributes().getNamedItem(ENABLE_FOR_USER_ROLES_CONSTANT).getTextContent();
                 String searchParams = headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT) == null? "" : headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT).getTextContent();
 
@@ -59,6 +62,8 @@ public class FrontElementConfigurationParser {
                 jsonObject.put("title",title);
                 jsonObject.put("enableForRoles",userRoles);
                 jsonObject.put("searchParams", searchParams);
+                jsonObject.put("type", type);
+                jsonObject.put("subElements", new JSONArray());
 
                 // Get sub searchers
                 NodeList nodeAttributesList = headerElementNode.getChildNodes();
@@ -81,7 +86,12 @@ public class FrontElementConfigurationParser {
                 jsonObject.put("searchers", attributeList);
 
                 if(containsAny(authentication,userRoles.split(","))){
-                    menuElementsList.put(jsonObject);
+                    if(type.equals("subElement")){
+                        ((JSONArray)((JSONObject) menuElementsList.get(i - 1)).get("subElements")).put(jsonObject);
+                    }else {
+                        menuElementsList.put(jsonObject);
+                    }
+
                 }
             }
             return menuElementsList;
@@ -185,7 +195,7 @@ public class FrontElementConfigurationParser {
         return containRole;
     }
 
-    public void setPathsConfigProperties(Properties pathsConfigProperties) {
-        this.pathsConfigProperties = pathsConfigProperties;
+    public void setPathsConfigProperties(PropertiesFactoryBean pathsConfigProperties) throws IOException {
+        this.pathsConfigProperties = pathsConfigProperties.getObject();
     }
 }

@@ -1,6 +1,7 @@
-function UserCardCreator(cardId, data, tabsId) {
+function UserCardCreator(cardId, data, tabsId, cardFiledValues) {
     this.cardId = cardId;
     this.tabsId = tabsId;
+    this.cardFiledValues = cardFiledValues!=undefined && cardFiledValues!=null ? JSON.parse( cardFiledValues.replace(new RegExp('&quot;', 'g'), '"')) : null;
     var dataStr = data.replace(new RegExp('&quot;', 'g'), '"');
     this.dataArray = JSON.parse(dataStr);
     this.customClassName = "customClassName";
@@ -48,7 +49,8 @@ UserCardCreator.prototype.createCardElements = function () {
             for (var j in subArray){
                 var attribute = subArray[j];
                 var elementType = attribute[this.type];
-                this[elementType](attribute,setId);
+                var elementValue = this.cardFiledValues!=null && this.cardFiledValues[attribute[this.name]]!=null ? this.cardFiledValues[attribute[this.name]] : null;
+                this[elementType](attribute,setId,elementValue);
             }
             tabsCounter++;
 
@@ -98,13 +100,21 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
         if(!foundEmpty){
             var postParams = {};
 
+            var formData = new FormData();
+            formData.append('file', "as");
+
             $('.card-attributes-container input').each(function(data){
-                if(this.name!=""){
-                    postParams[this.name] = this.value;
+                if(this.name!="") {
+
+                    if (this.type == "file") {
+                        postParams[this.name] = this.files[0].name +";"+this.fileValue;
+                    } else {
+                        postParams[this.name] = this.value;
+                    }
+                    // postParams[this.name] = this.value;
+                    // }\
                 }
             });
-
-
 
 
             $.ajax ({
@@ -131,7 +141,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
             var attribute = $('*[name=\''+fieldName+'\']')[0];
             var mandatoryFound = false;
             if(condition == "*"){
-                if(attribute.value == ""){
+                if(attribute.value == "" || (attribute.type == "file" && attribute.files.length == 0 )){
                     mandatoryFound = true;
                 }
             }else {

@@ -25,7 +25,9 @@ import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.CardDataFactory;
 import com.tracker.cards.CardDataProcessor;
 import com.tracker.dao.search.DataSearchFactory;
+import com.tracker.dao.search.GetElementFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
+import com.tracker.news.impl.NewsObserver;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -155,14 +157,14 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     @Bean
-    public Properties pathsConfigProperties() throws IOException {
+    public PropertiesFactoryBean pathsConfigProperties() throws IOException {
         PropertiesFactoryBean bean = new PropertiesFactoryBean();
         bean.setLocation(new ClassPathResource("com/tracker/config/properties/paths.properties"));
-        return bean.getObject();
+        return bean;
     }
 
     @Bean
-    public FrontElementConfigurationParser frontElementConfigurationParser(Properties pathsConfigProperties){
+    public FrontElementConfigurationParser frontElementConfigurationParser(PropertiesFactoryBean pathsConfigProperties) throws IOException {
         FrontElementConfigurationParser bean = new FrontElementConfigurationParser();
         bean.setPathsConfigProperties(pathsConfigProperties);
         return bean;
@@ -184,11 +186,8 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         return engine;
     }
 
-    @Bean
-    public CardDataFactory cardDataFactory(){
-        return new CardDataFactory();
-    }
 
+    /*
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     public CardDataProcessor cardDataProcessor(Properties pathsConfigProperties,
@@ -202,6 +201,11 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         cardDataProcessor.setFrontElementConfigurationParser(frontElementConfigurationParser);
         cardDataProcessor.setMessageSource(messageSource);
         return cardDataProcessor;
+    }
+*/
+    @Bean
+    public CardDataFactory cardDataFactory(){
+        return new CardDataFactory();
     }
 
     @Bean
@@ -219,6 +223,19 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     @Bean
     public DataSearchFactory dataSearchFactory(){
         return new DataSearchFactory();
+    }
+
+    @Bean
+    public GetElementFactory getElementFactory(){
+        return new GetElementFactory();
+    }
+
+    @Bean
+    public NewsObserver newsObserver(MongoDatabase database){
+        NewsObserver newsObserver = new NewsObserver();
+        newsObserver.setDatabase(database);
+        newsObserver.init();
+        return newsObserver;
     }
 
 }

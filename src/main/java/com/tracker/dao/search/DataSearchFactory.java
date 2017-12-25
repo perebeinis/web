@@ -2,13 +2,20 @@ package com.tracker.dao.search;
 
 import com.google.gson.JsonArray;
 import com.mongodb.client.MongoDatabase;
-import com.tracker.dao.search.user.UserSearch;
+import com.tracker.cards.CardData;
+import com.tracker.cards.impl.IssueCardData;
+import com.tracker.cards.impl.UserCardData;
+import com.tracker.dao.search.impl.DefaultSearcher;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class DataSearchFactory {
 
@@ -19,20 +26,17 @@ public class DataSearchFactory {
     private static final String searhDataConstant = "searchData";
     private static final String userTypeConstant = "user";
 
-    public JSONObject getData(JSONObject jsonObject){
-        String searchType = (String) ((JSONObject) jsonObject.get("search")).get(searhTypeConstant);
-        JSONObject result = new JSONObject();
+    final static Map<String, Supplier<DataSearcher>> map = new HashMap<>();
+    static {
+        map.put("element", DefaultSearcher::new);
+    }
 
-        switch (searchType){
-            case userTypeConstant:
-                UserSearch userSearch = new UserSearch();
-                result =  userSearch.getData(database, jsonObject);
-                break;
-            default:
-                System.out.println("DEFAULT SEARCH");
+    public JSONObject searchData(String elementType, JSONObject searchDataObject){
+        Supplier<DataSearcher> element = map.get(elementType);
+        if(element != null) {
+            return element.get().searchData(database,searchDataObject);
         }
-
-        return result;
+        throw new IllegalArgumentException("No such shape " + elementType);
     }
 
 }

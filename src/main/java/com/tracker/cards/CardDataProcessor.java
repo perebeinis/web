@@ -10,20 +10,26 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.InputStream;
 import java.util.Properties;
 
-public class CardDataProcessor {
+public abstract class CardDataProcessor {
 
+    @Autowired
     protected MessageSource messageSource;
 
+    @Autowired
     protected FrontElementConfigurationParser frontElementConfigurationParser;
 
+    @Autowired
     protected MongoDatabase database;
 
-    protected Properties pathsConfigProperties;
-
+    private Properties pathsConfigProperties;
 
     private static final String USER_CARD = "user-card";
+    private static final String ISSUE = "issue";
     private static final String PROPERTY_CONSTANT = "property";
     private static final String SET_CONSTANT = "set";
     private static final String TITLE_CONSTANT = "title";
@@ -33,11 +39,8 @@ public class CardDataProcessor {
     private static final String CUSTOM_CLASS_NAME_CONSTANT = "customClassName";
     private static final String MANDATORY_CONDITIONS_CONSTANT = "mandatoryCondition";
 
-    public CardDataProcessor() {
-        System.out.println("aaa");
-    }
 
-    public JSONArray parseData(Document document, String parentTagName){
+    public JSONArray  parseData(Document document, String parentTagName){
         JSONArray setList = new JSONArray();
         NodeList nodeList = document.getElementsByTagName(parentTagName);
         for (int i = 0; i < nodeList.getLength(); i++){
@@ -81,19 +84,54 @@ public class CardDataProcessor {
         return setList;
     }
 
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
+
+    public  JSONObject createCardData(String elementType) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(elementType));
+            DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document document = documentBuilder.parse(inputStream);
+            document.getDocumentElement().normalize();
+
+            JSONArray setList = parseData(document, SET_CONSTANT);
+            JSONArray buttons = parseData(document, BUTTONS_CONSTANT);
+
+
+            jsonObject.put(SET_CONSTANT, setList);
+            jsonObject.put(BUTTONS_CONSTANT, buttons);
+
+            return jsonObject;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 
-    public void setFrontElementConfigurationParser(FrontElementConfigurationParser frontElementConfigurationParser) {
-        this.frontElementConfigurationParser = frontElementConfigurationParser;
+
+    public MessageSource getMessageSource() {
+        return messageSource;
     }
 
-    public void setDatabase(MongoDatabase database) {
-        this.database = database;
+    public FrontElementConfigurationParser getFrontElementConfigurationParser() {
+        return frontElementConfigurationParser;
+    }
+
+    public MongoDatabase getDatabase() {
+        return database;
+    }
+
+    public Properties getPathsConfigProperties() {
+        return pathsConfigProperties;
     }
 
     public void setPathsConfigProperties(Properties pathsConfigProperties) {
-        this.pathsConfigProperties = pathsConfigProperties;
+        try {
+            this.pathsConfigProperties = pathsConfigProperties;
+        }catch (Exception e){
+            System.out.println("eee");
+        }
+
     }
 }

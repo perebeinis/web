@@ -19,9 +19,6 @@ function SearchDataComponent(tableDivId, data) {
         searchData["aaa"] = "trs";
 
         searchType["searchData"] = searchData;
-        console.log("serchhhhhhhhhhhhhhhhhh");
-
-        var scope = this;
 
         var test = $("#"+tableDivId).append($('<thead>').append($('<tr>')
             .append($('<td>').html("firstName"))
@@ -35,6 +32,9 @@ function SearchDataComponent(tableDivId, data) {
         var searchData = {};
         searchType["searchData"] = searchData;
         this.createSearchTable(searchType, this);
+        $("#"+tableDivId).on('click', 'tr', function () {
+            window.open("http://localhost:8082/get-element?type=user&id="+this.id, "_blank");
+        });
     }
 
     this.createSearchers = function () {
@@ -111,6 +111,10 @@ function SearchDataComponent(tableDivId, data) {
                     },
                     "dataType": 'json'
                 },
+                "createdRow": function ( row, data, index ) {
+                    row.id = data["_id"]["$oid"];
+                },
+
                 "columns": [
                     { "data": "firstName"},
                     { "data": "lastName"},

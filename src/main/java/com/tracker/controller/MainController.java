@@ -1,7 +1,6 @@
 package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
-import com.tracker.cards.user.UserCard;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONObject;
@@ -67,7 +66,7 @@ public class MainController {
         try {
             String encodeURL= URLDecoder.decode( searchData, "UTF-8" );
             JSONObject jsonObj = new JSONObject(encodeURL);
-            result = dataSearchFactory.getData(jsonObj);
+            result = dataSearchFactory.searchData("element",jsonObj);
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
         }

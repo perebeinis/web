@@ -1,7 +1,6 @@
 package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
-import com.tracker.cards.user.UserCard;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONObject;
