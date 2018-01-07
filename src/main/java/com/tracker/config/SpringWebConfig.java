@@ -24,6 +24,11 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.CardDataFactory;
 import com.tracker.cards.CardDataProcessor;
+import com.tracker.config.localization.ExposedResourceMessageBundleSource;
+import com.tracker.config.localization.MessageResolveService;
+import com.tracker.config.localization.MessageResolverServiceImpl;
+import com.tracker.config.security.authentification.impl.UserDetailsServiceImpl;
+import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dao.search.GetElementFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
@@ -45,6 +50,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
@@ -82,8 +88,8 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     @Bean
-    public ReloadableResourceBundleMessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+    public ExposedResourceMessageBundleSource messageSource() {
+        ExposedResourceMessageBundleSource messageSource = new ExposedResourceMessageBundleSource();
         messageSource.setBasename("classpath:/messages/messages");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(10);
@@ -93,7 +99,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     @Bean
     public CookieLocaleResolver localeResolver() {
         CookieLocaleResolver slr = new CookieLocaleResolver();
-        slr.setDefaultLocale(Locale.ENGLISH);
+        slr.setDefaultLocale(new Locale("uk","UA"));
         return slr;
     }
 
@@ -119,6 +125,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         templateResolver.setApplicationContext(this.applicationContext);
         templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
+        templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         // Template cache is true by default. Set to false if you want
         // templates to be automatically updated when modified.
@@ -139,6 +146,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
 
@@ -175,6 +183,24 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         MongoClient mongo = new MongoClient( "localhost" , 27017 );
         MongoDatabase database = mongo.getDatabase("tracker");
         return database;
+    }
+
+
+    @Bean
+    public MessageResolveService messageResolveService(MessageSource messageSource){
+        MessageResolverServiceImpl messageResolveService = new MessageResolverServiceImpl();
+        messageResolveService.setMessageSource(messageSource);
+        return messageResolveService;
+    }
+
+    @Bean
+    public UserDetailsService customUserDetailsService(MongoDatabase database){
+        return new UserDetailsServiceImpl(database);
+    }
+
+    @Bean
+    public BaseControllerResponce baseControllerResponce(){
+        return new BaseControllerResponce();
     }
 
 

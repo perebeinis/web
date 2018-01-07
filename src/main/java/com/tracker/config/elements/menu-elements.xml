@@ -1,11 +1,11 @@
 <elements>
 
-    <menu-element name="users" title="header.buttons.users"  searchParams="tratete" type="header" enableForRoles="ADMIN,USER">
+    <menu-element name="users" title="header.buttons.searchInbox"  searchParams="tratete" type="header" enableForRoles="ADMIN,USER">
 
-        <menu-element name="searchUsers" title="header.buttons.searchUsers"  type="subElement" searchParams="tratete" enableForRoles="ADMIN,USER">
+        <sub-element name="searchUsers" title="header.buttons.searchUsers"  type="subElement" searchParams="tratete" enableForRoles="ADMIN,USER">
             <searcher type="text" name="firstName" title="header.buttons.firstName"></searcher>
             <searcher type="text" name="lastName" title="header.buttons.lastName"></searcher>
-        </menu-element>
+        </sub-element>
 
 
     </menu-element>
@@ -15,7 +15,12 @@
         <searcher type="text" name="lastName" title="header.buttons.lastName"></searcher>
     </menu-element>
 
-    <menu-element name="test" title="header.buttons.test"  type="filter" enableForRoles="ADMIN,USER">
+    <menu-element name="test" title="header.buttons.test"  type="header" enableForRoles="ADMIN,USER">
+        <sub-element name="searchUsers2" title="header.buttons.searchUsers2"  type="subElement" searchParams="assdasd" enableForRoles="ADMIN,USER">
+            <searcher type="text" name="firstName" title="header.buttons.firstName"></searcher>
+            <searcher type="text" name="lastName" title="header.buttons.lastName"></searcher>
+        </sub-element>
+
     </menu-element>
 
 </elements>

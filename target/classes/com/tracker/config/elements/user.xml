@@ -1,13 +1,13 @@
 <elements>
 
-    <set name="common" title="common">
+    <set name="common" title="userCard.tab.common">
          <property name="user_id" title="user.card.user_id" type="textField"  customClassName = "half"/>
          <property name="firstName" title="user.card.firstName" type="textField"  customClassName = "half"/>
          <property name="lastName" title="user.card.lastName" type="textField"  customClassName = "half"/>
          <property name="description" title="user.card.description" type="textArea" mandatoryCondition="*"  customClassName = "fullString"/>
     </set>
 
-    <set name="test" title="test">
+    <set name="test" title="userCard.tab.additionalInfo">
         <property name="user_pass"
                   title="user.card.user_pass"
                   type="textField"
@@ -23,6 +23,7 @@
 
         <property name="birthDay" title="user.card.birthDay" type="date" mandatoryCondition="*" customClassName = "half"/>
 
+        <!--<property name="sdasdasda" title="user.card.sdasd" type="date" mandatoryCondition="*" customClassName = "half"/>-->
 
     </set>
 

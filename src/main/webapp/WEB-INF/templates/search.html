@@ -18,9 +18,10 @@
 
             <script>
                 var searchers = "[[${searchers}]]";
-                console.log(searchers);
+                var userData = "[[${userData}]]";
+                var messages = "[[${messages}]]";
                 var searchData = "[[${searchData}]]";
-                var dataComponent = new SearchDataComponent("search-result-table",searchers);
+                var dataComponent = new SearchDataComponent("search-result-table",searchers,messages, userData);
                 dataComponent.searchData();
 
 

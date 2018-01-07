@@ -1,6 +1,8 @@
 package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
+import com.tracker.config.localization.MessageResolveService;
+import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONObject;
@@ -16,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.unbescape.html.HtmlEscape;
 
+import javax.mail.internet.ContentType;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -28,14 +31,16 @@ import java.util.Locale;
 public class MainController {
 
     @Autowired
+    private MessageResolveService messageResolveService;
+
+    @Autowired
     private MessageSource messageSource;
 
     @Autowired
     private FrontElementConfigurationParser frontElementConfigurationParser;
 
     @Autowired
-    private MongoDatabase database;
-
+    private BaseControllerResponce baseControllerResponce;
 
     @Autowired
     private DataSearchFactory dataSearchFactory;
@@ -46,15 +51,9 @@ public class MainController {
     }
 
     /** Home page. */
-    @RequestMapping(value = "/welcome", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET,  produces = "text/html; charset=UTF-8")
     public String printWelcome(Locale locale, ModelMap model, Authentication authentication) {
-        String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
-        model.addAttribute("title", welcome);
-        String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
-        model.addAttribute("loginMsg", loginMsg);
-        model.addAttribute("headerList", frontElementConfigurationParser.parseHeaderMenuButtons());
-        model.addAttribute("menuList", frontElementConfigurationParser.parseMenuButtons());
-
+        model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
         return "welcome";
     }
 
@@ -102,11 +101,6 @@ public class MainController {
     /** Login form. */
     @RequestMapping("/login")
     public String login(Locale locale, ModelMap model) {
-        model.addAttribute("tabTitle", messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale));
-        model.addAttribute("signInTitle", messageSource.getMessage("loginMsg.title", new Object[]{""}, locale));
-        model.addAttribute("placeholderUserName", messageSource.getMessage("placeholderUserName", new Object[]{""}, locale));
-        model.addAttribute("placeholderPassword", messageSource.getMessage("placeholderPassword", new Object[]{""}, locale));
-        model.addAttribute("signIn", messageSource.getMessage("signIn", new Object[]{""}, locale));
         return "login";
     }
 

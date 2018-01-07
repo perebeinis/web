@@ -15,6 +15,7 @@
         <script type="text/javascript" th:src="@{/js/menu-creator.js}"></script>
         <script type="text/javascript" th:src="@{/js/search-data.js}"></script>
         <script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
         <script type="text/javascript" th:src="@{/js/bootstrap-datetimepicker.js}"></script>
         <!--<script type="text/javascript" th:src="@{/js/knockout-file-bindings.js}"></script>-->
 
@@ -30,8 +31,10 @@
         <div id="header-buttons" class="container">
 
             <script>
+                var messages = "[[${messages}]]";
+                var userData = "[[${userData}]]";
                 var cardAttributes = "[[${headerList}]]";
-                var menu = new HeaderButton("header-buttons",cardAttributes);
+                var menu = new HeaderButton("header-buttons",cardAttributes,messages, userData);
                 menu.createHeaderElements();
 
             </script>

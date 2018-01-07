@@ -2,6 +2,8 @@ package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.CardDataFactory;
+import com.tracker.config.localization.MessageResolveService;
+import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dao.search.GetElementFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
@@ -25,32 +27,30 @@ public class GetElementCardController {
     private MessageSource messageSource;
 
     @Autowired
-    private FrontElementConfigurationParser frontElementConfigurationParser;
-
-    @Autowired
-    private MongoDatabase database;
-
-    @Autowired
-    private DataSearchFactory dataSearchFactory;
+    private BaseControllerResponce baseControllerResponce;
 
     @Autowired
     private CardDataFactory cardDataFactory;
 
     @Autowired
-    private GetElementFactory getElementFactory;
+    private MessageResolveService messageResolveService;
 
     private static final String userType = "user";
 
 
     @RequestMapping(value = "/create-element", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getElementCard(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type) {
+        model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
         model = cardDataFactory.getCardData(type,model,null);
+        model.addAttribute("messages", messageResolveService.getMessages(messageSource, locale));
         return "create-user-card";
     }
 
     @RequestMapping(value = "/get-element", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getElementCardExist(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type, @RequestParam("id") String id) {
+        model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
         model = cardDataFactory.getCardData(type,model,id);
+        model.addAttribute("messages", messageResolveService.getMessages(messageSource, locale));
         return "create-user-card";
     }
 

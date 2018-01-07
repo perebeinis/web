@@ -246,3 +246,37 @@ navbar.less:37
         width :95%;
         padding: 6px 12px;
     }
+
+    .navbar.navbar-inverse a {
+        cursor: pointer;
+    }
+
+    .half img {
+        max-width: 50%;
+    }
+
+.container {
+    width: initial !important;
+}
+
+.navbar.navbar-inverse .nav.navbar-nav {
+    float: right;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    padding: 0px 0px 0px 0px;
+}
+
+.navbar-inverse .navbar-nav > li > a > img {
+    width: 50px;
+    margin: 2px 20px 2px 0px !important;
+}
+
+
+.navbar-inverse .navbar-nav > li > a > span {
+    margin-left: 10px;
+}
+
+.navbar-inverse {
+    border-radius: 0px !important;
+}

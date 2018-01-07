@@ -1,10 +1,12 @@
-function SearchDataComponent(tableDivId, data) {
+function SearchDataComponent(tableDivId, data,messages, userData) {
     this.tableDivId = tableDivId;
     var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
     this.searchersArray = JSON.parse(dataStr);
     this.customClassName = "customClassName";
     this.title = "title";
     this.name = "name";
+    this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
+    this.userData = JSON.parse(userData.replace(new RegExp('&quot;', 'g'),'"'));
     this.type = "type";
     this.mandatoryCondition = "mandatoryCondition";
 
@@ -33,7 +35,7 @@ function SearchDataComponent(tableDivId, data) {
         searchType["searchData"] = searchData;
         this.createSearchTable(searchType, this);
         $("#"+tableDivId).on('click', 'tr', function () {
-            window.open("http://localhost:8082/get-element?type=user&id="+this.id, "_blank");
+            window.open("/get-element?type=user&mode=view&id="+this.id, "_blank");
         });
     }
 
@@ -48,10 +50,11 @@ function SearchDataComponent(tableDivId, data) {
     }
 
     this.text = function (data, parentElementId) {
-        $('#'+parentElementId)
+        var messages = '[[#{'+data[this.title]+'}]]';
+            $('#'+parentElementId)
            .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
             append($('<span>', {class: "hidden popup"}).html(data[this.title])).
-            append($('<label>', {value: data[this.title]}).html(data[this.title])).
+            append($('<label>').html(this.messages[data[this.title]])).
             append($('<input>', {class: "form-control "+data[this.name], name:data[this.name], type: 'text', value : ''})));
 
 

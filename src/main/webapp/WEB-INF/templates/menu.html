@@ -22,7 +22,8 @@
 
     <script>
         var cardAttributes = "[[${menuList}]]";
-        var menu = new MenuElementsCretor("menu-items-list",cardAttributes);
+        var messages = "[[${messages}]]";
+        var menu = new MenuElementsCretor("menu-items-list",cardAttributes, messages);
         menu.createMenuElements();
         menu.createMenuEvents();
     </script>

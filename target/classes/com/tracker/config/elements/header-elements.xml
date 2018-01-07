@@ -12,4 +12,15 @@
     <header-element name="searchData" title="header.buttons.searchData"  enableForRoles="ADMIN,USER">
     </header-element>
 
+
+    <header-element name="userData" title="header.buttons.userData"  type="header" enableForRoles="ADMIN,USER">
+        <sub-element name="myProfile" title="header.buttons.myProfile"  enableForRoles="ADMIN,USER">
+        </sub-element>
+
+        <sub-element name="signOut" title="header.buttons.signOut"  enableForRoles="ADMIN,USER">
+        </sub-element>
+
+    </header-element>
+
+
 </elements>

@@ -1,4 +1,4 @@
-function MenuElementsCretor(cardId, data, tabsId) {
+function MenuElementsCretor(cardId, data, messages) {
     this.cardId = cardId;
     var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
     this.dataArray = JSON.parse(dataStr);
@@ -7,6 +7,7 @@ function MenuElementsCretor(cardId, data, tabsId) {
     this.name = "name";
     this.type = "type";
     this.mandatoryCondition = "mandatoryCondition";
+    this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
     this.mandatoryCondtitions = {};
     this.alreadyOpened = false;
 
@@ -32,7 +33,7 @@ function MenuElementsCretor(cardId, data, tabsId) {
     this.createHeaderElement = function (data, parentElement) {
         $('#'+parentElement)
             .append($('<li>').
-             append($('<label>', {class: "tree-toggle nav-header glyphicon-icon-rpad"}).html(data[this.title]).
+             append($('<label>', {class: "tree-toggle nav-header glyphicon-icon-rpad"}).html(this.messages[data[this.title]]).
              append($('<span>', {class: "menu-collapsible-icon glyphicon glyphicon-chevron-down"}))).
              append($('<ul>', {class: "nav nav-list tree bullets", id: data[this.name]})));
 
@@ -40,17 +41,15 @@ function MenuElementsCretor(cardId, data, tabsId) {
         for (var i in subElements){
             this.createFilterElement(subElements[i], data[this.name]);
         }
-
-
     }
     
     this.createFilterElement = function (data, parentElement) {
         $('#'+parentElement)
             .append($('<li>').
-            append($('<a>', {name: data[this.name], href : "#"}).html(data[this.title])
+            append($('<a>', {name: data[this.name], href : "#"}).html(this.messages[data[this.title]])
                 .click(function() {
                     localStorage.setItem('lastOpenedFilter', this.name);
-                    window.open("http://localhost:8082/search?filter="+this.name, "_self");
+                    window.open("/search?filter="+this.name, "_self");
                 })
 
             ));

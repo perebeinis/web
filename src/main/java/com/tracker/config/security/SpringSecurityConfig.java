@@ -19,18 +19,33 @@
  */
 package com.tracker.config.security;
 
+import com.mongodb.client.MongoDatabase;
+import com.tracker.config.security.authentification.impl.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 @EnableWebSecurity
+@ComponentScan({ "com.tracker"})
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
+    @Autowired
+    @Qualifier("database")
+    private MongoDatabase database;
 
+    @Autowired
+    private UserDetailsService customUserDetailsService;
 
     public SpringSecurityConfig() {
         super();
@@ -60,15 +75,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-
-    @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin").password("admin").roles("ADMIN","TEST").and()
-                .withUser("user").password("user").roles("USER").and()
-                .withUser("ted").password("demo").roles("USER","ADMIN");
+    @Autowired
+    public void configure(AuthenticationManagerBuilder builder)
+            throws Exception {
+        builder.userDetailsService(customUserDetailsService);
     }
+
 
 
 }

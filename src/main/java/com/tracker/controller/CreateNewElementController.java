@@ -1,6 +1,8 @@
 package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
+import com.tracker.config.localization.MessageResolveService;
+import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.create.DataCreator;
 import com.tracker.dao.create.user.UserDataCreator;
 import com.tracker.dao.search.DataSearchFactory;
@@ -12,6 +14,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +42,11 @@ public class CreateNewElementController {
     private NewsObserver newsObserver;
 
     @Autowired
-    private DataSearchFactory dataSearchFactory;
+    private BaseControllerResponce baseControllerResponce;
+
+    @Autowired
+    private UserDetailsService customUserDetailsService;
+
 
     private static final String userType = "user";
 
@@ -52,6 +59,7 @@ public class CreateNewElementController {
             JSONObject jsonObj = new JSONObject(encodeURL);
             System.out.println(jsonObj);
             createNewElement(type,jsonObj);
+            customUserDetailsService.reloadUsers();
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
         }

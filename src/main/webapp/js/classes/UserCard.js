@@ -1,4 +1,4 @@
-function UserCardCreator(cardId, data, tabsId, cardFiledValues) {
+function UserCardCreator(cardId, data, tabsId, cardFiledValues, messages) {
     this.cardId = cardId;
     this.tabsId = tabsId;
     this.cardFiledValues = cardFiledValues!=undefined && cardFiledValues!=null ? JSON.parse( cardFiledValues.replace(new RegExp('&quot;', 'g'), '"')) : null;
@@ -9,6 +9,7 @@ function UserCardCreator(cardId, data, tabsId, cardFiledValues) {
     this.name = "name";
     this.type = "type";
     this.mandatoryCondition = "mandatoryCondition";
+    this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
     this.mandatoryCondtitions = {};
     return this;
 }
@@ -38,7 +39,7 @@ UserCardCreator.prototype.createCardElements = function () {
                     $(this).addClass("tab-selected");
                     $("#"+setId).addClass("set-selected").removeClass("hidden");
                 }
-            }).html(title));
+            }).html(this.messages[title]));
 
             // Create set for tab
             var classNameSet = tabsCounter != 0 ? name+" hidden": name+" set-selected";
@@ -59,7 +60,7 @@ UserCardCreator.prototype.createCardElements = function () {
 
 
 
-function CardButtonsCreator(parentId, data, cardAttributesObject) {
+function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
 
     this.parentId = parentId;
     var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
@@ -69,6 +70,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
     this.title = "title";
     this.name = "name";
     this.type = "type";
+    this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
 
 
     this.createCardButtons = function () {
@@ -91,7 +93,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
     this.button = function (data, parentElementId) {
         $('#'+parentElementId)
             .append($('<div>', {class: "card-button"+" "+data[this.customClassName]}).
-            append($('<button>', {value: data[this.title] , class: "btn btn-primary btn-md"}).click(this,this[data[this.name]]).html(data[this.title])));
+            append($('<button>', {value: data[this.title] , class: "btn btn-primary btn-md"}).click(this,this[data[this.name]]).html(this.messages[data[this.title]])));
     }
 
     this.save = function(e, data){
@@ -107,7 +109,8 @@ function CardButtonsCreator(parentId, data, cardAttributesObject) {
                 if(this.name!="") {
 
                     if (this.type == "file") {
-                        postParams[this.name] = this.files[0].name +";"+this.fileValue;
+                        // postParams[this.name] = this.files[0].name +";"+this.fileValue;
+                        postParams[this.name] = this.fileValue;
                     } else {
                         postParams[this.name] = this.value;
                     }
