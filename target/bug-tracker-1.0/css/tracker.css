@@ -138,12 +138,12 @@ table.dataTable {
     display: none;
 }
 
-.half input {
+.half > input {
     width :90%;
 }
 
 .half .input-group .form-control {
-    width: 85%;
+    width: 75%;
 }
 
 .half .input-group-addon {
@@ -238,12 +238,15 @@ navbar.less:37
     }
 
     .input-group.date.half {
-        position: absolute;
-        width: 39% !important;
+        width: 50% !important;
+    }
+
+    .fullString {
+        margin-left: 5px;
     }
 
     .fullString textarea{
-        width :95%;
+        width: 95% !important;
         padding: 6px 12px;
     }
 
@@ -253,6 +256,7 @@ navbar.less:37
 
     .half img {
         max-width: 50%;
+        max-height: 50px;
     }
 
 .container {
@@ -280,3 +284,57 @@ navbar.less:37
 .navbar-inverse {
     border-radius: 0px !important;
 }
+
+    table.dataTable thead td {
+        padding-left: 10px;
+    }
+
+    .dataTables_length {
+        float: right !important;
+    }
+    .dataTables_length > label > select {
+        margin: 0px 5px;
+        cursor: pointer;
+    }
+
+    .set-selected .multiSelect {
+        width: 90% !important;
+        padding: 0px;
+    }
+
+    .set-selected .multiSelect .ms-choice {
+        border: none;
+        border-bottom: 1px solid #ccc;
+        height: inherit;
+    }
+
+    .set-selected .multiSelect .ms-choice > div{
+        height: inherit;
+        margin-top: 5px;
+    }
+
+    .ms-drop ul > li > label:hover{
+        background-color: #ada6a6;
+    }
+
+    .ms-drop ul > li label {
+        cursor: pointer;
+        padding-left: 5px;
+    }
+
+    .ms-drop ul > li label > span{
+        vertical-align: top;
+        margin-left: 10px;
+        /* padding-top: 10px; */
+    }
+
+    .ms-drop ul > li label > input {
+        margin-top: 5px;
+        vertical-align: top !important;
+    }
+
+    .set-selected .multiSelect .ms-choice > span {
+        height: inherit;
+        top: 6px;
+    }
+

@@ -10,7 +10,7 @@ function FormElements() {
 FormElements.prototype.textField = function (data, parentElementId, elementValue) {
     $('#'+parentElementId)
         .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
-         append($('<span>', {class: "hidden popup"}).html(data[this.title])).
+         append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
          append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).
          append($('<input>', {class: "form-control "+data[this.name], name:data[this.name], type: 'text', value: elementValue!=null? elementValue : ""})));
 
@@ -23,9 +23,9 @@ FormElements.prototype.textField = function (data, parentElementId, elementValue
 FormElements.prototype.textArea = function (data, parentElementId, elementValue) {
     $('#'+parentElementId)
         .append($('<div>', {class: "form-group"+" "+data[this.customClassName]}).
-         append($('<span>', {class: "hidden popup"}).html(data[this.title])).
+         append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
          append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).
-         append($('<textarea>', {class: "form-control "+data[this.name], name:data[this.name], type: 'text', value: elementValue!=null? elementValue : ""})));
+         append($('<textarea>', {class: "form-control "+data[this.name], name:data[this.name], type: 'text', value: elementValue!=null? elementValue : ""}).text(elementValue!=null? elementValue : "")));
 
     if(data[this.mandatoryCondition]!=""){
         this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
@@ -37,7 +37,7 @@ FormElements.prototype.textArea = function (data, parentElementId, elementValue)
 FormElements.prototype.date = function (data, parentElementId, elementValue) {
     $('#'+parentElementId)
         .append($('<div>', {class: "input-group date"+" "+data[this.customClassName], id: "user-card-"+data[this.name]}).
-        append($('<span>', {class: "hidden popup"}).html(data[this.title])).
+        append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
         append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).
         append($('<input>', {class: "form-control "+data[this.name], name: data[this.name], type: 'text', value: elementValue!=null? elementValue : ""})).
         append($('<span>', {class: "input-group-addon"}).
@@ -53,13 +53,48 @@ FormElements.prototype.date = function (data, parentElementId, elementValue) {
 
 }
 
+FormElements.prototype.multiSelect = function (data, parentElementId, elementValue) {
+    var defaultRoles = [{"role" :"ADMIN", "selected" : false}, {"role" :"USER", "selected" : false}];
+
+    if(elementValue!=null){
+        for (var i in defaultRoles){
+            var name = defaultRoles[i].role;
+            if(elementValue.indexOf(name)!=-1){
+                defaultRoles[i].selected = true;
+            }
+        }
+    }
+
+    $('#'+parentElementId)
+        .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
+        append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
+        append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).
+        append($('<select>', {class: "multiSelect form-control "+data[this.name], name:data[this.name], multiple: 'multiple', value: elementValue!=null? elementValue : ""})
+            .append(
+                $.map(defaultRoles, function (element, index) {
+                    if(element.selected){
+                        return '<option value="'+element.role+'" selected="'+element.selected+'">' + element.role + '</option>';
+                    }else{
+                        return '<option value="'+element.role+'">' + element.role + '</option>';
+                    }
+
+                }).join()
+
+        )));
+
+    if(data[this.mandatoryCondition]!=""){
+        this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
+    }
+
+}
+
 
 FormElements.prototype.image = function (data, parentElementId, elementValue) {
 
     if(this.getSearchParams("mode") != "view"){
         $('#'+parentElementId)
             .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
-            append($('<span>', {class: "hidden popup"}).html(data[this.title])).
+            append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
             append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]]))
                 .append($('<input>', {class: "input-ghost", id: this.name, type: "file", fileValue: "", name : data[this.name], style: "visibility:hidden; height:0" }).change(function(){
                     $(this).next($(this)).find('input.form-control').val(($(this).val()).split('\\').pop());

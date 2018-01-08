@@ -37,7 +37,7 @@ public class SearchInboxesController {
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces = {"application/xml; charset=UTF-8"})
     public String search(Locale locale, ModelMap model, Authentication authentication, @RequestParam("filter") String filter) {
         model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
-        model.addAttribute("searchers", frontElementConfigurationParser.getFilterSearchers(filter, locale));
+        model.addAttribute("searchers", frontElementConfigurationParser.getFilterData(filter));
         return "search-data";
     }
 

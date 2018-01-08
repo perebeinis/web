@@ -105,17 +105,30 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
             var formData = new FormData();
             formData.append('file', "as");
 
+            // inputs
             $('.card-attributes-container input').each(function(data){
                 if(this.name!="") {
-
                     if (this.type == "file") {
                         // postParams[this.name] = this.files[0].name +";"+this.fileValue;
                         postParams[this.name] = this.fileValue;
                     } else {
                         postParams[this.name] = this.value;
                     }
-                    // postParams[this.name] = this.value;
-                    // }\
+                }
+            });
+
+            // textarea
+            $('.card-attributes-container textarea').each(function(data){
+                if(this.name!="") {
+                        postParams[this.name] = this.value;
+                }
+            });
+
+            // select
+            $('.card-attributes-container .multiSelect button > span').each(function(data){
+                if(this.innerHTML!="") {
+                    var elementName = $(this.parentNode.parentNode.parentNode).find('.multiSelect')[0].name;
+                    postParams[elementName] = this.innerHTML;
                 }
             });
 
@@ -133,7 +146,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
     }
 
     this.close = function(){
-        window.open("http://localhost:8082/welcome", "_self");
+        window.open("/welcome", "_self");
     }
 
     this.mandatoryEventCheck = function(){

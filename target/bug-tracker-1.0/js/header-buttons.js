@@ -9,6 +9,7 @@ function HeaderButton(cardId, data, messages,userData) {
     this.mandatoryCondition = "mandatoryCondition";
     this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
     this.userData = userData!=undefined && userData!="" ? JSON.parse(userData.replace(new RegExp('&quot;', 'g'),'"')) : undefined;
+    CUSTOM_MESSAGES = this.messages;
 
 
     this.createHeaderElements = function () {
@@ -106,3 +107,5 @@ function HeaderButton(cardId, data, messages,userData) {
 
 
 };
+
+var CUSTOM_MESSAGES = {};

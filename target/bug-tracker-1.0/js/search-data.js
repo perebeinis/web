@@ -21,11 +21,16 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
         searchData["aaa"] = "trs";
 
         searchType["searchData"] = searchData;
+        var searchColumns = this.searchersArray.searchColumns.split(",");
+        for (var i in searchColumns){
+            searchColumns[i] = this.messages["user.card."+searchColumns[i]];
+        }
 
-        var test = $("#"+tableDivId).append($('<thead>').append($('<tr>')
-            .append($('<td>').html("firstName"))
-            .append($('<td>').html("lastName"))
-            .append($('<td>').html("user_id"))
+        var test = $("#"+tableDivId).append($('<thead>').append($('<tr>').append(
+            $.map(searchColumns, function (elementName, index) {
+                return '<td>' + elementName + '</td>';
+            }).join()
+            )
         ));
 
 
@@ -41,7 +46,7 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
 
     this.createSearchers = function () {
         var searchersId = "search-attributes";
-        var subArray = this.searchersArray;
+        var subArray = this.searchersArray["searchers"];
         for (var j in subArray){
             var attribute = subArray[j];
             var elementType = attribute[this.type];
@@ -64,13 +69,13 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
         var scope = this;
         var searchButtonsDiv = "search-buttons";
         // search button
-        $('#'+searchButtonsDiv).append($('<button>', {class: "searchButton btn btn-primary", value: "Search"}).html("Search").
+        $('#'+searchButtonsDiv).append($('<button>', {class: "searchButton btn btn-primary", value: "Search"}).html(this.messages["buttons.search"]).
         click(this, function(e) {
             e.data.searchDataEv();
         }));
 
         // search button
-        $('#'+searchButtonsDiv).append($('<button>', {class: "clearButton btn btn-primary", value: "Clear"}).html("Clear").
+        $('#'+searchButtonsDiv).append($('<button>', {class: "clearButton btn btn-primary", value: "Clear"}).html(this.messages["buttons.clear"]).
         click(this, function(e) {
             e.data.clearDataEv();
         }));
@@ -94,14 +99,38 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
 
     this.clearDataEv = function(e,data){
         console.log("clearData");
+        var searchAttrsDiv = "search-attributes";
+        $('#'+searchAttrsDiv+' input:not([name=""])').each(function() {
+            this.value = "";
+        });
     }
 
 
     this.createSearchTable = function (data, scope) {
         scope.searchData = data;
+        var searchColumns = this.searchersArray.searchColumns.split(",");
+        var resultColumns = [];
+        for (var i in searchColumns){
+            resultColumns.push({ "data": searchColumns[i]});
+        }
 
         $(document).ready(function(){
             scope.table = $("#"+tableDivId).DataTable( {
+                "language": {
+                    "lengthMenu": scope.messages["datatable.showingRecords"],
+                    "info": scope.messages["datatable.showingPages"],
+                    "infoEmpty": scope.messages["datatable.zeroRecords"],
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "processing":     scope.messages["datatable.processing"],
+                    "search":         "Search:",
+                    "zeroRecords":    scope.messages["datatable.zeroRecords"],
+                    "paginate": {
+                        "first":      "First",
+                        "last":       "Last",
+                        "next":       scope.messages["datatable.next"],
+                        "previous":   scope.messages["datatable.previous"]
+                    },
+                },
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
@@ -118,11 +147,7 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
                     row.id = data["_id"]["$oid"];
                 },
 
-                "columns": [
-                    { "data": "firstName"},
-                    { "data": "lastName"},
-                    { "data": "user_id"}
-                ]
+                "columns": resultColumns
             });
         });
 

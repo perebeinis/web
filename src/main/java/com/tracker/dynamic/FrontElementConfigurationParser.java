@@ -29,6 +29,7 @@ public class FrontElementConfigurationParser {
 
     private Properties pathsConfigProperties;
     private Map<String,JSONArray> filterSearchers = null;
+    private Map<String,JSONObject> filterData = null;
 
 
     private static final String EMPTY_ATTRIBUTE_CONSTANT = "#text";
@@ -40,6 +41,8 @@ public class FrontElementConfigurationParser {
     private static final String TITLE_CONSTANT = "title";
     private static final String TYPE_CONSTANT = "type";
     private static final String NAME_CONSTANT = "name";
+    private static final String SEARCH_COLUMNS = "searchColumns";
+    private static final String FILTER_DATA = "filterData";
 
 
 
@@ -54,6 +57,7 @@ public class FrontElementConfigurationParser {
 
             NodeList nodeList = document.getElementsByTagName(MENU_ELEMENT_CONSTANT);
             filterSearchers = new HashMap<>();
+            filterData = new HashMap<>();
             for (int i = 0; i < nodeList.getLength(); i++){
                 Node headerElementNode = nodeList.item(i);
                 String headerElementName = headerElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
@@ -61,16 +65,19 @@ public class FrontElementConfigurationParser {
                 String type = headerElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
                 String userRoles = headerElementNode.getAttributes().getNamedItem(ENABLE_FOR_USER_ROLES_CONSTANT).getTextContent();
                 String searchParams = headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT) == null? "" : headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT).getTextContent();
+                String searchColumns = headerElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS) == null? "" : headerElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS).getTextContent();
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("name",headerElementName);
                 jsonObject.put("title",title);
                 jsonObject.put("enableForRoles",userRoles);
                 jsonObject.put("searchParams", searchParams);
+                jsonObject.put("searchColumns", searchColumns);
                 jsonObject.put("type", type);
                 jsonObject.put("searchers",getSubElements(headerElementNode,"searcher"));
                 filterSearchers.put(headerElementName, getSubElements(headerElementNode,"searcher"));
                 jsonObject.put("subElements", new JSONArray());
+                filterData.put(headerElementName, jsonObject);
 
 
                 // Get sub searchers
@@ -82,14 +89,17 @@ public class FrontElementConfigurationParser {
                         String elementNameSub = attributeElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
                         String titleSub = attributeElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
                         String typeSub = attributeElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
+                        String subSearchColumns = attributeElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS) == null? "" : attributeElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS).getTextContent();
 
                         JSONObject jsonObjectSub = new JSONObject();
                         jsonObjectSub.put(NAME_CONSTANT,elementNameSub);
                         jsonObjectSub.put(TITLE_CONSTANT,titleSub);
                         jsonObjectSub.put(TYPE_CONSTANT,typeSub);
+                        jsonObjectSub.put(SEARCH_COLUMNS,subSearchColumns);
                         jsonObjectSub.put("searchers",getSubElements(attributeElementNode,"searcher"));
                         filterSearchers.put(elementNameSub,getSubElements(attributeElementNode,"searcher"));
                         ((JSONArray)jsonObject.get("subElements")).put(jsonObjectSub);
+                        filterData.put(elementNameSub, jsonObjectSub);
 
                     }
                 }
@@ -113,11 +123,14 @@ public class FrontElementConfigurationParser {
                 String elementNameSub = attributeElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
                 String titleSub = attributeElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
                 String typeSub = attributeElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
+                String subSearchColumns = attributeElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS) == null? "" : attributeElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS).getTextContent();
+
 
                 JSONObject jsonObjectSub = new JSONObject();
                 jsonObjectSub.put(NAME_CONSTANT,elementNameSub);
                 jsonObjectSub.put(TITLE_CONSTANT,titleSub);
                 jsonObjectSub.put(TYPE_CONSTANT,typeSub);
+                jsonObjectSub.put(SEARCH_COLUMNS,subSearchColumns);
                 attributeList.put(jsonObjectSub);
 
             }
@@ -142,6 +155,23 @@ public class FrontElementConfigurationParser {
             e.printStackTrace();
         }
         return new JSONArray();
+    }
+
+
+    public JSONObject getFilterData(String filterName){
+        try {
+            if(filterData == null){
+                parseMenuButtons();
+                return filterData.get(filterName);
+            }else{
+                return filterData.get(filterName);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new JSONObject();
     }
 
 

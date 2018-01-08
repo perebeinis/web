@@ -7,70 +7,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fbdabb4-db89-4427-aff6-6161b0acc20d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/config/localization/MessageResolverServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/SpringWebConfig.class" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/SpringWebConfig.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/CreateNewElementController.class" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/CreateNewElementController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/GetElementCardController.class" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/GetElementCardController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/MainController.class" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/MainController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/SearchInboxesController.class" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/controller/SearchInboxesController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/dynamic/FrontElementConfigurationParser.class" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/dynamic/FrontElementConfigurationParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/config/SpringWebConfig.class" afterPath="$PROJECT_DIR$/target/classes/com/tracker/config/SpringWebConfig.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/controller/CreateNewElementController.class" afterPath="$PROJECT_DIR$/target/classes/com/tracker/controller/CreateNewElementController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/controller/GetElementCardController.class" afterPath="$PROJECT_DIR$/target/classes/com/tracker/controller/GetElementCardController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/controller/MainController.class" afterPath="$PROJECT_DIR$/target/classes/com/tracker/controller/MainController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/controller/SearchInboxesController.class" afterPath="$PROJECT_DIR$/target/classes/com/tracker/controller/SearchInboxesController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/dynamic/FrontElementConfigurationParser.class" afterPath="$PROJECT_DIR$/target/classes/com/tracker/dynamic/FrontElementConfigurationParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/config/SpringWebConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/config/SpringWebConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/header-elements.xml" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/header-elements.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/menu-elements.xml" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/menu-elements.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user.xml" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/config/security/SpringSecurityConfig.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/config/security/SpringSecurityConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/controller/CreateNewElementController.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/controller/CreateNewElementController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/controller/GetElementCardController.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/controller/GetElementCardController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/controller/SearchInboxesController.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/controller/SearchInboxesController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/dao/create/user/UserDataCreator.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/dao/create/user/UserDataCreator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tracker/dynamic/FrontElementConfigurationParser.java" afterPath="$PROJECT_DIR$/src/main/java/com/tracker/dynamic/FrontElementConfigurationParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/messages/messages_en.properties" afterPath="$PROJECT_DIR$/src/main/resources/messages/messages_en.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/messages/messages_uk.properties" afterPath="$PROJECT_DIR$/src/main/resources/messages/messages_uk.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/footer.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/footer.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/header.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/header.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/login.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/menu.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/search-data.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/search-data.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/search.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/welcome.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/welcome.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/css/tracker.css" afterPath="$PROJECT_DIR$/src/main/webapp/css/tracker.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/classes/FormElements.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/classes/FormElements.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/classes/UserCard.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/classes/UserCard.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/header-buttons.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/header-buttons.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/menu-creator.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/menu-creator.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/search-data.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/search-data.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/elements/header-elements.xml" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/elements/header-elements.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/elements/menu-elements.xml" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/elements/menu-elements.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/elements/user.xml" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/com/tracker/config/elements/user.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/messages/messages_en.properties" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/messages/messages_en.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/messages/messages_uk.properties" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/classes/messages/messages_uk.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/card.html" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/card.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/header.html" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/header.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/login.html" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/menu.html" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/search-data.html" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/search-data.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/search.html" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/welcome.html" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/WEB-INF/templates/welcome.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/css/tracker.css" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/css/tracker.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/js/classes/FormElements.js" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/js/classes/FormElements.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/js/classes/UserCard.js" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/js/classes/UserCard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/js/header-buttons.js" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/js/header-buttons.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/js/menu-creator.js" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/js/menu-creator.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/bug-tracker-1.0/js/search-data.js" afterPath="$PROJECT_DIR$/target/bug-tracker-1.0/js/search-data.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/config/elements/header-elements.xml" afterPath="$PROJECT_DIR$/target/classes/com/tracker/config/elements/header-elements.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/config/elements/menu-elements.xml" afterPath="$PROJECT_DIR$/target/classes/com/tracker/config/elements/menu-elements.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/tracker/config/elements/user.xml" afterPath="$PROJECT_DIR$/target/classes/com/tracker/config/elements/user.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/messages/messages_en.properties" afterPath="$PROJECT_DIR$/target/classes/messages/messages_en.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/messages/messages_uk.properties" afterPath="$PROJECT_DIR$/target/classes/messages/messages_uk.properties" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -86,68 +35,93 @@
       <file leaf-file-name="tracker.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/css/tracker.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="511">
-              <caret line="278" column="0" lean-forward="true" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
+            <state relative-caret-position="168">
+              <caret line="321" column="26" lean-forward="true" selection-start-line="321" selection-start-column="26" selection-end-line="321" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="issue.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/issue.xml">
+      <file leaf-file-name="FrontElementConfigurationParser.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dynamic/FrontElementConfigurationParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="600">
+              <caret line="59" column="22" lean-forward="false" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
+              <folding>
+                <marker date="1515341945918" expanded="true" signature="12135:12142" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menu-elements.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/menu-elements.xml">
+      <file leaf-file-name="footer.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/footer.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="48" lean-forward="true" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="75" />
+            <state relative-caret-position="330">
+              <caret line="22" column="49" lean-forward="false" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FormElements.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/classes/FormElements.js">
+      <file leaf-file-name="messages_uk.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/messages/messages_uk.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="95" column="109" lean-forward="false" selection-start-line="95" selection-start-column="87" selection-end-line="95" selection-end-column="109" />
+            <state relative-caret-position="535">
+              <caret line="49" column="112" lean-forward="false" selection-start-line="49" selection-start-column="112" selection-end-line="49" selection-end-column="112" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="ResourceBundle">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="header.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/header.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="295">
+              <caret line="35" column="49" lean-forward="true" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="header-elements.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/header-elements.xml">
+      <file leaf-file-name="multiple-select.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/multiple-select.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="616">
+              <caret line="509" column="26" lean-forward="true" selection-start-line="509" selection-start-column="26" selection-end-line="509" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewsObserver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/news/impl/NewsObserver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="News.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/news/impl/News.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewsSubscriber.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/news/impl/NewsSubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
-              <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SearchInboxesController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/SearchInboxesController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="37" column="127" lean-forward="false" selection-start-line="37" selection-start-column="127" selection-end-line="37" selection-end-column="127" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="menu-creator.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu-creator.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="51" column="33" lean-forward="false" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
+              <caret line="29" column="27" lean-forward="true" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -156,30 +130,8 @@
       <file leaf-file-name="header-buttons.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/header-buttons.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="916">
-              <caret line="93" column="21" lean-forward="false" selection-start-line="93" selection-start-column="21" selection-end-line="93" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseControllerResponce.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/base/BaseControllerResponce.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="search-data.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/search-data.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" column="49" lean-forward="true" selection-start-line="35" selection-start-column="49" selection-end-line="35" selection-end-column="49" />
+            <state relative-caret-position="165">
+              <caret line="11" column="19" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -199,15 +151,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>left-menu-tree</find>
-      <find>mandatoryCondtitions</find>
-      <find>signInTitle</find>
-      <find>ThymeleafViewResolver</find>
-      <find>templateResolver</find>
-      <find>header.buttons.firstName</find>
-      <find>messa</find>
-      <find>messageSource</find>
-      <find>text</find>
       <find>tableDivId</find>
       <find>HeaderButton</find>
       <find>FormElements</find>
@@ -229,6 +172,15 @@
       <find>roles</find>
       <find>fileValue</find>
       <find>title</find>
+      <find>multiSelect</find>
+      <find>half input</find>
+      <find>All selected</find>
+      <find>.half .input-group .form-control</find>
+      <find>.input-group.date.half</find>
+      <find>.half img</find>
+      <find>selectAllText</find>
+      <find>.set-selected .multiSelect .ms-choice &gt; span</find>
+      <find>allSelected</find>
     </findStrings>
     <replaceStrings>
       <replace>parseHeaderMenuButtons</replace>
@@ -247,8 +199,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/css/bootstrap-datetimepicker.min.css" />
-        <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user-card.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/dao/create/DataCreator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/cards/user/CardData.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/cards/AbstractCardData.java" />
@@ -270,13 +220,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/localization/MessageResolverServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/localization/MessageResolveService.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/menu.html" />
-        <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/header-elements.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/menu-elements.xml" />
-        <option value="$PROJECT_DIR$/src/main/resources/messages/messages_uk.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/com/tracker/dynamic/FrontElementConfigurationParser.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/footer.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/security/authentification/UserDetailsServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/security/authentification/UserDetailsService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/security/authentification/CustomUserDetailsService.java" />
@@ -284,20 +229,27 @@
         <option value="$PROJECT_DIR$/src/main/java/org/springframework/security/core/userdetails/UserDetailsService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/security/authentification/impl/UserDetailsServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/security/authentification/CustomUserObject.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/classes/FormElements.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/classes/UserCard.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/search.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/header.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/controller/base/BaseControllerResponce.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/SpringWebConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/controller/GetElementCardController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/tracker/controller/CreateNewElementController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/tracker/controller/SearchInboxesController.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/css/tracker.css" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/header-buttons.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/menu-creator.js" />
+        <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/menu-elements.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/tracker/controller/SearchInboxesController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/tracker/dynamic/FrontElementConfigurationParser.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/css/multiple-select.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/header.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/search-data.js" />
+        <option value="$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/classes/UserCard.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/classes/FormElements.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/header-buttons.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/footer.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/messages/messages_uk.properties" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/multiple-select.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/css/tracker.css" />
       </list>
     </option>
   </component>
@@ -389,6 +341,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="tracker" type="462c0819:PsiDirectoryNode" />
+              <item name="cards" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BugTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tracker" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -400,6 +361,26 @@
               <item name="tracker" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
               <item name="elements" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BugTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tracker" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="localization" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BugTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tracker" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="properties" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
@@ -498,7 +479,62 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="userdetails" type="462c0819:PsiDirectoryNode" />
+              <item name="tracker" type="462c0819:PsiDirectoryNode" />
+              <item name="dynamic" type="462c0819:PsiDirectoryNode" />
+              <item name="menu" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BugTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tracker" type="462c0819:PsiDirectoryNode" />
+              <item name="dynamic" type="462c0819:PsiDirectoryNode" />
+              <item name="searcher" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BugTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tracker" type="462c0819:PsiDirectoryNode" />
+              <item name="news" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BugTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tracker" type="462c0819:PsiDirectoryNode" />
+              <item name="news" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BugTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BugTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="messages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BugTracker" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="messages" type="462c0819:PsiDirectoryNode" />
+              <item name="Resource Bundle 'messages'" type="a6c14932:ResourceBundleNode" />
             </path>
             <path>
               <item name="bug-tracker" type="b2602c69:ProjectViewProjectNode" />
@@ -993,19 +1029,19 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///home/oleksandr/projects/BugTracker/src/main/webapp/WEB-INF/templates/search.html" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/messages" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/js" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/tracker/cards/user" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/tracker/dynamic/menu" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/tracker/config/elements" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.tracker.controller" />
       <recent name="com.tracker.dynamic.menu" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/com/tracker/config/elements" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/webapp/css" />
+      <recent name="$PROJECT_DIR$/src/main/resources/messages" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/templates" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/js" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/tracker/cards/user" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1197,12 +1233,12 @@
       <workItem from="1513104398114" duration="50672000" />
       <workItem from="1514195708117" duration="12675000" />
       <workItem from="1514304741589" duration="2322000" />
-      <workItem from="1515088877873" duration="46705000" />
+      <workItem from="1515088877873" duration="65953000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="205252000" />
+    <option name="totallyTimeSpent" value="224500000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="0" width="1926" height="1058" extended-state="6" />
@@ -1280,15 +1316,9 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/com/tracker/dynamic/FrontElementConfigurationParser.java</url>
-          <line>36</line>
+          <line>37</line>
           <properties field="MENU_ELEMENT_CONSTANT" class="com.tracker.dynamic.FrontElementConfigurationParser" />
           <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/main/webapp/js/classes/UserCard.js</url>
-          <line>111</line>
-          <properties />
-          <option name="timeStamp" value="120" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1299,103 +1329,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="24" column="51" lean-forward="true" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/messages/messages_en.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/messages/messages_ru.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="41" lean-forward="true" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dao/create/user/UserDataCreator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/messages/messages_uk.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="65" lean-forward="true" selection-start-line="27" selection-start-column="65" selection-end-line="27" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/bootstrap.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/bootstrap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-405">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/footer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="57" lean-forward="true" selection-start-line="17" selection-start-column="57" selection-end-line="17" selection-end-column="57" />
           <folding />
         </state>
       </provider>
@@ -1456,16 +1393,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dynamic/FrontElementConfigurationParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="98" column="0" lean-forward="false" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-          <folding>
-            <marker date="1515251336277" expanded="true" signature="10558:10565" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/4.3.4.RELEASE/spring-core-4.3.4.RELEASE.jar!/org/springframework/util/StringUtils.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1486,25 +1413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="64" column="90" lean-forward="true" selection-start-line="64" selection-start-column="75" selection-end-line="64" selection-end-column="90" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dao/search/DataSearchFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="30" column="32" lean-forward="true" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1514101067993" expanded="true" signature="1335:1342" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dao/search/impl/DefaultSearcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1537,14 +1445,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dao/search/AbstractDataSearch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="49" column="112" lean-forward="false" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="112" />
           <folding />
         </state>
       </provider>
@@ -1583,34 +1483,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/classes/UserCard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="97" column="0" lean-forward="true" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.3.4.RELEASE/spring-context-4.3.4.RELEASE.jar!/org/springframework/ui/ModelMap.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/search.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="19" column="43" lean-forward="false" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="30" column="51" lean-forward="true" selection-start-line="30" selection-start-column="51" selection-end-line="30" selection-end-column="51" />
           <folding />
         </state>
       </provider>
@@ -1645,16 +1521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="42" selection-end-column="58" />
-          <folding>
-            <marker date="1515320015155" expanded="true" signature="2400:2639" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/GetElementCardController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -1673,29 +1539,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/SearchInboxesController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="37" column="127" lean-forward="false" selection-start-line="37" selection-start-column="127" selection-end-line="37" selection-end-column="127" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/base/BaseControllerResponce.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/tracker.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="278" column="0" lean-forward="true" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1703,14 +1553,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/menu-elements.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="48" lean-forward="true" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="75" />
           <folding />
         </state>
       </provider>
@@ -1723,22 +1565,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/classes/FormElements.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="95" column="109" lean-forward="false" selection-start-line="95" selection-start-column="87" selection-end-line="95" selection-end-column="109" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/header-buttons.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="916">
-          <caret line="93" column="21" lean-forward="false" selection-start-line="93" selection-start-column="21" selection-end-line="93" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu-creator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -1747,11 +1573,205 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dynamic/FrontElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="22" column="32" lean-forward="true" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/search.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="19" column="43" lean-forward="false" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap-theme.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="10" lean-forward="false" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/multiple-select.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="541">
+          <caret line="190" column="1" lean-forward="false" selection-start-line="190" selection-start-column="1" selection-end-line="190" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dao/search/DataSearchFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="30" column="32" lean-forward="true" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1514101067993" expanded="true" signature="1335:1342" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/search-data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="49" lean-forward="true" selection-start-line="35" selection-start-column="49" selection-end-line="35" selection-end-column="49" />
+        <state relative-caret-position="342">
+          <caret line="31" column="21" lean-forward="true" selection-start-line="28" selection-start-column="73" selection-end-line="31" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/menu-elements.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="90" lean-forward="true" selection-start-line="6" selection-start-column="90" selection-end-line="6" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/config/elements/user.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="88" lean-forward="false" selection-start-line="9" selection-start-column="88" selection-end-line="9" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="42" selection-end-column="58" />
+          <folding>
+            <marker date="1515320015155" expanded="true" signature="2400:2639" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/controller/SearchInboxesController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="39" column="92" lean-forward="false" selection-start-line="39" selection-start-column="92" selection-end-line="39" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dao/search/impl/DefaultSearcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dao/search/AbstractDataSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/classes/UserCard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="140" column="32" lean-forward="true" selection-start-line="140" selection-start-column="32" selection-end-line="140" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/classes/FormElements.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="77" column="64" lean-forward="false" selection-start-line="77" selection-start-column="64" selection-end-line="77" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/header-buttons.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="19" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="35" column="49" lean-forward="true" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="49" lean-forward="false" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/messages/messages_uk.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="49" column="112" lean-forward="false" selection-start-line="49" selection-start-column="112" selection-end-line="49" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/tracker.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="321" column="26" lean-forward="true" selection-start-line="321" selection-start-column="26" selection-end-line="321" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/multiple-select.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="509" column="26" lean-forward="true" selection-start-line="509" selection-start-column="26" selection-end-line="509" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/news/impl/News.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/news/impl/NewsObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/news/impl/NewsSubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="29" column="27" lean-forward="true" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tracker/dynamic/FrontElementConfigurationParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="59" column="22" lean-forward="false" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
+          <folding>
+            <marker date="1515341945918" expanded="true" signature="12135:12142" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
