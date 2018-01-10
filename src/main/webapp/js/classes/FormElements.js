@@ -2,6 +2,7 @@ function FormElements() {
     this.customClassName = "customClassName";
     this.title = "title";
     this.name = "name";
+    this.typeForSaving = "typeForSaving";
     this.type = "type";
 
     return this;
@@ -12,7 +13,7 @@ FormElements.prototype.textField = function (data, parentElementId, elementValue
         .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
          append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
          append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).
-         append($('<input>', {class: "form-control "+data[this.name], name:data[this.name], type: 'text', value: elementValue!=null? elementValue : ""})));
+         append($('<input>', {class: "form-control "+data[this.name], name:data[this.name], customType: data[this.typeForSaving], type: 'text', value: elementValue!=null? elementValue : ""})));
 
     if(data[this.mandatoryCondition]!=""){
         this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
@@ -25,7 +26,7 @@ FormElements.prototype.textArea = function (data, parentElementId, elementValue)
         .append($('<div>', {class: "form-group"+" "+data[this.customClassName]}).
          append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
          append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).
-         append($('<textarea>', {class: "form-control "+data[this.name], name:data[this.name], type: 'text', value: elementValue!=null? elementValue : ""}).text(elementValue!=null? elementValue : "")));
+         append($('<textarea>', {class: "form-control "+data[this.name], name:data[this.name], customType: data[this.typeForSaving], type: 'text', value: elementValue!=null? elementValue : ""}).text(elementValue!=null? elementValue : "")));
 
     if(data[this.mandatoryCondition]!=""){
         this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
@@ -39,7 +40,7 @@ FormElements.prototype.date = function (data, parentElementId, elementValue) {
         .append($('<div>', {class: "input-group date"+" "+data[this.customClassName], id: "user-card-"+data[this.name]}).
         append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
         append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).
-        append($('<input>', {class: "form-control "+data[this.name], name: data[this.name], type: 'text', value: elementValue!=null? elementValue : ""})).
+        append($('<input>', {class: "form-control "+data[this.name], name: data[this.name], customType: data[this.typeForSaving], type: 'text', value: elementValue!=null? elementValue : ""})).
         append($('<span>', {class: "input-group-addon"}).
         append($('<span>', {class: "glyphicon glyphicon-calendar"}))));
 
@@ -69,7 +70,7 @@ FormElements.prototype.multiSelect = function (data, parentElementId, elementVal
         .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
         append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
         append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).
-        append($('<select>', {class: "multiSelect form-control "+data[this.name], name:data[this.name], multiple: 'multiple', value: elementValue!=null? elementValue : ""})
+        append($('<select>', {class: "multiSelect form-control "+data[this.name],  customType: data[this.typeForSaving], name:data[this.name], multiple: 'multiple', value: elementValue!=null? elementValue : ""})
             .append(
                 $.map(defaultRoles, function (element, index) {
                     if(element.selected){
@@ -96,7 +97,7 @@ FormElements.prototype.image = function (data, parentElementId, elementValue) {
             .append($('<div>', {class: "textField"+" "+data[this.customClassName]}).
             append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).
             append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]]))
-                .append($('<input>', {class: "input-ghost", id: this.name, type: "file", fileValue: "", name : data[this.name], style: "visibility:hidden; height:0" }).change(function(){
+                .append($('<input>', {class: "input-ghost", id: this.name, customType: data[this.typeForSaving], type: "file", fileValue: "", name : data[this.name], style: "visibility:hidden; height:0" }).change(function(){
                     $(this).next($(this)).find('input.form-control').val(($(this).val()).split('\\').pop());
                     var reader = new FileReader();
                     reader.readAsDataURL(this.files[0]);

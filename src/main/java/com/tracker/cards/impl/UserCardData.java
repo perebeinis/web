@@ -16,13 +16,7 @@ import java.util.Properties;
 public class UserCardData extends CardDataProcessor implements CardData{
     @Override
     public ModelMap getData(ModelMap model, String elementId, String elementType, MessageSource messageSource, FrontElementConfigurationParser frontElementConfigurationParser, MongoDatabase database, Properties pathsConfigProperties, GetElementFactory getElementFactory) {
-//        String welcome = messageSource.getMessage("bug-tracker.title", new Object[]{""}, locale);
-//        model.addAttribute("title", welcome);
-//        String loginMsg = messageSource.getMessage("loginMsg.title", new Object[]{""}, locale);
-//        model.addAttribute("loginMsg", loginMsg);
         setPathsConfigProperties(pathsConfigProperties);
-        model.addAttribute(headerListConst, frontElementConfigurationParser.parseHeaderMenuButtons());
-        model.addAttribute(menuListConst, frontElementConfigurationParser.parseMenuButtons());
         if(!StringUtils.isEmpty(elementType) && !StringUtils.isEmpty(elementId)){
             model.addAttribute(cardFiledValuesConst, getElementFactory.searchData(elementType, elementId));
         }else{

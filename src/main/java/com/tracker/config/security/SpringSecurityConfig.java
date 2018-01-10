@@ -39,11 +39,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-    @Autowired
-    @Qualifier("database")
-    private MongoDatabase database;
-
     @Autowired
     private UserDetailsService customUserDetailsService;
 

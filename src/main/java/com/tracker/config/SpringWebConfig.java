@@ -29,6 +29,7 @@ import com.tracker.config.localization.MessageResolveService;
 import com.tracker.config.localization.MessageResolverServiceImpl;
 import com.tracker.config.security.authentification.impl.UserDetailsServiceImpl;
 import com.tracker.controller.base.BaseControllerResponce;
+import com.tracker.dao.create.DataCreatorFactory;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dao.search.GetElementFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
@@ -249,6 +250,11 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     @Bean
     public DataSearchFactory dataSearchFactory(){
         return new DataSearchFactory();
+    }
+
+    @Bean
+    public DataCreatorFactory dataCreatorFactory(){
+        return new DataCreatorFactory();
     }
 
     @Bean

@@ -100,19 +100,20 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
         var foundEmpty = e.data.mandatoryEventCheck();
 
         if(!foundEmpty){
-            var postParams = {};
-
-            var formData = new FormData();
-            formData.append('file', "as");
+            var postParams = [];
 
             // inputs
             $('.card-attributes-container input').each(function(data){
                 if(this.name!="") {
                     if (this.type == "file") {
+                        var postData = {name: this.name, type : this.attributes.customtype.nodeValue, data: this.fileValue, fileName : this.files[0].name};
+                        postParams.push(postData);
                         // postParams[this.name] = this.files[0].name +";"+this.fileValue;
-                        postParams[this.name] = this.fileValue;
+                        //postParams[this.name] = this.fileValue;
                     } else {
-                        postParams[this.name] = this.value;
+                        var postData = {name: this.name, type : this.attributes.customtype.nodeValue, data: this.value};
+                        postParams.push(postData);
+                        //postParams[this.name] = this.value;
                     }
                 }
             });
@@ -144,6 +145,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
 
 
     }
+
 
     this.close = function(){
         window.open("/welcome", "_self");

@@ -42,6 +42,9 @@ public class FrontElementConfigurationParser {
     private static final String TYPE_CONSTANT = "type";
     private static final String NAME_CONSTANT = "name";
     private static final String SEARCH_COLUMNS = "searchColumns";
+    private static final String SEARCHERS = "searchers";
+    private static final String SEARCHER_CONST = "searcher";
+    private static final String SUB_ELEMENTS = "subElements";
     private static final String FILTER_DATA = "filterData";
 
 
@@ -68,15 +71,15 @@ public class FrontElementConfigurationParser {
                 String searchColumns = headerElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS) == null? "" : headerElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS).getTextContent();
 
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("name",headerElementName);
-                jsonObject.put("title",title);
-                jsonObject.put("enableForRoles",userRoles);
-                jsonObject.put("searchParams", searchParams);
-                jsonObject.put("searchColumns", searchColumns);
-                jsonObject.put("type", type);
-                jsonObject.put("searchers",getSubElements(headerElementNode,"searcher"));
-                filterSearchers.put(headerElementName, getSubElements(headerElementNode,"searcher"));
-                jsonObject.put("subElements", new JSONArray());
+                jsonObject.put(NAME_CONSTANT,headerElementName);
+                jsonObject.put(TITLE_CONSTANT,title);
+                jsonObject.put(ENABLE_FOR_USER_ROLES_CONSTANT,userRoles);
+                jsonObject.put(SEARCH_PARAMS_CONSTANT, searchParams);
+                jsonObject.put(SEARCH_COLUMNS, searchColumns);
+                jsonObject.put(TYPE_CONSTANT, type);
+                jsonObject.put(SEARCHERS,getSubElements(headerElementNode, SEARCHER_CONST));
+                filterSearchers.put(headerElementName, getSubElements(headerElementNode, SEARCHER_CONST));
+                jsonObject.put(SUB_ELEMENTS, new JSONArray());
                 filterData.put(headerElementName, jsonObject);
 
 
@@ -96,9 +99,9 @@ public class FrontElementConfigurationParser {
                         jsonObjectSub.put(TITLE_CONSTANT,titleSub);
                         jsonObjectSub.put(TYPE_CONSTANT,typeSub);
                         jsonObjectSub.put(SEARCH_COLUMNS,subSearchColumns);
-                        jsonObjectSub.put("searchers",getSubElements(attributeElementNode,"searcher"));
-                        filterSearchers.put(elementNameSub,getSubElements(attributeElementNode,"searcher"));
-                        ((JSONArray)jsonObject.get("subElements")).put(jsonObjectSub);
+                        jsonObjectSub.put(SEARCHERS,getSubElements(attributeElementNode, SEARCHER_CONST));
+                        filterSearchers.put(elementNameSub,getSubElements(attributeElementNode, SEARCHER_CONST));
+                        ((JSONArray)jsonObject.get(SUB_ELEMENTS)).put(jsonObjectSub);
                         filterData.put(elementNameSub, jsonObjectSub);
 
                     }
@@ -193,11 +196,11 @@ public class FrontElementConfigurationParser {
                 String userRoles = headerElementNode.getAttributes().getNamedItem(ENABLE_FOR_USER_ROLES_CONSTANT).getTextContent();
 
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("name",headerElementName);
-                jsonObject.put("title",title);
-                jsonObject.put("enableForRoles",userRoles);
-                jsonObject.put("type", type);
-                jsonObject.put("subElements", new JSONArray());
+                jsonObject.put(NAME_CONSTANT,headerElementName);
+                jsonObject.put(TITLE_CONSTANT,title);
+                jsonObject.put(ENABLE_FOR_USER_ROLES_CONSTANT,userRoles);
+                jsonObject.put(TYPE_CONSTANT, type);
+                jsonObject.put(SUB_ELEMENTS, new JSONArray());
                 attributeList.put(jsonObject);
 
                     NodeList nodeAttributesList = headerElementNode.getChildNodes();
@@ -211,7 +214,7 @@ public class FrontElementConfigurationParser {
                             JSONObject jsonObjectSub = new JSONObject();
                             jsonObjectSub.put(NAME_CONSTANT,elementNameSub);
                             jsonObjectSub.put(TITLE_CONSTANT,titleSub);
-                            ((JSONArray) jsonObject.get("subElements")).put(jsonObjectSub);
+                            ((JSONArray) jsonObject.get(SUB_ELEMENTS)).put(jsonObjectSub);
 
                         }
                     }

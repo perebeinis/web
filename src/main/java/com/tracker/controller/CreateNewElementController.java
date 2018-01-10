@@ -4,10 +4,11 @@ import com.mongodb.client.MongoDatabase;
 import com.tracker.config.localization.MessageResolveService;
 import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.create.DataCreator;
-import com.tracker.dao.create.user.UserDataCreator;
+import com.tracker.dao.create.DataCreatorFactory;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import com.tracker.news.impl.NewsObserver;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -42,7 +43,7 @@ public class CreateNewElementController {
     private NewsObserver newsObserver;
 
     @Autowired
-    private BaseControllerResponce baseControllerResponce;
+    private DataCreatorFactory dataCreatorFactory;
 
     @Autowired
     private UserDetailsService customUserDetailsService;
@@ -56,28 +57,13 @@ public class CreateNewElementController {
         JSONObject result = new JSONObject();
         try {
             String encodeURL= URLDecoder.decode(postData, "UTF-8" );
-            JSONObject jsonObj = new JSONObject(encodeURL);
-            System.out.println(jsonObj);
-            createNewElement(type,jsonObj);
+            JSONArray formData = new JSONArray(encodeURL);
+            System.out.println(formData);
+            dataCreatorFactory.createData(type, formData);
             customUserDetailsService.reloadUsers();
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
         }
         return new ResponseEntity<Object>(result.toString(), HttpStatus.OK);
     }
-
-    private void createNewElement(String type, JSONObject incomingData){
-        switch (type){
-            case userType:
-                DataCreator userDataCreator = new UserDataCreator();
-                userDataCreator.createData(database, incomingData);
-                newsObserver.createNews(incomingData);
-                break;
-            default:
-                break;
-
-        }
-
-    }
-
 }

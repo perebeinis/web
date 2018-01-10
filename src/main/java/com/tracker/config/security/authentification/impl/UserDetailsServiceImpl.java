@@ -4,6 +4,7 @@ import com.google.gson.JsonParser;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.config.security.authentification.CustomUserObject;;
+import com.tracker.constants.BaseConstants;
 import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,14 +28,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         reloadUsers();
     }
 
+    /*
+    * Authentificate user from database
+    */
     public void reloadUsers(){
-        FindIterable<Document> allUsers = this.database.getCollection("userdetails").find();
-        ArrayList<Document> docs = new ArrayList();
-        allUsers.into(docs);
-
+        FindIterable<Document> allUsersFromDatabase = this.database.getCollection(BaseConstants.USERS_COLLECTION).find();
+        ArrayList<Document> usersList = new ArrayList();
+        allUsersFromDatabase.into(usersList);
         users = new ArrayList<>();
-        docs.forEach((document) -> {
-           this.users.add(new CustomUserObject((String) document.get("user_id"), (String) document.get("user_pass"), "ADMIN,USER", new JSONObject(new JsonParser().parse(document.toJson()).getAsJsonObject().toString())));
+        usersList.forEach((document) -> {
+           this.users.add(new CustomUserObject((String) document.get(BaseConstants.USER_ID), (String) document.get(BaseConstants.USER_PASS), (String) document.get(BaseConstants.USER_ROLES), new JSONObject(new JsonParser().parse(document.toJson()).getAsJsonObject().toString())));
         });
     }
 

@@ -69,7 +69,6 @@ public class MainController {
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
         }
-        result.put("aaa","???????????????");
         return new ResponseEntity<Object>(result.toString(), HttpStatus.OK);
     }
 

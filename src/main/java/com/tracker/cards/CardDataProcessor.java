@@ -13,6 +13,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public abstract class CardDataProcessor {
@@ -28,16 +30,15 @@ public abstract class CardDataProcessor {
 
     private Properties pathsConfigProperties;
 
-    private static final String USER_CARD = "user-card";
-    private static final String ISSUE = "issue";
-    private static final String PROPERTY_CONSTANT = "property";
     private static final String SET_CONSTANT = "set";
     private static final String TITLE_CONSTANT = "title";
     private static final String NAME_CONSTANT = "name";
     private static final String TYPE_CONSTANT = "type";
     private static final String BUTTONS_CONSTANT = "buttons";
     private static final String CUSTOM_CLASS_NAME_CONSTANT = "customClassName";
+    private static final String TYPE_FOR_SAVING = "typeForSaving";
     private static final String MANDATORY_CONDITIONS_CONSTANT = "mandatoryCondition";
+    private static Map<String,JSONArray> buttonsForCard = new HashMap<>();
 
 
     public JSONArray  parseData(Document document, String parentTagName){
@@ -52,7 +53,6 @@ public abstract class CardDataProcessor {
             jsonSetObject.put(TITLE_CONSTANT, setTitle);
 
 
-
             NodeList nodeAttributesList = setElementNode.getChildNodes();
             JSONArray attributeList = new JSONArray();
             for (int j = 0; j < nodeAttributesList.getLength(); j++){
@@ -61,6 +61,7 @@ public abstract class CardDataProcessor {
                     String elementName = attributeElementNode.getAttributes().getNamedItem(NAME_CONSTANT).getTextContent();
                     String title = attributeElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
                     String type = attributeElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
+                    String typeForSaving = attributeElementNode.getAttributes().getNamedItem(TYPE_FOR_SAVING)!=null ? attributeElementNode.getAttributes().getNamedItem(TYPE_FOR_SAVING).getTextContent() : "text";
                     String className = attributeElementNode.getAttributes().getNamedItem(CUSTOM_CLASS_NAME_CONSTANT).getTextContent();
                     String mandatoryCondition = "";
                     if(attributeElementNode.getAttributes().getNamedItem(MANDATORY_CONDITIONS_CONSTANT)!=null){
@@ -71,6 +72,7 @@ public abstract class CardDataProcessor {
                     jsonObject.put(NAME_CONSTANT,elementName);
                     jsonObject.put(TITLE_CONSTANT,title);
                     jsonObject.put(TYPE_CONSTANT,type);
+                    jsonObject.put(TYPE_FOR_SAVING, typeForSaving);
                     jsonObject.put(CUSTOM_CLASS_NAME_CONSTANT,className);
                     jsonObject.put(MANDATORY_CONDITIONS_CONSTANT,mandatoryCondition);
                     attributeList.put(jsonObject);
@@ -96,10 +98,8 @@ public abstract class CardDataProcessor {
             JSONArray setList = parseData(document, SET_CONSTANT);
             JSONArray buttons = parseData(document, BUTTONS_CONSTANT);
 
-
             jsonObject.put(SET_CONSTANT, setList);
             jsonObject.put(BUTTONS_CONSTANT, buttons);
-
             return jsonObject;
 
         } catch (Exception e) {
@@ -130,8 +130,12 @@ public abstract class CardDataProcessor {
         try {
             this.pathsConfigProperties = pathsConfigProperties;
         }catch (Exception e){
-            System.out.println("eee");
+            System.out.println("Error "+e);
         }
 
+    }
+
+    public static Map<String, JSONArray> getButtonsForCard() {
+        return buttonsForCard;
     }
 }

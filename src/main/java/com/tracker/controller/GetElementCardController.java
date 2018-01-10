@@ -42,15 +42,13 @@ public class GetElementCardController {
     public String getElementCard(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type) {
         model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
         model = cardDataFactory.getCardData(type,model,null);
-        model.addAttribute("messages", messageResolveService.getMessages(messageSource, locale));
         return "create-user-card";
     }
 
     @RequestMapping(value = "/get-element", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getElementCardExist(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type, @RequestParam("id") String id) {
         model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
-        model = cardDataFactory.getCardData(type,model,id);
-        model.addAttribute("messages", messageResolveService.getMessages(messageSource, locale));
+        model = cardDataFactory.getCardData(type, model, id);
         return "create-user-card";
     }
 
