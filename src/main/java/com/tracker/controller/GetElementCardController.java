@@ -2,6 +2,7 @@ package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.CardDataFactory;
+import com.tracker.cards.CardDataProcessor;
 import com.tracker.config.localization.MessageResolveService;
 import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.search.DataSearchFactory;
@@ -31,6 +32,9 @@ public class GetElementCardController {
 
     @Autowired
     private CardDataFactory cardDataFactory;
+
+    @Autowired
+    protected CardDataProcessor cardDataProcessor;
 
     @Autowired
     private MessageResolveService messageResolveService;

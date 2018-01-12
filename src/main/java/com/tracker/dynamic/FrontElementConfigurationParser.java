@@ -143,24 +143,6 @@ public class FrontElementConfigurationParser {
     }
 
 
-    public JSONArray getFilterSearchers(String filterName, Locale locale){
-        try {
-            JSONArray attributeList = new JSONArray();
-            if(filterSearchers == null){
-                parseMenuButtons();
-                return filterSearchers.get(filterName);
-            }else{
-                return filterSearchers.get(filterName);
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new JSONArray();
-    }
-
-
     public JSONObject getFilterData(String filterName){
         try {
             if(filterData == null){
@@ -169,8 +151,6 @@ public class FrontElementConfigurationParser {
             }else{
                 return filterData.get(filterName);
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,16 +3,22 @@ package com.tracker.dao.search;
 import com.google.gson.JsonParser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.tracker.constants.BaseConstants;
+import com.tracker.dao.search.request.impl.CreateRequestQueryFile;
+import com.tracker.dao.search.request.impl.CreateRequestQueryText;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public abstract class AbstractDataSearch {
     public static final String userCollection = "userdetails";
@@ -66,18 +72,27 @@ public abstract class AbstractDataSearch {
         JSONObject result  = new JSONObject();
         MongoCollection<Document> collection = mongoDatabase.getCollection(userCollection);
 
-        BasicDBObject query = new BasicDBObject();
-        query.put("_id", new ObjectId(elementId));
+        Bson match = new Document(BaseConstants.MATCH, new Document(BaseConstants.DOCUMENT_ID, new ObjectId(elementId)));
 
-        FindIterable iterator = collection.find(query);
+        List<Bson> filters = new ArrayList<>();
+//        filters.add(new CreateRequestQueryFile().createQueryForElement("avatar",""));
+        filters.add(match);
+
+        AggregateIterable<Document> iterator = collection.aggregate(filters);
         ArrayList<Document> docs = new ArrayList();
         iterator.into(docs);
 
-        JSONArray jsonArray = new JSONArray();
         if(docs.size()>0){
             result = new JSONObject(new JsonParser().parse(docs.get(0).toJson()).getAsJsonObject().toString());
         }
         return result;
+    }
+
+
+    private List<Bson> getSearchFilters(MongoDatabase mongoDatabase, String elementId){
+        List<Bson> filters = new ArrayList<>();
+
+        return filters;
     }
 
     private BasicDBObject createSearchData(JSONObject searchData){

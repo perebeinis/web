@@ -13,17 +13,16 @@ import org.springframework.util.StringUtils;
 
 import java.util.Properties;
 
-public class UserCardData extends CardDataProcessor implements CardData{
+public class UserCardData implements CardData{
     @Override
     public ModelMap getData(ModelMap model, String elementId, String elementType, MessageSource messageSource, FrontElementConfigurationParser frontElementConfigurationParser, MongoDatabase database, Properties pathsConfigProperties, GetElementFactory getElementFactory) {
-        setPathsConfigProperties(pathsConfigProperties);
         if(!StringUtils.isEmpty(elementType) && !StringUtils.isEmpty(elementId)){
             model.addAttribute(cardFiledValuesConst, getElementFactory.searchData(elementType, elementId));
         }else{
             model.addAttribute(cardFiledValuesConst, new JSONObject());
         }
 
-        JSONObject jsonArray = createCardData(elementType);
+        JSONObject jsonArray = CardDataProcessor.getInstance().getCardDataForElementType(elementType);
         model.addAttribute(cardDataConst, jsonArray);
         return model;
     }

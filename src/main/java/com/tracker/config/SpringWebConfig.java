@@ -214,22 +214,12 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
 
-    /*
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-    public CardDataProcessor cardDataProcessor(Properties pathsConfigProperties,
-                                               FrontElementConfigurationParser frontElementConfigurationParser,
-                                               MessageSource messageSource,
-                                               MongoDatabase database){
-
-        CardDataProcessor cardDataProcessor = new CardDataProcessor();
-        cardDataProcessor.setPathsConfigProperties(pathsConfigProperties);
-        cardDataProcessor.setDatabase(database);
-        cardDataProcessor.setFrontElementConfigurationParser(frontElementConfigurationParser);
-        cardDataProcessor.setMessageSource(messageSource);
-        return cardDataProcessor;
+    public CardDataProcessor cardDataProcessor(){
+        return new CardDataProcessor().getInstance();
     }
-*/
+
     @Bean
     public CardDataFactory cardDataFactory(){
         return new CardDataFactory();

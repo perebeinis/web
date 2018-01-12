@@ -14,14 +14,13 @@ import java.util.Properties;
 /**
  * Created by Perebeinis on 19.12.2017.
  */
-public class IssueCardData extends CardDataProcessor implements CardData{
+public class IssueCardData implements CardData{
     @Override
     public ModelMap getData(ModelMap model, String elementId,  String elementType, MessageSource messageSource, FrontElementConfigurationParser frontElementConfigurationParser, MongoDatabase database, Properties pathsConfigProperties,GetElementFactory getElementFactory) {
-        setPathsConfigProperties(pathsConfigProperties);
         model.addAttribute(headerListConst, frontElementConfigurationParser.parseHeaderMenuButtons());
         model.addAttribute(menuListConst, frontElementConfigurationParser.parseMenuButtons());
 
-        JSONObject jsonArray = createCardData(elementType);
+        JSONObject jsonArray =  CardDataProcessor.getInstance().getCardDataForElementType(elementType);
         model.addAttribute(cardDataConst, jsonArray);
         return model;
     }
