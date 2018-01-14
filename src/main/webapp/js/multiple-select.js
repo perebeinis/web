@@ -11,7 +11,6 @@
 
     // it only does '%s', and return '' when arguments are undefined
     var sprintf = function (str) {
-        console.log("eeeeeeeeeeeeeeeeeeeeeee");
         var args = arguments,
             flag = true,
             i = 1;

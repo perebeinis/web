@@ -3,7 +3,7 @@ package com.tracker.cards.impl;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.CardData;
 import com.tracker.cards.CardDataProcessor;
-import com.tracker.dao.search.GetElementFactory;
+import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONObject;
 import org.springframework.context.MessageSource;
@@ -16,7 +16,7 @@ import java.util.Properties;
  */
 public class IssueCardData implements CardData{
     @Override
-    public ModelMap getData(ModelMap model, String elementId,  String elementType, MessageSource messageSource, FrontElementConfigurationParser frontElementConfigurationParser, MongoDatabase database, Properties pathsConfigProperties,GetElementFactory getElementFactory) {
+    public ModelMap getData(ModelMap model, String elementId,  String elementType, MessageSource messageSource, FrontElementConfigurationParser frontElementConfigurationParser, MongoDatabase database, Properties pathsConfigProperties,DataSearchFactory getElementFactory) {
         model.addAttribute(headerListConst, frontElementConfigurationParser.parseHeaderMenuButtons());
         model.addAttribute(menuListConst, frontElementConfigurationParser.parseMenuButtons());
 

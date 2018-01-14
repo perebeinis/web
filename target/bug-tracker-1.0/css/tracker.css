@@ -384,3 +384,34 @@ navbar.less:  37.navbar {
         top: 4px;
     }
 
+
+    .textField .userAssoc {
+        background-image: url('/searchicon.png');
+        background-position: 10px 12px;
+        background-repeat: no-repeat;
+        width: 90%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+
+    .textField table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+    }
+
+    .textField table th, .textField table td {
+        text-align: left;
+        padding: 12px;
+    }
+
+    .textField table tr {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .textField table tr.header, .textField table tr:hover {
+        background-color: #f1f1f1;
+    }

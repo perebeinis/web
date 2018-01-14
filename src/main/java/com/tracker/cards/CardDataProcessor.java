@@ -104,10 +104,19 @@ public class CardDataProcessor {
             }
 
             if(parentTagName.equals(SET_CONSTANT)){
-                cardAttributes.put(elementType, attributeList);
+                if(cardAttributes.get(elementType) == null) {
+                    JSONArray attributeListCopy = new JSONArray(attributeList.toString());
+                    cardAttributes.put(elementType,attributeListCopy);
+                }else{
+                    JSONArray attributeListCopy = new JSONArray(attributeList.toString());
+                    for (Object jsonObject : attributeListCopy) {
+                        cardAttributes.get(elementType).put(jsonObject);
+                    }
+
+                }
             }
 
-            jsonSetObject.put(SET_CONSTANT, attributeList);
+            jsonSetObject.put(parentTagName, attributeList);
             setList.put(jsonSetObject);
         }
 
@@ -117,29 +126,32 @@ public class CardDataProcessor {
 
     public  JSONObject createCardData() {
         JSONObject jsonObject = new JSONObject();
-        try {
-            Enumeration propertyNames = pathsConfigProperties.propertyNames();
+        if (pathsConfigProperties != null) {
+            try {
+                Enumeration propertyNames = pathsConfigProperties.propertyNames();
 
-            while (propertyNames.hasMoreElements()) {
-                String key = (String) propertyNames.nextElement();
-                InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(key));
-                DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                Document document = documentBuilder.parse(inputStream);
-                document.getDocumentElement().normalize();
+                while (propertyNames.hasMoreElements()) {
+                    String key = (String) propertyNames.nextElement();
+                    InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(key));
+                    DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                    Document document = documentBuilder.parse(inputStream);
+                    document.getDocumentElement().normalize();
 
-                JSONArray setList = parseData(document, SET_CONSTANT, key);
-                JSONArray buttons = parseData(document, BUTTONS_CONSTANT, key);
+                    JSONArray setList = parseData(document, SET_CONSTANT, key);
+                    JSONArray buttons = parseData(document, BUTTONS_CONSTANT, key);
 
-                jsonObject.put(SET_CONSTANT, setList);
-                jsonObject.put(BUTTONS_CONSTANT, buttons);
-                cardElements.put(key,jsonObject);
+                    jsonObject.put(SET_CONSTANT, setList);
+                    jsonObject.put(BUTTONS_CONSTANT, buttons);
+                    cardElements.put(key, jsonObject);
+                }
+
+                return jsonObject;
+
+            } catch(Exception e){
+                e.printStackTrace();
             }
-
-            return jsonObject;
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
 
         return jsonObject;
     }
@@ -155,9 +167,11 @@ public class CardDataProcessor {
         return cardElements.get(elementType);
     }
 
+    public Map<String, JSONObject> getCardElements() {
+        return cardElements;
+    }
 
-
-    public static Map<String, JSONArray> getCardAttributes() {
+    public Map<String, JSONArray> getCardAttributes() {
         return cardAttributes;
     }
 }

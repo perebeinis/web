@@ -3,7 +3,7 @@ package com.tracker.cards;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.impl.IssueCardData;
 import com.tracker.cards.impl.UserCardData;
-import com.tracker.dao.search.GetElementFactory;
+import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -29,7 +29,7 @@ public class CardDataFactory {
     protected Properties pathsConfigProperties;
 
     @Autowired
-    private GetElementFactory getElementFactory;
+    private DataSearchFactory getElementFactory;
 
     final static Map<String, Supplier<CardData>> map = new HashMap<>();
     static {

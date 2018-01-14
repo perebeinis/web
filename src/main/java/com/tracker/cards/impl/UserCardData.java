@@ -4,7 +4,7 @@ import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.CardData;
 import com.tracker.cards.CardDataProcessor;
 import com.tracker.dao.search.AbstractDataSearch;
-import com.tracker.dao.search.GetElementFactory;
+import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONObject;
 import org.springframework.context.MessageSource;
@@ -15,9 +15,9 @@ import java.util.Properties;
 
 public class UserCardData implements CardData{
     @Override
-    public ModelMap getData(ModelMap model, String elementId, String elementType, MessageSource messageSource, FrontElementConfigurationParser frontElementConfigurationParser, MongoDatabase database, Properties pathsConfigProperties, GetElementFactory getElementFactory) {
+    public ModelMap getData(ModelMap model, String elementId, String elementType, MessageSource messageSource, FrontElementConfigurationParser frontElementConfigurationParser, MongoDatabase database, Properties pathsConfigProperties, DataSearchFactory getElementFactory) {
         if(!StringUtils.isEmpty(elementType) && !StringUtils.isEmpty(elementId)){
-            model.addAttribute(cardFiledValuesConst, getElementFactory.searchData(elementType, elementId));
+            model.addAttribute(cardFiledValuesConst, getElementFactory.searchDataById(elementType, elementId));
         }else{
             model.addAttribute(cardFiledValuesConst, new JSONObject());
         }

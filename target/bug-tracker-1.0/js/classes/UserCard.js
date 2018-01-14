@@ -1,4 +1,4 @@
-function UserCardCreator(cardId, data, tabsId, cardFiledValues, messages) {
+function UserCardCreator(cardId, data, tabsId, cardFiledValues, messages, mode) {
     this.cardId = cardId;
     this.tabsId = tabsId;
     this.cardFiledValues = cardFiledValues!=undefined && cardFiledValues!=null ? JSON.parse( cardFiledValues.replace(new RegExp('&quot;', 'g'), '"')) : null;
@@ -11,6 +11,8 @@ function UserCardCreator(cardId, data, tabsId, cardFiledValues, messages) {
     this.mandatoryCondition = "mandatoryCondition";
     this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
     this.mandatoryCondtitions = {};
+    this.typeForSaving = "typeForSaving";
+    this.mode = mode;
     return this;
 }
 
@@ -60,7 +62,7 @@ UserCardCreator.prototype.createCardElements = function () {
 
 
 
-function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
+function CardButtonsCreator(parentId, data, cardAttributesObject,messages,mode) {
 
     this.parentId = parentId;
     var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
@@ -70,6 +72,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
     this.title = "title";
     this.name = "name";
     this.type = "type";
+    this.mode = mode;
     this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
 
 
@@ -77,17 +80,19 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
         var tabsCounter = 0;
         //create buttons for cards
         var buttons = this.dataArray.buttons;
-        for (var i in buttons){
+    if(this.mode == undefined || this.mode != "view") {
+        for (var i in buttons) {
             var set = buttons[i];
 
-            var subArray = set["set"];
-            for (var j in subArray){
+            var subArray = set["buttons"];
+            for (var j in subArray) {
                 var attribute = subArray[j];
                 var elementType = attribute[this.type];
                 this[elementType](attribute, parentId);
             }
             tabsCounter++;
         }
+    }
     }
 
     this.button = function (data, parentElementId) {
@@ -121,15 +126,19 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
             // textarea
             $('.card-attributes-container textarea').each(function(data){
                 if(this.name!="") {
-                        postParams[this.name] = this.value;
+                    var postData = {name: this.name, type : this.attributes.customtype.nodeValue, data: this.value};
+                    postParams.push(postData);
                 }
             });
 
             // select
-            $('.card-attributes-container .multiSelect button > span').each(function(data){
-                if(this.innerHTML!="") {
-                    var elementName = $(this.parentNode.parentNode.parentNode).find('.multiSelect')[0].name;
-                    postParams[elementName] = this.innerHTML;
+            $(".card-attributes-container .multiSelect").each(function(data){
+                if(this.innerHTML!="" && this.name!=undefined) {
+                     var result = $(this.parentNode).find('.ms-drop.bottom > ul > li.selected:not(\'.ms-select-all\') > label > span').map(function() {
+                         return this.innerHTML;
+                     }).get().join();
+                    var postData = {name: this.name, type : this.attributes.customtype.nodeValue, data: result};
+                    postParams.push(postData);
                 }
             });
 
@@ -140,7 +149,9 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages) {
                 contentType: "application/json",
                 data: JSON.stringify(postParams),
                 dataType: 'json'
-            })
+            }).done(function( data ) {
+                window.open("/get-element?type=user&mode=view&id="+data._id , "_self");
+            });
         }
 
 

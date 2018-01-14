@@ -67,7 +67,7 @@ public class FrontElementConfigurationParser {
                 String title = headerElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
                 String type = headerElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
                 String userRoles = headerElementNode.getAttributes().getNamedItem(ENABLE_FOR_USER_ROLES_CONSTANT).getTextContent();
-                String searchParams = headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT) == null? "" : headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT).getTextContent();
+                String searchParams = headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT) == null? "{}" : headerElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT).getTextContent();
                 String searchColumns = headerElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS) == null? "" : headerElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS).getTextContent();
 
                 JSONObject jsonObject = new JSONObject();
@@ -93,11 +93,13 @@ public class FrontElementConfigurationParser {
                         String titleSub = attributeElementNode.getAttributes().getNamedItem(TITLE_CONSTANT).getTextContent();
                         String typeSub = attributeElementNode.getAttributes().getNamedItem(TYPE_CONSTANT).getTextContent();
                         String subSearchColumns = attributeElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS) == null? "" : attributeElementNode.getAttributes().getNamedItem(SEARCH_COLUMNS).getTextContent();
+                        String searchParamsData = attributeElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT) == null? "{}" : attributeElementNode.getAttributes().getNamedItem(SEARCH_PARAMS_CONSTANT).getTextContent();
 
                         JSONObject jsonObjectSub = new JSONObject();
                         jsonObjectSub.put(NAME_CONSTANT,elementNameSub);
                         jsonObjectSub.put(TITLE_CONSTANT,titleSub);
                         jsonObjectSub.put(TYPE_CONSTANT,typeSub);
+                        jsonObjectSub.put(SEARCH_PARAMS_CONSTANT, searchParamsData);
                         jsonObjectSub.put(SEARCH_COLUMNS,subSearchColumns);
                         jsonObjectSub.put(SEARCHERS,getSubElements(attributeElementNode, SEARCHER_CONST));
                         filterSearchers.put(elementNameSub,getSubElements(attributeElementNode, SEARCHER_CONST));

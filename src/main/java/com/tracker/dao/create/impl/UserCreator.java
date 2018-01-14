@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.create.DataCreator;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,7 +17,7 @@ import java.util.Iterator;
 public class UserCreator implements DataCreator{
 
     @Override
-    public void createData(MongoDatabase database, JSONArray incomingData) {
+    public String createData(MongoDatabase database, JSONArray incomingData) {
         MongoCollection<Document> collection = database.getCollection(BaseConstants.USERS_COLLECTION);
         Document document = new Document();
         for (Object formField : incomingData) {
@@ -34,7 +35,9 @@ public class UserCreator implements DataCreator{
         }
 
         collection.insertOne(document);
+        ObjectId objectId = document.getObjectId(BaseConstants.DOCUMENT_ID);
         System.out.println("USER was created");
+        return objectId.toString();
     }
 
     @Override

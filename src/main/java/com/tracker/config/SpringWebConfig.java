@@ -31,7 +31,6 @@ import com.tracker.config.security.authentification.impl.UserDetailsServiceImpl;
 import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.create.DataCreatorFactory;
 import com.tracker.dao.search.DataSearchFactory;
-import com.tracker.dao.search.GetElementFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import com.tracker.news.impl.NewsObserver;
 import org.springframework.beans.BeansException;
@@ -41,10 +40,7 @@ import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -195,6 +191,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     @Bean
+    @DependsOn("cardDataProcessor")
     public UserDetailsService customUserDetailsService(MongoDatabase database){
         return new UserDetailsServiceImpl(database);
     }
@@ -214,7 +211,8 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
 
-    @Bean
+    @Bean(initMethod = "getInstance")
+    @DependsOn("pathsConfigProperties")
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     public CardDataProcessor cardDataProcessor(){
         return new CardDataProcessor().getInstance();
@@ -245,11 +243,6 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     @Bean
     public DataCreatorFactory dataCreatorFactory(){
         return new DataCreatorFactory();
-    }
-
-    @Bean
-    public GetElementFactory getElementFactory(){
-        return new GetElementFactory();
     }
 
     @Bean
