@@ -18,7 +18,6 @@ public class MessageResolverServiceImpl implements MessageResolveService{
 
 
     public JSONObject getMessages(MessageSource messageSource, Locale locale){
-        System.out.println("aa");
         Properties properties =  ((ExposedResourceMessageBundleSource) messageSource).getMessages(locale);
         JSONObject jsonObject= new JSONObject();
         for(Map.Entry<Object,Object> entry: properties.entrySet()){

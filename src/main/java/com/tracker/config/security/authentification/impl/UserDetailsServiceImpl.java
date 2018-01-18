@@ -1,11 +1,14 @@
 package com.tracker.config.security.authentification.impl;
 
 import com.google.gson.JsonParser;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.config.security.authentification.CustomUserObject;;
 import com.tracker.constants.BaseConstants;
+import com.tracker.dao.search.AbstractDataSearch;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.security.core.userdetails.User;
@@ -32,9 +35,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     * Authentificate user from database
     */
     public void reloadUsers(){
-        FindIterable<Document> allUsersFromDatabase = this.database.getCollection(BaseConstants.USERS_COLLECTION).find();
+        List<Bson> filters = new ArrayList<>();
+        filters = AbstractDataSearch.searchDataByParams(filters, BaseConstants.USER_TYPE);
+
+        AggregateIterable<Document> iterator = this.database.getCollection(BaseConstants.USERS_COLLECTION).aggregate(filters);
         ArrayList<Document> usersList = new ArrayList();
-        allUsersFromDatabase.into(usersList);
+        iterator.into(usersList);
         users = new ArrayList<>();
         usersList.forEach((document) -> {
            this.users.add(new CustomUserObject((String) document.get(BaseConstants.USER_ID), (String) document.get(BaseConstants.USER_PASS), (String) document.get(BaseConstants.USER_ROLES), new JSONObject(new JsonParser().parse(document.toJson()).getAsJsonObject().toString())));

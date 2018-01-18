@@ -7,18 +7,21 @@ import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.tracker.cards.CardDataProcessor;
 import com.tracker.constants.BaseConstants;
+import com.tracker.dao.search.impl.DefaultSearcher;
+import com.tracker.dao.search.request.CreateRequestQuery;
 import com.tracker.dao.search.request.impl.CreateRequestQueryFile;
 import com.tracker.dao.search.request.impl.CreateRequestQueryText;
+import com.tracker.dao.search.request.impl.CreateRequestQueryUserAssoc;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Supplier;
 
 public abstract class AbstractDataSearch {
     public static final String userCollection = "userdetails";
@@ -30,7 +33,16 @@ public abstract class AbstractDataSearch {
     public static final String recordsFilteredConst = "recordsFiltered";
     public static final String dataConst = "data";
     public static final String search = "search";
+    public static final String name = "name";
     public static final String searchDataConst = "searchData";
+
+    final static Map<String, Supplier<CreateRequestQuery>> requestQueryMap = new HashMap<>();
+    static {
+        requestQueryMap.put("file", CreateRequestQueryFile::new);
+        requestQueryMap.put("text", CreateRequestQueryText::new);
+        requestQueryMap.put("userAssoc", CreateRequestQueryUserAssoc::new);
+    }
+
 
 
     public JSONObject getData(MongoDatabase mongoDatabase, JSONObject searchParams) {
@@ -68,15 +80,15 @@ public abstract class AbstractDataSearch {
         return result;
     }
 
-    public JSONObject getDataById(MongoDatabase mongoDatabase, String elementId){
+    public JSONObject getDataById(MongoDatabase mongoDatabase, String elementType, String elementId){
         JSONObject result  = new JSONObject();
         MongoCollection<Document> collection = mongoDatabase.getCollection(userCollection);
 
         Bson match = new Document(BaseConstants.MATCH, new Document(BaseConstants.DOCUMENT_ID, new ObjectId(elementId)));
 
         List<Bson> filters = new ArrayList<>();
-//        filters.add(new CreateRequestQueryFile().createQueryForElement("avatar",""));
         filters.add(match);
+        filters = searchDataByParams(filters,elementType);
 
         AggregateIterable<Document> iterator = collection.aggregate(filters);
         ArrayList<Document> docs = new ArrayList();
@@ -89,12 +101,6 @@ public abstract class AbstractDataSearch {
     }
 
 
-    private List<Bson> getSearchFilters(MongoDatabase mongoDatabase, String elementId){
-        List<Bson> filters = new ArrayList<>();
-
-        return filters;
-    }
-
     private BasicDBObject createSearchData(JSONObject searchData){
         BasicDBObject regexQuery = new BasicDBObject();
         Iterator<?> keys = searchData.keys();
@@ -104,6 +110,20 @@ public abstract class AbstractDataSearch {
                     .append("$options", "i"));
         }
         return regexQuery;
+    }
+
+    public static List<Bson> searchDataByParams(List<Bson> filters, String elementType){
+        CardDataProcessor.getInstance().getCardDataForElementType(elementType);
+        JSONArray jsonArray = CardDataProcessor.getInstance().getCardAttributes().get(elementType);
+        for (Object object : jsonArray) {
+            JSONObject cardData = (JSONObject) object;
+            Supplier<CreateRequestQuery> element = requestQueryMap.get(cardData.get(BaseConstants.TYPES_FOR_SAVING));
+            if(element != null) {
+                Bson result = element.get().createQueryForElement((String) cardData.get(name),"");
+                if(result!=null) filters.add(result);
+            }
+        }
+        return filters;
     }
 
 }

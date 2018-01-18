@@ -2,6 +2,7 @@ package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
 import com.tracker.config.localization.MessageResolveService;
+import com.tracker.constants.BaseConstants;
 import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.create.DataCreator;
 import com.tracker.dao.create.DataCreatorFactory;
@@ -59,8 +60,9 @@ public class CreateNewElementController {
             String encodeURL= URLDecoder.decode(postData, "UTF-8" );
             JSONArray formData = new JSONArray(encodeURL);
             System.out.println(formData);
-            dataCreatorFactory.createData(type, formData);
+            String newElementId = dataCreatorFactory.createData(type, formData);
             customUserDetailsService.reloadUsers();
+            result.put(BaseConstants.DOCUMENT_ID,newElementId);
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
         }

@@ -2,6 +2,8 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
     this.tableDivId = tableDivId;
     var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
     this.searchersArray = JSON.parse(dataStr);
+    var searchParamsStr = this.searchersArray.searchParams.replace(new RegExp('&quot;', 'g'),'"').replace(new RegExp('&#39;', 'g'),'"');
+    this.searchParams = JSON.parse(searchParamsStr);
     this.customClassName = "customClassName";
     this.title = "title";
     this.name = "name";
@@ -14,13 +16,7 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
     this.searchData = function () {
         this.createSearchers();
         this.createSearchButtons();
-        var searchType = {};
-        searchType["searchType"] = "user";
 
-        var searchData = {};
-        searchData["aaa"] = "trs";
-
-        searchType["searchData"] = searchData;
         var searchColumns = this.searchersArray.searchColumns.split(",");
         for (var i in searchColumns){
             searchColumns[i] = this.messages["user.card."+searchColumns[i]];
@@ -33,12 +29,11 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
             )
         ));
 
-
-        var searchType = {};
-        searchType["searchType"] = "user";
-        var searchData = {};
-        searchType["searchData"] = searchData;
-        this.createSearchTable(searchType, this);
+        if(!this.searchParams.searchData) this.searchParams.searchData = {};
+        var searchParams = {};
+        searchParams["searchType"] = this.searchParams.searchType;
+        searchParams["searchData"] = this.searchParams.searchData;
+        this.createSearchTable(searchParams, this);
         $("#"+tableDivId).on('click', 'tr', function () {
             window.open("/get-element?type=user&mode=view&id="+this.id, "_blank");
         });
@@ -82,17 +77,22 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
     }
 
     this.searchDataEv = function(e,data){
+        var searchParams = {};
+        searchParams.searchType = this.searchParams.searchType;
+        var defaultSearchParams = this.searchParams.searchData;
+        var copy = Object.assign({}, this.searchParams.searchData);
+        searchParams.searchData = copy;
         var searchAttrsDiv = "search-attributes";
-        var searchData = {};
         $('#'+searchAttrsDiv+' input:not([name=""])').each(function() {
             if(this.value!=""){
-                searchData[this.name] = this.value;
+                searchParams.searchData[this.name] = this.value;
+            }else if(searchParams.searchData[this.name]!=undefined && defaultSearchParams[this.name]!=undefined){
+                 searchParams.searchData[this.name] = defaultSearchParams[this.name]
+            }else if(searchParams.searchData[this.name]!=undefined){
+                delete searchParams.searchData[this.name];
             }
         });
-        var searchDataJson = {};
-        searchDataJson["searchType"] = "user";
-        searchDataJson["searchData"] = searchData;
-        this.searchData = searchDataJson;
+        this.searchData = searchParams;
         this.table.ajax.reload();
         console.log("search");
     }

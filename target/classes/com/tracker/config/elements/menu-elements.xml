@@ -1,22 +1,24 @@
 <elements>
 
-    <menu-element name="users" title="header.buttons.searchInbox" searchColumns="firstName,lastName,birthDay"  searchParams="tratete" type="header" enableForRoles="ADMIN,USER">
+    <menu-element name="users" title="header.buttons.searchInbox" searchColumns="firstName,lastName,birthDay"  type="header" enableForRoles="ADMIN,USER">
 
-        <sub-element name="searchUsers" title="header.buttons.searchUsers"  type="subElement" searchColumns="firstName,lastName,birthDay" searchParams="tratete" enableForRoles="ADMIN,USER">
+        <sub-element name="searchUsers" title="header.buttons.searchUsers"  type="subElement" searchColumns="firstName,lastName,birthDay"
+                     searchParams="{'searchType' : 'user'}"
+                     enableForRoles="ADMIN,USER">
             <searcher type="text" name="firstName" title="header.buttons.firstName"></searcher>
             <searcher type="text" name="lastName" title="header.buttons.lastName"></searcher>
         </sub-element>
-
+        <!-- searchParams="{'searchType' : 'user','searchData' : {'firstName' : 'admin'} }" -->
 
     </menu-element>
 
-    <menu-element name="searchNews" title="header.buttons.searchNews"  searchParams="aaaaaaa"  searchColumns="firstName,lastName,birthDay" type="filter" enableForRoles="ADMIN,USER">
+    <menu-element name="searchNews" title="header.buttons.searchNews" searchColumns="firstName,lastName,birthDay" type="filter" enableForRoles="ADMIN,USER">
         <searcher type="text" name="firstName" title="header.buttons.firstName"></searcher>
         <searcher type="text" name="lastName" title="header.buttons.lastName"></searcher>
     </menu-element>
 
     <menu-element name="test" title="header.buttons.test"  type="header" enableForRoles="ADMIN,USER">
-        <sub-element name="searchUsers2" title="header.buttons.searchUsers2"  type="subElement"  searchColumns="firstName,lastName,birthDay" searchParams="assdasd" enableForRoles="ADMIN,USER">
+        <sub-element name="searchUsers2" title="header.buttons.searchUsers2"  type="subElement"  searchColumns="firstName,lastName,birthDay"  enableForRoles="ADMIN,USER">
             <searcher type="text" name="firstName" title="header.buttons.firstName"></searcher>
             <searcher type="text" name="lastName" title="header.buttons.lastName"></searcher>
         </sub-element>

@@ -25,11 +25,10 @@ public class DataCreatorFactory {
         dataCreatorMap.put("user", UserCreator::new);
     }
 
-    public boolean createData(String elementType, JSONArray incomingDataObject){
+    public String createData(String elementType, JSONArray incomingDataObject){
         Supplier<DataCreator> element = dataCreatorMap.get(elementType);
         if(element != null) {
-            element.get().createData(database, incomingDataObject);
-            return true;
+            return element.get().createData(database, incomingDataObject);
         }
         throw new IllegalArgumentException("No such shape " + elementType);
     }

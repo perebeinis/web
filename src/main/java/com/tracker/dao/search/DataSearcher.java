@@ -9,5 +9,5 @@ import org.json.JSONObject;
 public interface DataSearcher {
     JSONObject searchData(MongoDatabase database, JSONObject searchDataObject);
 
-    JSONObject getElementById(MongoDatabase database, String elementId);
+    JSONObject getElementById(MongoDatabase database, String elementType,  String elementId);
 }

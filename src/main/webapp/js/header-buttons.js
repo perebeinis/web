@@ -46,7 +46,7 @@ function HeaderButton(cardId, data, messages,userData) {
         var name = set[this.name];
         var title = set[this.title];
         var functionName = this[name] == undefined ? "defaultClick" : name;
-        var avatar = avatar && this.userData!=undefined? "<img src='"+this.userData.avatar.replace(/\s/g, '+')+"'/>" : "";
+        var avatar = avatar && this.userData!=undefined && this.userData.avatar!=undefined ? "<img src='"+this.userData.avatar[0].data.toString().replace(/\s/g, '+')+"'/>" : "";
         var userFullName = useUserFullName && this.userData!=undefined ? avatar + this.userData.firstName + " "+ this.userData.lastName : this.messages[set[this.title]];
 
         $('#'+parentElement)
@@ -61,7 +61,7 @@ function HeaderButton(cardId, data, messages,userData) {
 
             $('#'+name)
                 .append($('<li>')
-                    .append($('<a>').click(this[subElements[i][this.name]]).html(this.messages[subElements[i][this.title]])));
+                    .append($('<a>', {userId: this.userData._id["$oid"]}).click(this[subElements[i][this.name]]).html(this.messages[subElements[i][this.title]])));
 
         }
     }
@@ -77,6 +77,10 @@ function HeaderButton(cardId, data, messages,userData) {
 
     this.signOut = function() {
         window.open("/logout", "_self");
+    };
+
+    this.myProfile = function() {
+        window.open("/get-element?type=user&mode=view&id="+this.attributes.userid.nodeValue , "_self");
     };
 
     this.createNewTask = function() {

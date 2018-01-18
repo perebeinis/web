@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.create.DataCreator;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,7 +17,7 @@ import java.util.Iterator;
 public class UserCreator implements DataCreator{
 
     @Override
-    public void createData(MongoDatabase database, JSONArray incomingData) {
+    public String createData(MongoDatabase database, JSONArray incomingData) {
         MongoCollection<Document> collection = database.getCollection(BaseConstants.USERS_COLLECTION);
         Document document = new Document();
         for (Object formField : incomingData) {
@@ -25,8 +26,13 @@ public class UserCreator implements DataCreator{
             String fieldType = (String) formFieldElement.get("type");
             String fieldValue = (String) formFieldElement.get("data");
 
-            if(fieldType.equals("file")){
-                document.put(fieldName, DocumentCreator.createElement(database,formFieldElement));
+            if(fieldType.equals("file")) {
+                document.put(fieldName, DocumentCreator.createElement(database, formFieldElement));
+            }else if(fieldType.equals("userAssoc")){
+                String [] idsArray = fieldValue.split(",");
+                for (String userId : idsArray) {
+                    document.put(fieldName, new ObjectId(userId));
+                }
             }else {
                 document.put(fieldName, fieldValue);
             }
@@ -34,7 +40,9 @@ public class UserCreator implements DataCreator{
         }
 
         collection.insertOne(document);
+        ObjectId objectId = document.getObjectId(BaseConstants.DOCUMENT_ID);
         System.out.println("USER was created");
+        return objectId.toString();
     }
 
     @Override

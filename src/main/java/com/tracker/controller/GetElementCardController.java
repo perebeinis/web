@@ -6,7 +6,6 @@ import com.tracker.cards.CardDataProcessor;
 import com.tracker.config.localization.MessageResolveService;
 import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.search.DataSearchFactory;
-import com.tracker.dao.search.GetElementFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +45,7 @@ public class GetElementCardController {
     public String getElementCard(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type) {
         model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
         model = cardDataFactory.getCardData(type,model,null);
+        model.addAttribute("mode", "create");
         return "create-user-card";
     }
 
@@ -53,6 +53,7 @@ public class GetElementCardController {
     public String getElementCardExist(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type, @RequestParam("id") String id) {
         model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
         model = cardDataFactory.getCardData(type, model, id);
+        model.addAttribute("mode", "view");
         return "create-user-card";
     }
 

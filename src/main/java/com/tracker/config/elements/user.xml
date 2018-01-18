@@ -18,8 +18,9 @@
 
     <set name="test" title="userCard.tab.additionalInfo">
 
+        <property name="userAssoc" title="user.card.userAssoc" type="userAssoc"  typeForSaving="userAssoc" mandatoryCondition="*" customClassName = "half"/>
 
-        <property name="email" title="user.card.email" type="textField"   typeForSaving="text" mandatoryCondition="*" customClassName = "half"/>
+        <property name="email" title="user.card.email" type="textField"  typeForSaving="text" mandatoryCondition="*" customClassName = "half"/>
 
         <property name="avatar" title="user.card.avatar" type="image"  typeForSaving="file" mandatoryCondition="*" customClassName = "half"/>
 

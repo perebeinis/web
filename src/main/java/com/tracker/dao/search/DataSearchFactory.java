@@ -29,12 +29,21 @@ public class DataSearchFactory {
     final static Map<String, Supplier<DataSearcher>> map = new HashMap<>();
     static {
         map.put("element", DefaultSearcher::new);
+        map.put("user", DefaultSearcher::new);
     }
 
     public JSONObject searchData(String elementType, JSONObject searchDataObject){
         Supplier<DataSearcher> element = map.get(elementType);
         if(element != null) {
             return element.get().searchData(database,searchDataObject);
+        }
+        throw new IllegalArgumentException("No such shape " + elementType);
+    }
+
+    public JSONObject searchDataById(String elementType, String elementId){
+        Supplier<DataSearcher> element = map.get(elementType);
+        if(element != null) {
+            return element.get().getElementById(database, elementType, elementId);
         }
         throw new IllegalArgumentException("No such shape " + elementType);
     }

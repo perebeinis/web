@@ -159,9 +159,11 @@ table.dataTable {
 }
 
 @media (min-width: 768px)
-navbar.less:  37.navbar {
-        border-radius: 0px;
-    }
+navbar.less:
+
+37.navbar {
+      border-radius: 0px;
+  }
 
     .nav-menu-list-style > li > a {
         padding: 10px 0px;
@@ -284,6 +286,11 @@ navbar.less:  37.navbar {
 
     .input-group.date.half {
         width: 50% !important;
+        vertical-align: top;
+    }
+
+    .added tr {
+        background-color: #b2e1e796;
     }
 
     .fullString {
@@ -384,3 +391,50 @@ navbar.less:  37.navbar {
         top: 4px;
     }
 
+    .textField .userAssoc {
+        background-image: url('/images/searchicon.png');
+        background-position: 5px 7px;
+        background-repeat: no-repeat;
+        width: 90%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+    }
+
+    .textField table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+    }
+
+    .textField table th {
+        text-align: left;
+        padding: 1px 12px;
+    }
+
+    .textField table td {
+        text-align: left;
+        padding: 5px 12px;
+    }
+
+    .textField table tr {
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+    }
+
+    .card-attributes-container > div .half > .searchResult {
+        width: 35%;
+        position: fixed;
+        z-index: 3;
+        background-color: white;
+    }
+
+    .added {
+        margin-bottom: 5px;
+        width: 90% !important;
+    }
+
+    .textField table tr:not(.header):hover {
+        background-color: #ddd;
+    }

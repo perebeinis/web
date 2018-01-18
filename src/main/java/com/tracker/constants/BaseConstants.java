@@ -5,6 +5,7 @@ package com.tracker.constants;
  */
 public interface BaseConstants {
     public static String USERS_COLLECTION = "userdetails";
+    public static String USER_TYPE = "user";
     public static String DOCUMENTS_COLLECTION = "documents";
     public static String DOCUMENT_ID = "_id";
     public static String LOOKUP = "$lookup";
@@ -20,4 +21,5 @@ public interface BaseConstants {
     public static String USER_ID = "user_id";
     public static String USER_PASS = "user_pass";
     public static String USER_ROLES = "roles";
+    public static String TYPES_FOR_SAVING = "typeForSaving";
 }
