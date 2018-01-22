@@ -23,6 +23,7 @@ public class DataCreatorFactory {
     final static Map<String, Supplier<DataCreator>> dataCreatorMap = new HashMap<>();
     static {
         dataCreatorMap.put("user", UserCreator::new);
+        dataCreatorMap.put("issue", UserCreator::new);
     }
 
     public String createData(String elementType, JSONArray incomingDataObject){

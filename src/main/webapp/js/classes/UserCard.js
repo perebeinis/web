@@ -109,7 +109,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages,mode) 
 
             // inputs
             $('.card-attributes-container input').each(function(data){
-                if(this.name!="") {
+                if(this.name!="" && this.name!="userAssoc") {
                     if (this.type == "file") {
                         var postData = {name: this.name, type : this.attributes.customtype.nodeValue, data: this.fileValue, fileName : this.files[0].name};
                         postParams.push(postData);
@@ -183,7 +183,8 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages,mode) 
             if(condition == "*"){
                 if(attribute.attributes.customtype.nodeValue == "userAssoc" && $(attribute.parentNode).find(".added > tr").length == 0) {
                     mandatoryFound = true;
-                }else if(attribute.value == "" || (attribute.type == "file" && attribute.files.length == 0 ) || (attribute.type == "userAssoc" && attribute.files.length == 0 )){
+                }else if(attribute.attributes.customtype.nodeValue != "userAssoc" &&
+                    (attribute.value == "" || (attribute.type == "file" && attribute.files.length == 0 ) || (attribute.type == "userAssoc" && attribute.files.length == 0 ))){
                     mandatoryFound = true;
                 }
             }else {

@@ -9,7 +9,9 @@ import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Perebeinis on 10.01.2018.
@@ -30,9 +32,13 @@ public class UserCreator implements DataCreator{
                 document.put(fieldName, DocumentCreator.createElement(database, formFieldElement));
             }else if(fieldType.equals("userAssoc")){
                 String [] idsArray = fieldValue.split(",");
+                List<ObjectId> ids = new ArrayList<>();
+
                 for (String userId : idsArray) {
-                    document.put(fieldName, new ObjectId(userId));
+                    ids.add( new ObjectId(userId));
                 }
+
+                document.put(fieldName,ids);
             }else {
                 document.put(fieldName, fieldValue);
             }

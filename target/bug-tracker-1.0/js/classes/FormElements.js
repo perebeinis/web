@@ -154,12 +154,13 @@ FormElements.prototype.image = function (data, parentElementId, elementValue) {
 
 FormElements.prototype.userAssoc = function (data, parentElementId, elementValue) {
     var scope = this;
+    var resultTable = ["firstName", "lastName"];
     $('#' + parentElementId)
         .append($('<div>', {class: "textField" + " " + data[this.customClassName]}).append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).append($('<input>', {
                 class: "form-control " + data[this.name], name: data[this.name],
                 placeholder: "search ...",
                 customType: data[this.typeForSaving],
-                type: 'text', value: elementValue != null ? elementValue : "",
+                type: 'text', value: "",
                 readonly: this.mode == "view" ? true : false
             }).keyup(function (event) {
                 scope.searchUsers(event, this);
@@ -167,6 +168,18 @@ FormElements.prototype.userAssoc = function (data, parentElementId, elementValue
 
     if (data[this.mandatoryCondition] != "") {
         this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
+    }
+
+    if(this.mode == "view") {
+        var addedTable = $('#' + parentElementId).find('table.added')[0];
+        for (var index in elementValue) {
+            var searchResultElement = elementValue[index];
+            $(addedTable).append($('<tr>', {id: searchResultElement._id["$oid"]}).append(
+                $.map(resultTable, function (elementName, index) {
+                    return '<td>' + searchResultElement[elementName] + '</td>';
+                }).join()
+            ));
+        }
     }
 }
 

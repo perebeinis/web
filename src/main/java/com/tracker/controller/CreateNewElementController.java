@@ -59,7 +59,6 @@ public class CreateNewElementController {
         try {
             String encodeURL= URLDecoder.decode(postData, "UTF-8" );
             JSONArray formData = new JSONArray(encodeURL);
-            System.out.println(formData);
             String newElementId = dataCreatorFactory.createData(type, formData);
             customUserDetailsService.reloadUsers();
             result.put(BaseConstants.DOCUMENT_ID,newElementId);
