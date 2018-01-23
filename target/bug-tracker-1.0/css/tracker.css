@@ -443,3 +443,17 @@ navbar.less:
     .textField table tr:not(.header):hover {
         background-color: #ddd;
     }
+
+
+
+    .fullString > input {
+        width: 99%;
+        margin-bottom: 20px;
+    }
+
+    .fullString > .userAssoc,
+    .fullString  .added,
+    .fullString  .searchResult {
+        margin-bottom: 0px;
+        width: 99% !important;
+    }

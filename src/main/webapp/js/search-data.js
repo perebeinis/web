@@ -35,7 +35,7 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
         searchParams["searchData"] = this.searchParams.searchData;
         this.createSearchTable(searchParams, this);
         $("#"+tableDivId).on('click', 'tr', function () {
-            window.open("/get-element?type=user&mode=view&id="+this.id, "_blank");
+            window.open("/get-element?type="+this.elementType+"&mode=view&id="+this.id, "_blank");
         });
     }
 

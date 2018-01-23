@@ -18,12 +18,13 @@
                 var cardAttributes = "[[${cardData}]]";
                 var messages = "[[${messages}]]";
                 var mode = "[[${mode}]]";
+                var elementType = "[[${elementType}]]";
                 var cardAttrs = new UserCardCreator("card-attributes-container",cardAttributes,"card-attributes-tabs",cardFiledValues,messages, mode);
                 cardAttrs.createCardElements();
 
                 var messages = "[[${messages}]]";
                 var cardButtons = "[[${cardData}]]";
-                var cardButton = new CardButtonsCreator("card-attributes-buttons",cardAttributes, cardAttrs,messages, mode);
+                var cardButton = new CardButtonsCreator("card-attributes-buttons",cardAttributes, cardAttrs,messages, mode, elementType);
                 cardButton.createCardButtons();
 
             </script>

@@ -19,7 +19,6 @@
  */
 package com.tracker.config;
 
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.CardDataFactory;
@@ -32,7 +31,11 @@ import com.tracker.controller.base.BaseControllerResponce;
 import com.tracker.dao.create.DataCreatorFactory;
 import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
-import com.tracker.news.impl.NewsObserver;
+import com.tracker.observer.ChangingDataObserver;
+import com.tracker.observer.Observer;
+import com.tracker.observer.impl.CreateHistoryDataSubscriber;
+import com.tracker.observer.impl.CreateNewsDataSubscriber;
+import com.tracker.observer.impl.TaskProcessDataSubscriber;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -42,17 +45,13 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
@@ -60,8 +59,9 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
@@ -245,12 +245,36 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         return new DataCreatorFactory();
     }
 
+
     @Bean
-    public NewsObserver newsObserver(MongoDatabase database){
-        NewsObserver newsObserver = new NewsObserver();
-        newsObserver.setDatabase(database);
-        newsObserver.init();
-        return newsObserver;
+    public CreateHistoryDataSubscriber createHistoryDataSubscriber(MongoDatabase database){
+        CreateHistoryDataSubscriber createHistoryDataSubscriber = new CreateHistoryDataSubscriber();
+        createHistoryDataSubscriber.setDatabase(database);
+        return new CreateHistoryDataSubscriber();
+    }
+
+    @Bean
+    public TaskProcessDataSubscriber taskProcessDataSubscriber(){
+        return new TaskProcessDataSubscriber();
+    }
+
+    @Bean
+    public CreateNewsDataSubscriber createNewsDataSubscriber(){
+        return new CreateNewsDataSubscriber();
+    }
+
+
+
+    @Bean
+    public ChangingDataObserver changingDataObserver(MongoDatabase database, CreateHistoryDataSubscriber createHistoryDataSubscriber, TaskProcessDataSubscriber taskProcessDataSubscriber, CreateNewsDataSubscriber createNewsDataSubscriber ){
+        ChangingDataObserver changingDataObserver = new ChangingDataObserver();
+        List<Observer> observers = new ArrayList<>();
+        observers.add(createHistoryDataSubscriber);
+        observers.add(taskProcessDataSubscriber);
+        observers.add(createNewsDataSubscriber);
+        changingDataObserver.setDatabase(database);
+        changingDataObserver.init(observers);
+        return changingDataObserver;
     }
 
 }

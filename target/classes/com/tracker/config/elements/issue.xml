@@ -1,14 +1,10 @@
 <elements>
 
-    <set name="common" title="common">
-         <property name="issue_id" title="user.card.issue_id" type="textField" mandatoryCondition="*" customClassName = "half"/>
-         <property name="issueName" title="user.card.issueName" type="textField" mandatoryCondition="*" customClassName = "half"/>
-    </set>
+    <set name="common" title="userCard.tab.common">
+        <property name="issueName" title="issue.card.issueName" type="textField" mandatoryCondition="*" customClassName = "fullString"/>
+        <property name="issueDescription" title="issue.card.issueDescription" type="textField" mandatoryCondition="*" customClassName = "fullString"/>
 
-    <set name="test" title="test">
-        <property name="issue_description" title="user.card.issue_description" type="textField" mandatoryCondition="*" customClassName = "half"/>
-
-        <property name="issue_dueDate" title="user.card.issue_dueDate" type="date" mandatoryCondition="*" customClassName = "half"/>
+        <property name="userAssoc" title="user.card.userAssoc" type="userAssoc"  typeForSaving="userAssoc" mandatoryCondition="*" customClassName = "fullString"/>
 
     </set>
 

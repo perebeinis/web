@@ -22,14 +22,11 @@ public class DataSearchFactory {
     @Autowired
     private MongoDatabase database;
 
-    private static final String searhTypeConstant = "searchType";
-    private static final String searhDataConstant = "searchData";
-    private static final String userTypeConstant = "user";
-
     final static Map<String, Supplier<DataSearcher>> map = new HashMap<>();
     static {
         map.put("element", DefaultSearcher::new);
         map.put("user", DefaultSearcher::new);
+        map.put("issue", DefaultSearcher::new);
     }
 
     public JSONObject searchData(String elementType, JSONObject searchDataObject){

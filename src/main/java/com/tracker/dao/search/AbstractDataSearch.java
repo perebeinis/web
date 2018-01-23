@@ -51,9 +51,10 @@ public abstract class AbstractDataSearch {
         Integer draw = (Integer) searchParams.get(drawConst);
         ArrayList<Document> docs = new ArrayList();
         JSONObject searchData = (JSONObject) ((JSONObject) searchParams.get(search)).get(searchDataConst);
+        String searchType = (String) ((JSONObject) searchParams.get(search)).get("searchType");
         BasicDBObject query = createSearchData(searchData);
 
-        MongoCollection<Document> collection = mongoDatabase.getCollection(userCollection);
+        MongoCollection<Document> collection = mongoDatabase.getCollection(BaseConstants.getCollection(searchType));
 
         FindIterable iteratorAll = collection.find(query);
         iteratorAll.into(docs);
@@ -82,7 +83,7 @@ public abstract class AbstractDataSearch {
 
     public JSONObject getDataById(MongoDatabase mongoDatabase, String elementType, String elementId){
         JSONObject result  = new JSONObject();
-        MongoCollection<Document> collection = mongoDatabase.getCollection(userCollection);
+        MongoCollection<Document> collection = mongoDatabase.getCollection(BaseConstants.getCollection(elementType));
 
         Bson match = new Document(BaseConstants.MATCH, new Document(BaseConstants.DOCUMENT_ID, new ObjectId(elementId)));
 

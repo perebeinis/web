@@ -1,22 +1,24 @@
-package com.tracker.news.impl;
+package com.tracker.observer;
 
-import com.tracker.news.Observer;
-import com.tracker.news.Subject;
+import com.tracker.observer.Observer;
+import com.tracker.observer.Subject;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Perebeinis on 19.12.2017.
+ * Created by Perebeinis on 23.01.2018.
  */
-public class News implements Subject {
+public class ChangingData implements Subject {
+
     private List<Observer> observers;
-    private JSONObject news;
+    private NotifyData notifyData;
     private boolean changed;
     private static final Object monitor = new Object();
 
-    public News(){
+    public ChangingData(){
         this.observers=new ArrayList<>();
     }
     @Override
@@ -55,13 +57,13 @@ public class News implements Subject {
 
     @Override
     public Object getUpdate(Observer obj) {
-        return this.news;
+        return this.notifyData;
     }
 
     //method to post message to the topic
-    public void postData(JSONObject news){
-        System.out.println("New news was created :"+news);
-        this.news = news;
+    public void processIncomingData(NotifyData notifyData){
+        System.out.println("New news was created :"+notifyData);
+        this.notifyData = notifyData;
         this.changed=true;
         notifyObservers();
     }

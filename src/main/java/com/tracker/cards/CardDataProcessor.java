@@ -131,6 +131,7 @@ public class CardDataProcessor {
                 Enumeration propertyNames = pathsConfigProperties.propertyNames();
 
                 while (propertyNames.hasMoreElements()) {
+                    jsonObject = new JSONObject();
                     String key = (String) propertyNames.nextElement();
                     InputStream inputStream = this.getClass().getResourceAsStream(pathsConfigProperties.getProperty(key));
                     DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

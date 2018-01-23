@@ -62,7 +62,7 @@ UserCardCreator.prototype.createCardElements = function () {
 
 
 
-function CardButtonsCreator(parentId, data, cardAttributesObject,messages,mode) {
+function CardButtonsCreator(parentId, data, cardAttributesObject,messages, mode, elementType) {
 
     this.parentId = parentId;
     var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
@@ -72,6 +72,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages,mode) 
     this.title = "title";
     this.name = "name";
     this.type = "type";
+    this.elementType = elementType;
     this.mode = mode;
     this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
 
@@ -103,6 +104,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages,mode) 
 
     this.save = function(e, data){
         var foundEmpty = e.data.mandatoryEventCheck();
+        var currentElementType = e.data.elementType;
 
         if(!foundEmpty){
             var postParams = [];
@@ -155,13 +157,13 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages,mode) 
 
 
             $.ajax ({
-                url: '/create-new-element?type=user',
+                url: '/create-new-element?type='+currentElementType,
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(postParams),
                 dataType: 'json'
             }).done(function( data ) {
-                window.open("/get-element?type=user&mode=view&id="+data._id , "_self");
+                window.open("/get-element?type="+currentElementType+"&mode=view&id="+data._id , "_self");
             });
         }
 

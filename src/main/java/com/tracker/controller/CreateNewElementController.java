@@ -1,14 +1,10 @@
 package com.tracker.controller;
 
 import com.mongodb.client.MongoDatabase;
-import com.tracker.config.localization.MessageResolveService;
 import com.tracker.constants.BaseConstants;
-import com.tracker.controller.base.BaseControllerResponce;
-import com.tracker.dao.create.DataCreator;
 import com.tracker.dao.create.DataCreatorFactory;
-import com.tracker.dao.search.DataSearchFactory;
 import com.tracker.dynamic.FrontElementConfigurationParser;
-import com.tracker.news.impl.NewsObserver;
+import com.tracker.observer.ChangingDataObserver;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,17 +37,13 @@ public class CreateNewElementController {
     private MongoDatabase database;
 
     @Autowired
-    private NewsObserver newsObserver;
+    private ChangingDataObserver changingDataObserver;
 
     @Autowired
     private DataCreatorFactory dataCreatorFactory;
 
     @Autowired
     private UserDetailsService customUserDetailsService;
-
-
-    private static final String userType = "user";
-
 
     @RequestMapping(value = "/create-new-element", method = RequestMethod.POST , produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object> searchData(@RequestBody String postData, @RequestParam("type") String type) {
@@ -62,6 +54,7 @@ public class CreateNewElementController {
             String newElementId = dataCreatorFactory.createData(type, formData);
             customUserDetailsService.reloadUsers();
             result.put(BaseConstants.DOCUMENT_ID,newElementId);
+            changingDataObserver.createEvent(type, formData, newElementId);
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
         }
