@@ -104,7 +104,7 @@ span.popup {
 .left-menu-tree + div {
     float: right;
     display: inline-block;
-    width: 80%;
+    width: 79%;
 }
 
 .search-buttons,
@@ -456,4 +456,8 @@ navbar.less:
     .fullString  .searchResult {
         margin-bottom: 0px;
         width: 99% !important;
+    }
+
+    .search-block {
+        display: block;
     }

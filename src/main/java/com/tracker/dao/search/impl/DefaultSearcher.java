@@ -21,5 +21,10 @@ public class DefaultSearcher  extends AbstractDataSearch implements DataSearcher
         return getDataById(database, elementType, elementId);
     }
 
+    @Override
+    public JSONObject updateElementById(MongoDatabase database, String elementType, String elementId, JSONObject dataForUpdate) {
+        return updateDataById(database, elementType, elementId, dataForUpdate);
+    }
+
 
 }

@@ -34,7 +34,7 @@ public class DataSearchFactory {
         if(element != null) {
             return element.get().searchData(database,searchDataObject);
         }
-        throw new IllegalArgumentException("No such shape " + elementType);
+        throw new IllegalArgumentException("No such element " + elementType);
     }
 
     public JSONObject searchDataById(String elementType, String elementId){
@@ -42,7 +42,14 @@ public class DataSearchFactory {
         if(element != null) {
             return element.get().getElementById(database, elementType, elementId);
         }
-        throw new IllegalArgumentException("No such shape " + elementType);
+        throw new IllegalArgumentException("No such element " + elementType);
     }
 
+    public JSONObject updateElementById(String elementType, String elementId, JSONObject dataForUpdate){
+        Supplier<DataSearcher> element = map.get(elementType);
+        if(element != null) {
+            return element.get().updateElementById(database, elementType, elementId, dataForUpdate);
+        }
+        throw new IllegalArgumentException("No such element " + elementType);
+    }
 }

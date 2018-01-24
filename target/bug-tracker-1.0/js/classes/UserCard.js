@@ -1,7 +1,7 @@
 function UserCardCreator(cardId, data, tabsId, cardFiledValues, messages, mode) {
     this.cardId = cardId;
     this.tabsId = tabsId;
-    this.cardFiledValues = cardFiledValues!=undefined && cardFiledValues!=null ? JSON.parse( cardFiledValues.replace(new RegExp('&quot;', 'g'), '"')) : null;
+    this.cardFiledValues = cardFiledValues!=undefined && cardFiledValues!=null ? JSON.parse(cardFiledValues.replace(new RegExp('&quot;', 'g'), '"').replace(new RegExp('\r?\n','g'), '%')) : null;
     var dataStr = data.replace(new RegExp('&quot;', 'g'), '"');
     this.dataArray = JSON.parse(dataStr);
     this.customClassName = "customClassName";
@@ -182,27 +182,29 @@ function CardButtonsCreator(parentId, data, cardAttributesObject,messages, mode,
             var condition = conditionsList[i];
             var attribute = $('*[name=\''+fieldName+'\']')[0];
             var mandatoryFound = false;
-            if(condition == "*"){
-                if(attribute.attributes.customtype.nodeValue == "userAssoc" && $(attribute.parentNode).find(".added > tr").length == 0) {
-                    mandatoryFound = true;
-                }else if(attribute.attributes.customtype.nodeValue != "userAssoc" &&
-                    (attribute.value == "" || (attribute.type == "file" && attribute.files.length == 0 ) || (attribute.type == "userAssoc" && attribute.files.length == 0 ))){
-                    mandatoryFound = true;
-                }
-            }else {
-                var conditionJson = JSON.parse(condition.replace(new RegExp('&#39;', 'g'),'"'));
-                for (var j in conditionJson){
-                    var conditionAttribute = $('*[name=\''+j+'\']')[0];
-                    var conditionValue = conditionJson[j];
-                    var regExp = /\(([^)]+)\)/;
-                    var valuesArray = regExp.exec(conditionValue)[1].split(",");
-                    var result = (conditionValue.indexOf("NOT IN") == -1) ?
-                        valuesArray.indexOf(conditionAttribute.value)!=-1
-                        : valuesArray.indexOf(conditionAttribute.value)==-1;
-
-                    if(conditionAttribute.value=="" || result){
+            if(attribute!= undefined) {
+                if (condition == "*") {
+                    if (attribute.attributes.customtype.nodeValue == "userAssoc" && $(attribute.parentNode).find(".added > tr").length == 0) {
                         mandatoryFound = true;
-                        break;
+                    } else if (attribute.attributes.customtype.nodeValue != "userAssoc" &&
+                        (attribute.value == "" || (attribute.type == "file" && attribute.files.length == 0 ) || (attribute.type == "userAssoc" && attribute.files.length == 0 ))) {
+                        mandatoryFound = true;
+                    }
+                } else {
+                    var conditionJson = JSON.parse(condition.replace(new RegExp('&#39;', 'g'), '"'));
+                    for (var j in conditionJson) {
+                        var conditionAttribute = $('*[name=\'' + j + '\']')[0];
+                        var conditionValue = conditionJson[j];
+                        var regExp = /\(([^)]+)\)/;
+                        var valuesArray = regExp.exec(conditionValue)[1].split(",");
+                        var result = (conditionValue.indexOf("NOT IN") == -1) ?
+                        valuesArray.indexOf(conditionAttribute.value) != -1
+                            : valuesArray.indexOf(conditionAttribute.value) == -1;
+
+                        if (conditionAttribute.value == "" || result) {
+                            mandatoryFound = true;
+                            break;
+                        }
                     }
                 }
             }

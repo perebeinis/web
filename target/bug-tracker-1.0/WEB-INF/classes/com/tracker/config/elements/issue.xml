@@ -2,7 +2,7 @@
 
     <set name="common" title="userCard.tab.common">
         <property name="issueName" title="issue.card.issueName" type="textField" mandatoryCondition="*" customClassName = "fullString"/>
-        <property name="issueDescription" title="issue.card.issueDescription" type="textField" mandatoryCondition="*" customClassName = "fullString"/>
+        <property name="issueDescription" title="issue.card.issueDescription" type="textArea" mandatoryCondition="*" customClassName = "fullString"/>
 
         <property name="userAssoc" title="user.card.userAssoc" type="userAssoc"  typeForSaving="userAssoc" mandatoryCondition="*" customClassName = "fullString"/>
 

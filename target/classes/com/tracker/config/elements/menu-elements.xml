@@ -10,6 +10,14 @@
         </sub-element>
         <!-- searchParams="{'searchType' : 'user','searchData' : {'firstName' : 'admin'} }" -->
 
+        <sub-element name="searchMyTasks" title="header.buttons.searchMyTasks"  type="subElement" searchColumns="issueName,issueDescription"
+                     searchParams="{'searchType' : 'issue', 'searchMyTasks' : 'true'}"
+                     enableForRoles="ADMIN,USER">
+            <searcher type="text" name="issueName" title="issue.card.issueName"></searcher>
+            <searcher type="text" name="issueDescription" title="issue.card.issueDescription"></searcher>
+        </sub-element>
+
+
     </menu-element>
 
     <menu-element name="searchNews" title="header.buttons.searchNews" searchColumns="issueName,issueDescription" type="filter" enableForRoles="ADMIN,USER" searchParams="{'searchType' : 'issue'}">

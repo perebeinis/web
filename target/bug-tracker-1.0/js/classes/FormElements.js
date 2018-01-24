@@ -26,8 +26,8 @@ FormElements.prototype.textArea = function (data, parentElementId, elementValue)
         .append($('<div>', {class: "form-group" + " " + data[this.customClassName]}).append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).append($('<textarea>', {
             class: "form-control " + data[this.name], name: data[this.name],
             customType: data[this.typeForSaving], type: 'text',
-            value: elementValue != null ? elementValue : "", readonly: this.mode == "view" ? true : false
-        }).text(elementValue != null ? elementValue : "")));
+            value: elementValue != null ? elementValue.replace(new RegExp('%','g'), '\n') : "", readonly: this.mode == "view" ? true : false
+        }).text(elementValue != null ? elementValue.replace(new RegExp('%','g'), '\n') : "")));
 
     if (data[this.mandatoryCondition] != "") {
         this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];

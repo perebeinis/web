@@ -33,9 +33,16 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
         var searchParams = {};
         searchParams["searchType"] = this.searchParams.searchType;
         searchParams["searchData"] = this.searchParams.searchData;
+
+        if(this.searchParams.searchMyTasks){
+            this.searchParams.searchData = searchParams["searchData"] = { currentExecutor : this.userData._id["$oid"]};
+        }
+
         this.createSearchTable(searchParams, this);
-        $("#"+tableDivId).on('click', 'tr', function () {
-            window.open("/get-element?type="+this.elementType+"&mode=view&id="+this.id, "_blank");
+        var currentSearchType = this.searchParams.searchType;
+
+        $("#"+tableDivId).on('click', 'tbody tr', function () {
+            window.open("/get-element?type="+currentSearchType+"&mode=view&id="+this.id, "_blank");
         });
     }
 
