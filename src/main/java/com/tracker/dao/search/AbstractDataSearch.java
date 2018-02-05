@@ -7,12 +7,15 @@ import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.UpdateResult;
 import com.tracker.cards.CardDataProcessor;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.search.impl.DefaultSearcher;
 import com.tracker.dao.search.request.CreateRequestQuery;
+import com.tracker.dao.search.request.impl.CreateRequestQueryAddressee;
 import com.tracker.dao.search.request.impl.CreateRequestQueryFile;
 import com.tracker.dao.search.request.impl.CreateRequestQueryText;
+import com.tracker.dao.search.request.impl.CreateRequestQueryUserAssoc;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -39,6 +42,8 @@ public abstract class AbstractDataSearch {
     static {
         requestQueryMap.put("file", CreateRequestQueryFile::new);
         requestQueryMap.put("text", CreateRequestQueryText::new);
+        requestQueryMap.put(BaseConstants.CURRENT_EXECUTOR, CreateRequestQueryAddressee::new);
+        requestQueryMap.put("userAssoc", CreateRequestQueryUserAssoc::new);
     }
 
 
@@ -49,9 +54,10 @@ public abstract class AbstractDataSearch {
         Integer draw = (Integer) searchParams.get(drawConst);
         ArrayList<Document> docs = new ArrayList();
         JSONObject searchData = (JSONObject) ((JSONObject) searchParams.get(search)).get(searchDataConst);
+        String searchType = (String) ((JSONObject) searchParams.get(search)).get("searchType");
         BasicDBObject query = createSearchData(searchData);
 
-        MongoCollection<Document> collection = mongoDatabase.getCollection(userCollection);
+        MongoCollection<Document> collection = mongoDatabase.getCollection(BaseConstants.getCollection(searchType));
 
         FindIterable iteratorAll = collection.find(query);
         iteratorAll.into(docs);
@@ -80,7 +86,7 @@ public abstract class AbstractDataSearch {
 
     public JSONObject getDataById(MongoDatabase mongoDatabase, String elementType, String elementId){
         JSONObject result  = new JSONObject();
-        MongoCollection<Document> collection = mongoDatabase.getCollection(userCollection);
+        MongoCollection<Document> collection = mongoDatabase.getCollection(BaseConstants.getCollection(elementType));
 
         Bson match = new Document(BaseConstants.MATCH, new Document(BaseConstants.DOCUMENT_ID, new ObjectId(elementId)));
 
@@ -99,15 +105,39 @@ public abstract class AbstractDataSearch {
     }
 
 
+    public JSONObject updateDataById(MongoDatabase mongoDatabase, String elementType, String elementId, JSONObject dataForUpdate){
+        JSONObject result  = new JSONObject();
+        MongoCollection<Document> collection = mongoDatabase.getCollection(BaseConstants.getCollection(elementType));
+        Bson setData = new Document(BaseConstants.SET, createUpdateData(dataForUpdate));
+        UpdateResult updateResult = collection.updateOne(new Document(BaseConstants.DOCUMENT_ID, new ObjectId(elementId)), setData);
+        System.out.println("data updated");
+        return result;
+    }
+
     private BasicDBObject createSearchData(JSONObject searchData){
         BasicDBObject regexQuery = new BasicDBObject();
         Iterator<?> keys = searchData.keys();
         while(keys.hasNext() ) {
             String key = (String)keys.next();
-            regexQuery.put(key,new BasicDBObject("$regex", searchData.get(key)+".*")
-                    .append("$options", "i"));
+            if(key.equals(BaseConstants.CURRENT_EXECUTOR)){
+                regexQuery.put(key,new ObjectId((String) searchData.get(key)));
+            }else{
+                regexQuery.put(key,new BasicDBObject("$regex", searchData.get(key)+".*")
+                        .append("$options", "i"));
+            }
+
         }
         return regexQuery;
+    }
+
+    private BasicDBObject createUpdateData(JSONObject updateData){
+        BasicDBObject updatingDataObject = new BasicDBObject();
+        Iterator<?> keys = updateData.keys();
+        while(keys.hasNext() ) {
+            String key = (String)keys.next();
+            updatingDataObject.put(key,updateData.get(key));
+        }
+        return updatingDataObject;
     }
 
     public static List<Bson> searchDataByParams(List<Bson> filters, String elementType){

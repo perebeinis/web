@@ -46,6 +46,7 @@ public class GetElementCardController {
         model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
         model = cardDataFactory.getCardData(type,model,null);
         model.addAttribute("mode", "create");
+        model.addAttribute("elementType", type);
         return "create-user-card";
     }
 
@@ -54,6 +55,7 @@ public class GetElementCardController {
         model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
         model = cardDataFactory.getCardData(type, model, id);
         model.addAttribute("mode", "view");
+        model.addAttribute("elementType", type);
         return "create-user-card";
     }
 

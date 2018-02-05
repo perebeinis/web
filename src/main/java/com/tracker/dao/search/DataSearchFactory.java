@@ -22,14 +22,11 @@ public class DataSearchFactory {
     @Autowired
     private MongoDatabase database;
 
-    private static final String searhTypeConstant = "searchType";
-    private static final String searhDataConstant = "searchData";
-    private static final String userTypeConstant = "user";
-
     final static Map<String, Supplier<DataSearcher>> map = new HashMap<>();
     static {
         map.put("element", DefaultSearcher::new);
         map.put("user", DefaultSearcher::new);
+        map.put("issue", DefaultSearcher::new);
     }
 
     public JSONObject searchData(String elementType, JSONObject searchDataObject){
@@ -37,7 +34,7 @@ public class DataSearchFactory {
         if(element != null) {
             return element.get().searchData(database,searchDataObject);
         }
-        throw new IllegalArgumentException("No such shape " + elementType);
+        throw new IllegalArgumentException("No such element " + elementType);
     }
 
     public JSONObject searchDataById(String elementType, String elementId){
@@ -45,7 +42,14 @@ public class DataSearchFactory {
         if(element != null) {
             return element.get().getElementById(database, elementType, elementId);
         }
-        throw new IllegalArgumentException("No such shape " + elementType);
+        throw new IllegalArgumentException("No such element " + elementType);
     }
 
+    public JSONObject updateElementById(String elementType, String elementId, JSONObject dataForUpdate){
+        Supplier<DataSearcher> element = map.get(elementType);
+        if(element != null) {
+            return element.get().updateElementById(database, elementType, elementId, dataForUpdate);
+        }
+        throw new IllegalArgumentException("No such element " + elementType);
+    }
 }

@@ -10,4 +10,6 @@ public interface DataSearcher {
     JSONObject searchData(MongoDatabase database, JSONObject searchDataObject);
 
     JSONObject getElementById(MongoDatabase database, String elementType,  String elementId);
+
+    JSONObject updateElementById(MongoDatabase database, String elementType, String elementId, JSONObject dataForUpdate);
 }

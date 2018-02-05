@@ -1,6 +1,12 @@
+@font-face {
+    font-family: Syntesia;
+    src: url(Syntesia.ttf);
+}
+
 * {
     font-family: "Times New Roman", Times, serif;
     font-size: 16px;
+
 }
 
 * input {
@@ -43,24 +49,30 @@
 }
 
 .card-attributes-tabs > span {
-    padding: 7px 5px 7px 5px;
-    background-color: #337ab7;
-    color: white;
     cursor: pointer;
+    background-color: #26465b;
+    display: inline-block;
+    color: #c7c7c7 !important;
+    text-align: center;
+    padding: 5px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
 }
 
 .card-attributes-tabs > span:hover {
-    background-color: red !important;
-    padding: 7px 5px 7px 5px;
+    background-color: #26465b !important;
+    padding: 5px;
 }
 
-.tab-selected {
-    background-color: #479a1f !important;
+.card-attributes-tabs > span.tab-selected {
+    background-color: #396d8e !important;
+    color: white !important;
 }
 
 .card-attributes-container {
     padding: 10px 0 10px 10px;
-    border: 1px solid #3379b7;
+    border: 1px solid #c0c2c3;
 }
 
 .card-attributes-container > div .half {
@@ -84,9 +96,9 @@
 }
 
 .card-attributes-buttons .card-button button {
-    background-color: #479a20;
-    border: 1px solid #479a20;
-    color: white;
+    background-color: #26465b !important;
+    border: 1px solid #26465b;
+    color: #ececec !important;
 }
 
 span.popup {
@@ -99,7 +111,7 @@ span.popup {
 .left-menu-tree + div {
     float: right;
     display: inline-block;
-    width: 80%;
+    width: 79%;
 }
 
 .search-buttons,
@@ -159,9 +171,11 @@ table.dataTable {
 }
 
 @media (min-width: 768px)
-navbar.less:  37.navbar {
-        border-radius: 0px;
-    }
+navbar.less:
+
+37.navbar {
+      border-radius: 0px;
+  }
 
     .nav-menu-list-style > li > a {
         padding: 10px 0px;
@@ -256,6 +270,10 @@ navbar.less:  37.navbar {
         list-style: inside disc
     }
 
+    ul.bullets> li {
+        padding-left: 10px
+    }
+
     ul.numerics {
         list-style: inside decimal
     }
@@ -284,6 +302,11 @@ navbar.less:  37.navbar {
 
     .input-group.date.half {
         width: 50% !important;
+        vertical-align: top;
+    }
+
+    .added tr {
+        background-color: #b2e1e796;
     }
 
     .fullString {
@@ -328,6 +351,8 @@ navbar.less:  37.navbar {
 
     .navbar-inverse {
         border-radius: 0px !important;
+        background-color: #26465b;
+        border-color: #26465b;
     }
 
     table.dataTable thead td {
@@ -384,16 +409,14 @@ navbar.less:  37.navbar {
         top: 4px;
     }
 
-
     .textField .userAssoc {
-        background-image: url('/searchicon.png');
-        background-position: 10px 12px;
+        background-image: url('/images/searchicon.png');
+        background-position: 5px 7px;
         background-repeat: no-repeat;
         width: 90%;
         font-size: 16px;
         padding: 12px 20px 12px 40px;
         border: 1px solid #ddd;
-        margin-bottom: 12px;
     }
 
     .textField table {
@@ -403,16 +426,60 @@ navbar.less:  37.navbar {
         font-size: 18px;
     }
 
-    .textField table th, .textField table td {
+    .textField table th {
         text-align: left;
-        padding: 12px;
+        padding: 1px 12px;
+    }
+
+    .textField table td {
+        text-align: left;
+        padding: 5px 12px;
     }
 
     .textField table tr {
         border-bottom: 1px solid #ddd;
+        cursor: pointer;
+    }
+.card-attributes-container > div .half > .searchResult {
+        width: 35%;
+        position: fixed;
+        z-index: 3;
+        background-color: white;
+    }
+
+    .added {
+        margin-bottom: 5px;
+        width: 90% !important;
+    }
+
+    .textField table tr:not(.header):hover {
+        background-color: #ddd;
     }
 
 
-    .textField table tr.header, .textField table tr:hover {
-        background-color: #f1f1f1;
+
+    .fullString > input {
+        width: 99%;
+        margin-bottom: 20px;
+    }
+
+    .fullString > .userAssoc,
+    .fullString  .added,
+    .fullString  .searchResult {
+        margin-bottom: 0px;
+        width: 99% !important;
+    }
+
+    .search-block {
+        display: block;
+    }
+
+    .navbar-inverse .navbar-brand {
+        color: #c7c7c7 !important;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #26465b;
+        border-color: #26465b;
     }
