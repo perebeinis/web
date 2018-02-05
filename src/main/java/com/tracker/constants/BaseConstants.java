@@ -33,6 +33,9 @@ public interface BaseConstants {
 
     public static final Map<String, String> collectionsByType = new HashMap<>();
 
+    /* TASKS*/
+    public static String CURRENT_TASK_EXECUTOR = "currentExecutor";
+
     public static String getCollection(String elementType){
         if(elementType.equals("issue")){
             return ISSUE_COLLECTION;

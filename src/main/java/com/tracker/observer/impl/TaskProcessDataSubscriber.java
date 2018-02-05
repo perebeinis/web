@@ -42,7 +42,7 @@ public class TaskProcessDataSubscriber extends Observer{
                 if(name.equals(BaseConstants.USER_ASSOC)){
                     String assocUserId = (String) formElement.get("data");
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("currentExecutor", new ObjectId(assocUserId));
+                    jsonObject.put(BaseConstants.CURRENT_TASK_EXECUTOR, new ObjectId(assocUserId));
                     dataSearchFactory.updateElementById(elementType,elementId,jsonObject);
                 }
 

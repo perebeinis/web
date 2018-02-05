@@ -1,6 +1,12 @@
+@font-face {
+    font-family: Syntesia;
+    src: url(Syntesia.ttf);
+}
+
 * {
     font-family: "Times New Roman", Times, serif;
     font-size: 16px;
+
 }
 
 * input {
@@ -44,9 +50,9 @@
 
 .card-attributes-tabs > span {
     cursor: pointer;
-    background-color: #ccc;
+    background-color: #26465b;
     display: inline-block;
-    color: black;
+    color: #c7c7c7 !important;
     text-align: center;
     padding: 5px 16px;
     text-decoration: none;
@@ -55,12 +61,13 @@
 }
 
 .card-attributes-tabs > span:hover {
-    background-color: #b3b3b3 !important;
+    background-color: #26465b !important;
     padding: 5px;
 }
 
-.tab-selected {
-    background-color: #b3b3b3 !important;
+.card-attributes-tabs > span.tab-selected {
+    background-color: #396d8e !important;
+    color: white !important;
 }
 
 .card-attributes-container {
@@ -89,9 +96,9 @@
 }
 
 .card-attributes-buttons .card-button button {
-    background-color: #479a20;
-    border: 1px solid #479a20;
-    color: white;
+    background-color: #26465b !important;
+    border: 1px solid #26465b;
+    color: #ececec !important;
 }
 
 span.popup {
@@ -263,6 +270,10 @@ navbar.less:
         list-style: inside disc
     }
 
+    ul.bullets> li {
+        padding-left: 10px
+    }
+
     ul.numerics {
         list-style: inside decimal
     }
@@ -340,6 +351,8 @@ navbar.less:
 
     .navbar-inverse {
         border-radius: 0px !important;
+        background-color: #26465b;
+        border-color: #26465b;
     }
 
     table.dataTable thead td {
@@ -460,4 +473,8 @@ navbar.less:
 
     .search-block {
         display: block;
+    }
+
+    .navbar-inverse .navbar-brand {
+        color: #c7c7c7 !important;
     }
