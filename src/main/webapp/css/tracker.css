@@ -412,6 +412,7 @@ navbar.less:  37.navbar {
         border-bottom: 1px solid #ddd;
     }
 
+
     .textField table tr.header, .textField table tr:hover {
         background-color: #f1f1f1;
     }
