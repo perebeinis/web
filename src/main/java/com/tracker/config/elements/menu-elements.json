@@ -1,0 +1,115 @@
+{
+  "elements": [
+    {
+      "name": "users",
+      "title": "header.buttons.searchInbox",
+      "searchColumns": "firstName,lastName,birthDay",
+      "type": "header",
+      "enableForRoles": "ADMIN,USER",
+      "elements": [
+        {
+          "name": "searchUsers",
+          "title": "header.buttons.searchUsers",
+          "searchColumns": "firstName,lastName,birthDay",
+          "type": "subElement",
+          "mode": "view",
+          "searchParams": {
+            "searchType": "user"
+          },
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "firstName",
+              "title": "header.buttons.firstName",
+              "type": "text"
+            },
+            {
+              "name": "lastName",
+              "title": "header.buttons.lastName",
+              "type": "text"
+            }
+          ]
+        },
+
+        {
+          "name": "searchMyTasks",
+          "title": "header.buttons.searchMyTasks",
+          "searchColumns": "issueName,issueDescription",
+          "type": "subElement",
+          "mode": "task",
+          "searchParams": {"searchType" : "issue", "searchMyTasks" : "true"},
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "issueName",
+              "title": "issue.card.issueName",
+              "type": "text"
+            },
+            {
+              "name": "issueDescription",
+              "title": "issue.card.issueDescription",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    
+    {
+      "name": "searchNews",
+      "title": "header.buttons.searchNews",
+      "searchColumns": "issueName,issueDescription",
+      "type": "filter",
+      "mode": "view",
+      "enableForRoles": "ADMIN,USER",
+      "searchParams": {"searchType" : "issue"},
+      "searchers": [
+        {
+          "name": "issueName",
+          "title": "issue.card.issueName",
+          "type": "text"
+        },
+        {
+          "name": "issueDescription",
+          "title": "issue.card.issueDescription",
+          "type": "text"
+        }
+      ]
+    },
+
+    {
+      "name": "adminHeader",
+      "title": "header.buttons.adminHeader",
+      "type": "header",
+      "enableForRoles": "ADMIN,USER",
+      "elements": [
+        {
+          "name": "audit",
+          "title": "header.buttons.audit",
+          "searchColumns": "actionName,time,auditData",
+          "type": "subElement",
+          "mode": "view",
+          "searchParams": {"searchType" : "audit"},
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "actionName",
+              "title": "header.buttons.actionName",
+              "type": "text"
+            },
+            {
+              "name": "time",
+              "title": "header.buttons.time",
+              "type": "text"
+            },
+            {
+              "name": "auditData",
+              "title":"header.buttons.auditData",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

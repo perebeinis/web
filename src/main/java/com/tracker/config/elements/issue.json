@@ -1,0 +1,83 @@
+{
+  "tabs": [
+    {
+      "name": "common",
+      "title": "userCard.tab.common",
+      "properties": [
+        {
+          "name": "issueName",
+          "title": "issue.card.issueName",
+          "type": "textField",
+          "mandatoryCondition": "*",
+          "typeForSaving": "text",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ],
+          "customClassName": "fullString"
+        },
+        {
+          "name": "issueDescription",
+          "title": "issue.card.issueDescription",
+          "type": "textArea",
+          "enableParams": [
+            {
+              "mode": "create"
+            },
+            {
+              "mode": "task"
+            }
+          ],
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "fullString"
+        },
+        {
+          "name": "userAssoc",
+          "title": "issue.card.userAssoc",
+          "type": "userAssoc",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ],
+          "typeForSaving": "userAssoc",
+          "mandatoryCondition": "*",
+          "customClassName": "fullString"
+        }
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "name": "save",
+      "title": "user.card.save",
+      "type": "button",
+      "viewParams": {
+        "mode": [
+          "create",
+          "task"
+        ]
+      },
+      "customClassName": "save"
+    },
+    {
+      "name": "close",
+      "title": "user.card.close",
+      "type": "button",
+      "customClassName": "save"
+    },
+    {
+      "name": "sendNext",
+      "title": "user.card.sendNext",
+      "type": "button",
+      "viewParams": {
+        "mode": [
+          "create"
+        ]
+      },
+      "customClassName": "save"
+    }
+  ]
+}

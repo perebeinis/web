@@ -1,0 +1,113 @@
+{
+  "tabs": [
+    {
+      "name": "common",
+      "title": "userCard.tab.common",
+      "properties": [
+        {
+          "name": "user_id",
+          "title": "user.card.user_id",
+          "type": "textField",
+          "mandatoryCondition": "*",
+          "typeForSaving": "text",
+          "customClassName": "half"
+        },
+        {
+          "name": "user_pass",
+          "title": "user.card.user_pass",
+          "type": "textField",
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "half"
+        },
+        {
+          "name": "firstName",
+          "title": "user.card.firstName",
+          "type": "textField",
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "half"
+        },
+        {
+          "name": "lastName",
+          "title": "user.card.lastName",
+          "type": "textField",
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "half"
+        },
+        {
+          "name": "roles",
+          "title": "user.card.roles",
+          "type": "multiSelect",
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "half"
+        },
+        {
+          "name": "description",
+          "title": "user.card.description",
+          "type": "textArea",
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "fullString"
+        }
+      ]
+    },
+
+    {
+      "name": "test",
+      "title": "userCard.tab.additionalInfo",
+      "properties": [
+        {
+          "name": "userAssoc",
+          "title": "user.card.userAssoc",
+          "type": "userAssoc",
+          "mandatoryCondition": "*",
+          "typeForSaving": "userAssoc",
+          "customClassName": "half"
+        },
+        {
+          "name": "email",
+          "title": "user.card.email",
+          "type": "textField",
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "half"
+        },
+        {
+          "name": "avatar",
+          "title": "user.card.avatar",
+          "type": "image",
+          "typeForSaving": "file",
+          "mandatoryCondition": "*",
+          "customClassName": "half"
+        },
+        {
+          "name": "birthDay",
+          "title": "user.card.birthDay",
+          "type": "date",
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "half"
+        }
+      ]
+    }
+
+  ],
+  "buttons": [
+        {
+          "name": "save",
+          "title": "user.card.save",
+          "type": "button",
+          "viewParams": {"mode" : "create"},
+          "customClassName": "save"
+        },
+        {
+          "name": "close",
+          "title": "user.card.close",
+          "type": "button",
+          "customClassName": "save"
+        }
+  ]
+}

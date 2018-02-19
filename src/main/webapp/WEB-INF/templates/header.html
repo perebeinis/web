@@ -1,0 +1,51 @@
+<head>
+    <div th:fragment="header-css">
+        <!-- this is header-css -->
+        <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="css/bootstrap.css" />
+        <link rel="stylesheet" th:href="@{/css/tracker.css}" href="css/tracker.css" />
+        <link rel="stylesheet" th:href="@{/css/multiple-select.css}" href="css/multiple-select.css" />
+        <!--<link rel="stylesheet" th:href="@{/css/knockout-file-bindings.css}" href="css/knockout-file-bindings.css" />-->
+        <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" href="css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}" href="css/bootstrap-datetimepicker.min.css" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" th:src="@{/js/classes/Utils.js}"></script>
+        <script type="text/javascript" th:src="@{/js/header-buttons.js}"></script>
+        <script type="text/javascript" th:src="@{/js/classes/FormElements.js}"></script>
+        <script type="text/javascript" th:src="@{/js/classes/CardCreator.js}"></script>
+        <script type="text/javascript" th:src="@{/js/menu-creator.js}"></script>
+        <script type="text/javascript" th:src="@{/js/search-data.js}"></script>
+        <script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+        <script type="text/javascript" th:src="@{/js/multiple-select.js}"></script>
+        <!--<script type="text/javascript" th:src="@{/js/knockout-file-bindings.js}"></script>-->
+
+        <script type="text/javascript" th:src="@{/js/jquery.dataTables.min.js}"></script>
+
+
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+    <!-- this is header -->
+    <nav class="navbar navbar-inverse">
+        <div id="header-buttons" class="container">
+
+            <script>
+                var messages = "[[${messages}]]";
+                var userData = "[[${userData}]]";
+                var cardAttributes = "[[${headerList}]]";
+                var menu = new HeaderButton("header-buttons",cardAttributes,messages, userData);
+                menu.createHeaderElements();
+
+            </script>
+
+        </div>
+    </nav>
+
+</div>
+
+</body>
+</html>

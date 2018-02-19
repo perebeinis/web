@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <META http-equiv="content-type" content="text/html; charset=utf-8">
+    <title th:text="#{loginMsg.title}"></title>
+    <div th:replace="header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="header :: header"/>
+
+<div class="left-menu-tree">
+    <div th:replace="menu :: menu"/>
+</div>
+
+<!--
+<div class="card-attributes">
+    <div th:replace="card :: card"/>
+</div>
+-->
+
+<div th:replace="footer :: footer"/>
+
+</body>
+</html>

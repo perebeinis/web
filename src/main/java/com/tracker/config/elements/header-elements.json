@@ -1,0 +1,42 @@
+{
+  "elements": [
+    {
+      "name": "createNewTask",
+      "title": "header.buttons.createNewTask",
+      "enableForRoles": "ADMIN,USER"
+    },
+    {
+      "name": "createNewUser",
+      "title": "header.buttons.createNewUser",
+      "enableForRoles": "ADMIN,USER"
+    },
+    {
+      "name": "test",
+      "title": "header.buttons.test",
+      "enableForRoles": "ADMIN,USER"
+    },
+    {
+      "name": "searchData",
+      "title": "header.buttons.searchData",
+      "enableForRoles": "ADMIN"
+    },
+    {
+      "name": "userData",
+      "title": "header.buttons.userData",
+      "type" : "header",
+      "enableForRoles": "ADMIN,USER",
+      "elements": [
+        {
+          "name": "myProfile",
+          "title": "header.buttons.myProfile",
+          "enableForRoles": "ADMIN,USER"
+        },
+        {
+          "name": "signOut",
+          "title": "header.buttons.signOut",
+          "enableForRoles": "ADMIN,USER"
+        }
+      ]
+    }
+  ]
+}
