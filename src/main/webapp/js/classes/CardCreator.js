@@ -88,14 +88,12 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
         var tabsCounter = 0;
         //create buttons for cards
         var buttons = this.dataArray.buttons;
-        if (this.mode == undefined || this.mode != "view") {
-            for (var i in buttons) {
-                var button = buttons[i];
-                if(button.viewParams == undefined || (button.viewParams && button.viewParams.mode.indexOf(this.mode)!=-1)){
-                    var buttonType = button[this.type];
-                    this[buttonType](button, parentId);
-                    tabsCounter++;
-                }
+        for (var i in buttons) {
+            var button = buttons[i];
+            if (button.enableParams == undefined || Utils.checkFieldEnabled(button)) {
+                var buttonType = button[this.type];
+                this[buttonType](button, parentId);
+                tabsCounter++;
             }
         }
     }
@@ -183,7 +181,83 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
         }
 
 
-    }
+    },
+
+        this.sendNext = function (e, data) {
+            var foundEmpty = e.data.mandatoryEventCheck();
+            var currentElementType = e.data.elementType;
+
+            if (!foundEmpty) {
+                var postParams = [];
+
+                // inputs
+                $('.card-attributes-container input').each(function (data) {
+                    if (this.name != "" && this.name != "userAssoc" && this.readOnly == false) {
+                        if (this.type == "file") {
+                            var postData = {
+                                name: this.name,
+                                type: this.attributes.customtype.nodeValue,
+                                data: this.fileValue,
+                                fileName: this.files[0].name
+                            };
+                            postParams.push(postData);
+                            // postParams[this.name] = this.files[0].name +";"+this.fileValue;
+                            //postParams[this.name] = this.fileValue;
+                        } else {
+                            var postData = {
+                                name: this.name,
+                                type: this.attributes.customtype.nodeValue,
+                                data: this.value
+                            };
+                            postParams.push(postData);
+                            //postParams[this.name] = this.value;
+                        }
+                    }
+                });
+
+                // textarea
+                $('.card-attributes-container textarea').each(function (data) {
+                    if (this.name != "" && this.readOnly == false) {
+                        var postData = {name: this.name, type: this.attributes.customtype.nodeValue, data: this.value};
+                        postParams.push(postData);
+                    }
+                });
+
+                // select
+                $(".card-attributes-container .multiSelect").each(function (data) {
+                    if (this.innerHTML != "" && this.name != undefined) {
+                        var result = $(this.parentNode).find('.ms-drop.bottom > ul > li.selected:not(\'.ms-select-all\') > label > span').map(function () {
+                            return this.innerHTML;
+                        }).get().join();
+                        var postData = {name: this.name, type: this.attributes.customtype.nodeValue, data: result};
+                        postParams.push(postData);
+                    }
+                });
+
+                // userAssocs
+                $('.card-attributes-container .userAssoc').each(function (data) {
+                    if (this.name != undefined && this.readOnly == false) {
+                        var result = $(this.parentNode).find('.added tr').map(function () {
+                            return this.id;
+                        }).get().join();
+                        var postData = {name: this.name, type: this.attributes.customtype.nodeValue, data: result};
+                        postParams.push(postData);
+                    }
+                });
+
+                $.ajax({
+                    url: '/update-element?type=' + currentElementType+"&id="+Utils.getUrlParameter("id"),
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(postParams),
+                    dataType: 'json'
+                }).done(function (data) {
+                    window.open("/get-element?type=" + currentElementType + "&mode=view&id=" + data._id, "_self");
+                });
+            }
+
+
+        }
 
 
     this.close = function () {

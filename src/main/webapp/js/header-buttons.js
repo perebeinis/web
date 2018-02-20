@@ -56,7 +56,7 @@ function HeaderButton(cardId, data, messages,userData) {
                         .append($('<span>', {class: "caret"})))
                     .append($('<ul>', {class: "dropdown-menu", id:  name}))));
 
-        var subElements = data["subElements"];
+        var subElements = data["elements"];
         for (var i in subElements){
 
             $('#'+name)
@@ -84,11 +84,11 @@ function HeaderButton(cardId, data, messages,userData) {
     };
 
     this.createNewTask = function() {
-        window.open("/create-element?type=issue", "_self");
+        window.open("/create-element?type=issue&mode=create", "_self");
     };
 
     this.createNewUser = function() {
-        window.open("/create-element?type=user", "_self");
+        window.open("/create-element?type=user&mode=create", "_self");
     };
 
     this.defaultClick = function() {

@@ -349,6 +349,7 @@ navbar.less:
         margin-left: 10px;
     }
 
+    .search-result-table thead tr,
     .navbar-inverse {
         border-radius: 0px !important;
         background-color: #26465b;
@@ -477,4 +478,16 @@ navbar.less:
 
     .navbar-inverse .navbar-brand {
         color: #c7c7c7 !important;
+    }
+
+    table.dataTable thead {
+        color: #e1d8d8;
+    }
+
+    table.dataTable thead td{
+        padding: 10px 0px 10px 10px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0.01em 1em !important;
     }

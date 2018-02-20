@@ -41,6 +41,7 @@ public interface BaseConstants {
     public static String DEFAULT = "default";
     public static String TEXT = "text";
     public static String TYPE = "type";
+    public static String AUDIT_ELEMENT_ID = "auditElementId";
     public static String DATA = "data";
     public static String AUDIT_DATA = "auditData";
     public static String TIME = "time";
@@ -48,7 +49,9 @@ public interface BaseConstants {
     public static String TYPES_FOR_SAVING = "typeForSaving";
     public static String ACTION_NAME = "actionName";
     public static String CREATE = "create";
+    public static String UPDATE = "update";
     public static String CREATED = "created";
+    public static String ACTOR = "actor";
     public static String DATABASE = "database";
 
     public static final Map<String, String> collectionsByType = new HashMap<>();

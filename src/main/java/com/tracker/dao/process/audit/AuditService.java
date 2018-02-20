@@ -2,6 +2,7 @@ package com.tracker.dao.process.audit;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.tracker.config.security.authentification.CustomUserObject;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.process.audit.elements.AuditElement;
 import com.tracker.dao.process.audit.elements.impl.TextAuditElement;
@@ -13,9 +14,13 @@ import com.tracker.dao.process.data.elements.impl.TextDataElement;
 import com.tracker.dao.process.data.elements.impl.UserAssocDataElement;
 import org.apache.log4j.helpers.ISO8601DateFormat;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.text.DateFormat;
@@ -55,26 +60,33 @@ public class AuditService {
         return instance;
     }
 
-    public void auditData(String actionName, List<AuditObject> auditObjects){
+    public void auditData(String actionName, List<AuditObject> auditObjects, String elementType, ObjectId elementId){
         MongoCollection<Document> collection = database.getCollection(BaseConstants.getCollection(BaseConstants.AUDIT));
         Document auditDocument = new Document();
         auditDocument.put(BaseConstants.ACTION_NAME,actionName);
         auditDocument.put(BaseConstants.TIME, ISO8601DateFormat.getDateTimeInstance().format(new Date()));
         auditDocument.put(BaseConstants.CREATED, ISO8601DateFormat.getDateTimeInstance().format(new Date()));
+        auditDocument.put(BaseConstants.ACTOR, getCurrentActorFullName());
+        auditDocument.put(BaseConstants.TYPE, elementType);
+        auditDocument.put(BaseConstants.AUDIT_ELEMENT_ID, elementId);
 
-        Document auditData = new Document();
         JSONArray jsonArray = new JSONArray();
         for (AuditObject auditObject : auditObjects) {
             Supplier<AuditElement> element = auditElementsType.get(auditObject.getFieldType());
-
             jsonArray.put(element != null ?
             element.get().createAuditData(auditObject.getFieldName(),auditObject.getFieldValue()) :
             auditElementsType.get(BaseConstants.DEFAULT).get().createAuditData(auditObject.getFieldName(), auditObject.getFieldValue()));
-
         }
 
         auditDocument.put(BaseConstants.AUDIT_DATA,jsonArray);
         collection.insertOne(auditDocument);
         System.out.println("add action to history");
+    }
+
+
+    private String getCurrentActorFullName(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserObject customUserObject = customUserDetailsService.loadUserDataByUsername(authentication.getName());
+        return  customUserObject.getAllUserData().get(BaseConstants.FIRST_NAME) + " "+ customUserObject.getAllUserData().get(BaseConstants.LAST_NAME);
     }
 }

@@ -75,8 +75,8 @@ public abstract class AbstractDataSearch {
 
         JSONObject result = new JSONObject();
         result.put(drawConst, draw);
-        result.put(recordsTotalConst, docs.size());
-        result.put(recordsFilteredConst, docs.size());
+        result.put(recordsTotalConst, count);
+        result.put(recordsFilteredConst, count);
         result.put(dataConst, jsonArray);
 
         System.out.println("finish search users from query "+query);

@@ -19,10 +19,12 @@ public class DefaultDataProcessor implements DataProcessor {
     }
 
     @Override
-    public void updateData() {
+    public String updateData(JSONArray incomingDataObject, String elementType, String elementId) {
+        return "";
     }
 
     @Override
-    public void removeData() {
+    public String removeData() {
+        return "";
     }
 }

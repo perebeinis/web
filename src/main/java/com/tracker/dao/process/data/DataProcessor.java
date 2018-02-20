@@ -8,6 +8,6 @@ import org.json.JSONArray;
 public interface DataProcessor {
     String processData(JSONArray incomingDataObject, String elementType, String elementId);
     String createData(JSONArray incomingDataObject, String elementType, String elementId);
-    void updateData();
-    void removeData();
+    String updateData(JSONArray incomingDataObject, String elementType, String elementId);
+    String removeData();
 }

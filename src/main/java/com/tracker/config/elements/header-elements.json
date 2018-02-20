@@ -11,16 +11,6 @@
       "enableForRoles": "ADMIN,USER"
     },
     {
-      "name": "test",
-      "title": "header.buttons.test",
-      "enableForRoles": "ADMIN,USER"
-    },
-    {
-      "name": "searchData",
-      "title": "header.buttons.searchData",
-      "enableForRoles": "ADMIN"
-    },
-    {
       "name": "userData",
       "title": "header.buttons.userData",
       "type" : "header",

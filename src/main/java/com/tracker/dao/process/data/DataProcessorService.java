@@ -1,5 +1,7 @@
 package com.tracker.dao.process.data;
 
+import com.google.gson.JsonParser;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.constants.BaseConstants;
@@ -10,6 +12,7 @@ import com.tracker.dao.process.data.elements.impl.FileDataElement;
 import com.tracker.dao.process.data.elements.impl.TextDataElement;
 import com.tracker.dao.process.data.elements.impl.UserAssocDataElement;
 import com.tracker.dao.process.data.impl.DefaultDataProcessor;
+import org.bson.conversions.Bson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,11 +75,30 @@ public class DataProcessorService {
         }
 
         collection.insertOne(document);
-        AuditService.getInstance().auditData(BaseConstants.CREATE, auditObjects);
-
         ObjectId objectId = document.getObjectId(BaseConstants.DOCUMENT_ID);
+        AuditService.getInstance().auditData(BaseConstants.CREATE, auditObjects, elementType, objectId);
         System.out.println("created new element with type = " + elementType);
         return objectId.toString();
+    }
+
+
+    public JSONObject getElementById(String elementType, String elementId){
+        MongoCollection<Document> collection = database.getCollection(BaseConstants.getCollection(elementType));
+        Bson match = new Document(BaseConstants.MATCH, new Document(BaseConstants.DOCUMENT_ID, new ObjectId(elementId)));
+
+        List<Bson> filters = new ArrayList<>();
+        filters.add(match);
+
+        AggregateIterable<Document> iterator = collection.aggregate(filters);
+        ArrayList<Document> docs = new ArrayList();
+        iterator.into(docs);
+
+        JSONObject result  = new JSONObject();
+        if(docs.size()>0){
+            result = new JSONObject(new JsonParser().parse(docs.get(0).toJson()).getAsJsonObject().toString());
+        }
+
+        return result;
     }
 
     public Map<String, Supplier<DataElement>> getSavingElementsType() {

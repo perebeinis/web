@@ -2,11 +2,11 @@
   "tabs": [
     {
       "name": "common",
-      "title": "userCard.tab.common",
+      "title": "tabs.common",
       "properties": [
         {
           "name": "user_id",
-          "title": "user.card.user_id",
+          "title": "constants.user_id",
           "type": "textField",
           "mandatoryCondition": "*",
           "typeForSaving": "text",
@@ -14,7 +14,7 @@
         },
         {
           "name": "user_pass",
-          "title": "user.card.user_pass",
+          "title": "constants.user_pass",
           "type": "textField",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
@@ -22,7 +22,7 @@
         },
         {
           "name": "firstName",
-          "title": "user.card.firstName",
+          "title": "constants.firstName",
           "type": "textField",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
@@ -30,7 +30,7 @@
         },
         {
           "name": "lastName",
-          "title": "user.card.lastName",
+          "title": "constants.lastName",
           "type": "textField",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
@@ -38,7 +38,7 @@
         },
         {
           "name": "roles",
-          "title": "user.card.roles",
+          "title": "constants.roles",
           "type": "multiSelect",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
@@ -46,7 +46,7 @@
         },
         {
           "name": "description",
-          "title": "user.card.description",
+          "title": "constants.description",
           "type": "textArea",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
@@ -57,11 +57,11 @@
 
     {
       "name": "test",
-      "title": "userCard.tab.additionalInfo",
+      "title": "tabs.additionalInfo",
       "properties": [
         {
           "name": "userAssoc",
-          "title": "user.card.userAssoc",
+          "title": "constants.user.userAssoc",
           "type": "userAssoc",
           "mandatoryCondition": "*",
           "typeForSaving": "userAssoc",
@@ -69,7 +69,7 @@
         },
         {
           "name": "email",
-          "title": "user.card.email",
+          "title": "constants.email",
           "type": "textField",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
@@ -77,7 +77,7 @@
         },
         {
           "name": "avatar",
-          "title": "user.card.avatar",
+          "title": "constants.avatar",
           "type": "image",
           "typeForSaving": "file",
           "mandatoryCondition": "*",
@@ -85,7 +85,7 @@
         },
         {
           "name": "birthDay",
-          "title": "user.card.birthDay",
+          "title": "constants.birthDay",
           "type": "date",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
@@ -98,14 +98,14 @@
   "buttons": [
         {
           "name": "save",
-          "title": "user.card.save",
+          "title": "constants.save",
           "type": "button",
           "viewParams": {"mode" : "create"},
           "customClassName": "save"
         },
         {
           "name": "close",
-          "title": "user.card.close",
+          "title": "constants.close",
           "type": "button",
           "customClassName": "save"
         }

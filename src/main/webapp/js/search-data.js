@@ -19,8 +19,8 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
 
         var searchColumns = this.searchersArray.searchColumns.split(",");
         for (var i in searchColumns){
-            searchColumns[i] = this.messages["user.card."+searchColumns[i]]!=undefined ?
-                this.messages["user.card."+searchColumns[i]] : searchColumns[i];
+            searchColumns[i] = this.messages["constants."+searchColumns[i]]!=undefined ?
+                this.messages["constants."+searchColumns[i]] : searchColumns[i];
         }
 
         var test = $("#"+tableDivId).append($('<thead>').append($('<tr>').append(
@@ -44,6 +44,7 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
         var openMode = this.mode;
 
         $("#"+tableDivId).on('click', 'tbody tr', function () {
+            currentSearchType = this.elementType? this.elementType : currentSearchType;
             window.open("/get-element?type="+currentSearchType+"&mode="+openMode+"&id="+this.id, "_blank");
         });
     }
@@ -120,6 +121,7 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
         scope.searchData = data;
         var searchColumns = this.searchersArray.searchColumns.split(",");
         var resultColumns = [];
+        var messages = this.messages;
         for (var i in searchColumns){
             resultColumns.push({ "data": searchColumns[i],
                 "createdCell": function (td, cellData, rowData, row, col) {
@@ -127,7 +129,8 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
                     var div = document.createElement('div');
                     for(var index in cellData){
                         var span = document.createElement('span');
-                        span.innerHTML = cellData[index].name+" = "+cellData[index].data;
+                        var label = messages["constants."+cellData[index].name]!=undefined ? messages["constants."+cellData[index].name] : cellData[index].name;
+                        span.innerHTML = label +" = "+cellData[index].data;
                         div.appendChild(span);
                         div.appendChild(document.createElement('br'));
                     }
@@ -166,7 +169,13 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
                     "dataType": 'json'
                 },
                 "createdRow": function ( row, data, index ) {
-                    row.id = data["_id"]["$oid"];
+                    if(data.auditElementId){
+                        row.elementType = data["type"];
+                        row.id = data["auditElementId"]["$oid"];
+                    } else {
+                        row.id = data["_id"]["$oid"];
+                    }
+
                 },
 
                 "columns": resultColumns

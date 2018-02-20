@@ -20,12 +20,12 @@
           "searchers": [
             {
               "name": "firstName",
-              "title": "header.buttons.firstName",
+              "title": "constants.firstName",
               "type": "text"
             },
             {
               "name": "lastName",
-              "title": "header.buttons.lastName",
+              "title": "constants.lastName",
               "type": "text"
             }
           ]
@@ -34,20 +34,20 @@
         {
           "name": "searchMyTasks",
           "title": "header.buttons.searchMyTasks",
-          "searchColumns": "issueName,issueDescription",
+          "searchColumns": "elementName,description",
           "type": "subElement",
           "mode": "task",
           "searchParams": {"searchType" : "issue", "searchMyTasks" : "true"},
           "enableForRoles": "ADMIN,USER",
           "searchers": [
             {
-              "name": "issueName",
-              "title": "issue.card.issueName",
+              "name": "elementName",
+              "title": "constants.elementName",
               "type": "text"
             },
             {
-              "name": "issueDescription",
-              "title": "issue.card.issueDescription",
+              "name": "description",
+              "title": "constants.description",
               "type": "text"
             }
           ]
@@ -65,13 +65,13 @@
       "searchParams": {"searchType" : "issue"},
       "searchers": [
         {
-          "name": "issueName",
-          "title": "issue.card.issueName",
+          "name": "elementName",
+          "title": "constants.elementName",
           "type": "text"
         },
         {
-          "name": "issueDescription",
-          "title": "issue.card.issueDescription",
+          "name": "description",
+          "title": "constants.description",
           "type": "text"
         }
       ]
@@ -86,7 +86,7 @@
         {
           "name": "audit",
           "title": "header.buttons.audit",
-          "searchColumns": "actionName,time,auditData",
+          "searchColumns": "actionName,time,actor,type,auditData",
           "type": "subElement",
           "mode": "view",
           "searchParams": {"searchType" : "audit"},
@@ -94,17 +94,17 @@
           "searchers": [
             {
               "name": "actionName",
-              "title": "header.buttons.actionName",
+              "title": "constants.actionName",
               "type": "text"
             },
             {
               "name": "time",
-              "title": "header.buttons.time",
+              "title": "constants.time",
               "type": "text"
             },
             {
               "name": "auditData",
-              "title":"header.buttons.auditData",
+              "title":"constants.auditData",
               "type": "text"
             }
           ]

@@ -5,6 +5,7 @@ import com.tracker.cards.CardDataFactory;
 import com.tracker.cards.CardDataProcessor;
 import com.tracker.config.localization.MessageResolveService;
 import com.tracker.controller.base.BaseControllerResponce;
+import com.tracker.dao.process.data.DataProcessorFactory;
 import com.tracker.dao.search.DataSearchFactory;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,13 @@ public class GetElementCardController {
     protected CardDataProcessor cardDataProcessor;
 
     @Autowired
+    private DataProcessorFactory dataProcessorFactory;
+
+    @Autowired
     private MessageResolveService messageResolveService;
 
     private static final String userType = "user";
+    private static final String RESPONSE_ELEMENT_TYPE = "create-user-card";
 
 
     @RequestMapping(value = "/create-element", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -46,7 +51,7 @@ public class GetElementCardController {
         model = cardDataFactory.getCardData(type,model,null);
         model.addAttribute("mode", "create");
         model.addAttribute("elementType", type);
-        return "create-user-card";
+        return RESPONSE_ELEMENT_TYPE;
     }
 
     @RequestMapping(value = "/get-element", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -55,8 +60,7 @@ public class GetElementCardController {
         model = cardDataFactory.getCardData(type, model, id);
         model.addAttribute("mode", "view");
         model.addAttribute("elementType", type);
-        return "create-user-card";
+        return RESPONSE_ELEMENT_TYPE;
     }
-
 
 }
