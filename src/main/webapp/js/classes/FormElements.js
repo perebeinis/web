@@ -224,7 +224,7 @@ FormElements.prototype.searchUsers = function (event, data) {
             url: '/search-data',
             type: "POST",
             contentType: "application/json",
-            data: JSON.stringify(search),
+            data: encodeURI(JSON.stringify(search)),
             dataType: 'json'
         }).done(function (data) {
             if (data.data.length > 0) {

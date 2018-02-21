@@ -164,7 +164,7 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
                     "contentType": "application/json",
                     data:function(d){
                             d.search =  scope.searchData;
-                        return JSON.stringify(d);
+                        return encodeURI(JSON.stringify(d));
                     },
                     "dataType": 'json'
                 },

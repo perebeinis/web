@@ -173,7 +173,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                 url: '/create-new-element?type=' + currentElementType,
                 type: "POST",
                 contentType: "application/json",
-                data: JSON.stringify(postParams),
+                data: encodeURI(JSON.stringify(postParams)),
                 dataType: 'json'
             }).done(function (data) {
                 window.open("/get-element?type=" + currentElementType + "&mode=view&id=" + data._id, "_self");
@@ -249,7 +249,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     url: '/update-element?type=' + currentElementType+"&id="+Utils.getUrlParameter("id"),
                     type: "POST",
                     contentType: "application/json",
-                    data: JSON.stringify(postParams),
+                    data: encodeURI(JSON.stringify(postParams)),
                     dataType: 'json'
                 }).done(function (data) {
                     window.open("/get-element?type=" + currentElementType + "&mode=view&id=" + data._id, "_self");

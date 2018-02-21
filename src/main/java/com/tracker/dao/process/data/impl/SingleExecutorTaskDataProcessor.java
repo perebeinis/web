@@ -85,6 +85,7 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
         WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
         MongoDatabase database = (MongoDatabase) context.getBean(BaseConstants.DATABASE);
         MongoCollection<Document> collection = database.getCollection(BaseConstants.getCollection(elementType));
+        UserDetailsServiceImpl userDetailsService = (UserDetailsServiceImpl) context.getBean(BaseConstants.CUSTOM_USER_DETAILS_SERVICE);
 
         List<AuditObject> auditObjects = new ArrayList<>();
         BasicDBObject updatingDataObject = new BasicDBObject();
@@ -103,6 +104,11 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
 
                 updatingDataObject.put(fieldName, fieldValue);
                 auditObjects.add(new AuditObject(fieldName, fieldType, currentElement.get(fieldName).toString() +" = "+ fieldValue));
+
+                updatingDataObject.put(BaseConstants.CURRENT_TASK_EXECUTOR, null);
+                CustomUserObject lastExecutorData = userDetailsService.loadUserById(new ObjectId(((JSONObject) currentElement.get(BaseConstants.CURRENT_TASK_EXECUTOR)).get(BaseConstants.MONGO_ID).toString()));
+                String userFullName = lastExecutorData.getAllUserData().get(BaseConstants.FIRST_NAME) + " "+lastExecutorData.getAllUserData().get(BaseConstants.LAST_NAME);
+                auditObjects.add(new AuditObject(BaseConstants.CURRENT_TASK_EXECUTOR, BaseConstants.TEXT, userFullName +" = "));
             }
         }
 

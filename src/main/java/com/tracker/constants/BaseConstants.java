@@ -18,6 +18,7 @@ public interface BaseConstants {
     public static String LOOKUP = "$lookup";
     public static String ELEM_MATCH = "$elemMatch";
     public static String FROM = "from";
+    public static String MONGO_ID = "$oid";
     public static String MATCH = "$match";
     public static String SET = "$set";
     public static String REGEX = "$regex";
