@@ -33,6 +33,16 @@
           "mandatoryCondition": "*",
           "customClassName": "fullString"
         },
+
+        {
+          "name": "document",
+          "title": "constants.document",
+          "type": "file",
+          "typeForSaving": "file",
+          "mandatoryCondition": "*",
+          "customClassName": "half"
+        },
+
         {
           "name": "userAssoc",
           "title": "constants.issue.userAssoc",

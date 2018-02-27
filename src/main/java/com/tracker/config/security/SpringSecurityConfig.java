@@ -49,7 +49,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.sessionManagement().maximumSessions(1).and().invalidSessionUrl("/login")
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login-error")
@@ -64,6 +65,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/welcome/**").hasAnyRole("USER","ADMIN")
                 .antMatchers("/create-new-user/**").hasAnyRole("USER","ADMIN")
                 .antMatchers("/search-data/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/create-element/**").hasAnyRole("USER","ADMIN")
             .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403");

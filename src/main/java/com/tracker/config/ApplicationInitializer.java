@@ -22,6 +22,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 		// Manage the life-cycle of the root application context
 		container.addListener(new ContextLoaderListener(rootContext));
 		container.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain")).addMappingForUrlPatterns(null, false, "/*");
+		container.addListener(new SessionListener());
 
 		// Create the dispatcher servlet's Spring application context
 		AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();

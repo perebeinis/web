@@ -491,3 +491,24 @@ navbar.less:
     .dataTables_wrapper .dataTables_paginate .paginate_button {
         padding: 0.01em 1em !important;
     }
+
+    .btn-primary {
+        color: #dedcdc;
+        background-color: #26465b;
+        border-color: #26465b;
+    }
+
+    .fileSaver {
+        width: 90px;
+        height: 120px;
+        background-color: #dadada;
+        border-radius: 5px;
+        word-wrap: break-word;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .fileSaver a{
+        width: inherit;
+        color: black
+    }

@@ -24,5 +24,15 @@ var Utils = {
             p[k] = v
         })
         return k ? p[k] : p;
+    },
+
+    checkIfHasEmptyFiles: function checkIfHasEmptyFiles(className){
+        var hasEmptyFiles = false;
+        $("."+className+" input[type=file]").each(function (data) {
+            if(this.files.length == 0){
+                hasEmptyFiles = true;
+            }
+        });
+        return hasEmptyFiles;
     }
 }
