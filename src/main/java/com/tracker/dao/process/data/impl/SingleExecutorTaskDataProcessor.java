@@ -66,7 +66,17 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
             Object fieldValue = element != null ?
                     DataProcessorService.getInstance().getSavingElementsType().get(fieldType).get().getData(database, formFieldElement) :
                     DataProcessorService.getInstance().getSavingElementsType().get(BaseConstants.TEXT).get().getData(database, formFieldElement);
-            document.put(fieldName, fieldValue);
+            if(fieldType.equals(BaseConstants.FILE)){
+                if(document.get(fieldName)!=null){
+                    ((List<ObjectId>) document.get(fieldName)).add((ObjectId) fieldValue);
+                }else{
+                    List<ObjectId> objectIds = new ArrayList<>();
+                    objectIds.add((ObjectId) fieldValue);
+                    document.put(fieldName, objectIds);
+                }
+            }else{
+                document.put(fieldName, fieldValue);
+            }
             auditObjects.add(new AuditObject(fieldName, fieldType, fieldValue));
         }
 

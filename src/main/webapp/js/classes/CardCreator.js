@@ -13,6 +13,7 @@ function CardCreator(cardId, data, tabsId, cardFiledValues, messages) {
     this.mandatoryCondtitions = {};
     this.typeForSaving = "typeForSaving";
     this.mode = this.getSearchParams("mode");
+    this.countFormElements = 0;
     return this;
 }
 
@@ -120,7 +121,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
             // inputs
             $('.card-attributes-container input').each(function (data) {
                 if (this.name != "" && this.name != "userAssoc") {
-                    if (this.type == "file") {
+                    if (this.type == "file" && this.files.length>0) {
                         var postData = {
                             name: this.name,
                             type: this.attributes.customtype.nodeValue,
@@ -130,7 +131,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                         postParams.push(postData);
                         // postParams[this.name] = this.files[0].name +";"+this.fileValue;
                         //postParams[this.name] = this.fileValue;
-                    } else {
+                    } else if(this.value){
                         var postData = {name: this.name, type: this.attributes.customtype.nodeValue, data: this.value};
                         postParams.push(postData);
                         //postParams[this.name] = this.value;
@@ -193,7 +194,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                 // inputs
                 $('.card-attributes-container input').each(function (data) {
                     if (this.name != "" && this.name != "userAssoc" && this.readOnly == false) {
-                        if (this.type == "file") {
+                        if (this.type == "file" && this.files.length>0) {
                             var postData = {
                                 name: this.name,
                                 type: this.attributes.customtype.nodeValue,
@@ -203,7 +204,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                             postParams.push(postData);
                             // postParams[this.name] = this.files[0].name +";"+this.fileValue;
                             //postParams[this.name] = this.fileValue;
-                        } else {
+                        } else if(this.value){
                             var postData = {
                                 name: this.name,
                                 type: this.attributes.customtype.nodeValue,

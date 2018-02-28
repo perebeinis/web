@@ -34,5 +34,15 @@ var Utils = {
             }
         });
         return hasEmptyFiles;
+    },
+
+    countEmptyFiles: function countEmptyFiles(className){
+        var hasEmptyFiles = 0;
+        $("."+className+" input[type=file]").each(function (data) {
+            if(this.files.length == 0){
+                hasEmptyFiles++;
+            }
+        });
+        return hasEmptyFiles;
     }
 }

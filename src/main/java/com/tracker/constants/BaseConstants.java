@@ -54,6 +54,7 @@ public interface BaseConstants {
     public static String CREATED = "created";
     public static String ACTOR = "actor";
     public static String DATABASE = "database";
+    public static String FILE = "file";
 
     public static final Map<String, String> collectionsByType = new HashMap<>();
 

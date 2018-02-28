@@ -5,7 +5,11 @@ import com.mongodb.client.MongoDatabase;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.process.data.elements.DataElement;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Perebeinis on 15.02.2018.
@@ -25,6 +29,7 @@ public class FileDataElement implements DataElement{
         document.put(BaseConstants.FILE_NAME,fileName);
 
         collection.insertOne(document);
+
         System.out.println("Document was created");
         return document.get(BaseConstants.DOCUMENT_ID);
     }

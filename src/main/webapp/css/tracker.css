@@ -510,5 +510,35 @@ navbar.less:
 
     .fileSaver a{
         width: inherit;
-        color: black
+        color: black;
+        cursor: pointer;
+    }
+
+    .textField .input-ghost {
+        visibility:hidden;
+        height:0
+    }
+
+    .textField  .input-group .input-group-btn:first-child {
+        width: initial;
+    }
+
+    .textField .input-group-btn {
+        position: relative;
+        font-size: 0;
+        white-space: nowrap;
+        float : left;
+    }
+
+    .textField .input-group-btn:last-child {
+        z-index: 2;
+        margin-left: -1px;
+        background-color: white;
+        color: black;
+        border-color: #cccccc;
+    }
+
+    .card-attributes-container > div .half.filesList {
+        width: 7% !important;
+        vertical-align: top;
     }
