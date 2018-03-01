@@ -9,12 +9,15 @@ import java.util.Map;
 public interface BaseConstants {
     public static String USERS_COLLECTION = "userdetails";
     public static String AUDIT = "audit";
+    public static String MESSAGE = "message";
     public static String ISSUE_COLLECTION = "tasks";
     public static String ISSUE_CONSTANT = "issue";
     public static String USER_TYPE = "user";
     public static String DOCUMENTS_COLLECTION = "documents";
     public static String DOCUMENT_ID = "_id";
     public static String CURRENT_EXECUTOR = "currentExecutor";
+    public static String MY_ID = "MY_ID";
+    public static String IN = "$in";
     public static String LOOKUP = "$lookup";
     public static String ELEM_MATCH = "$elemMatch";
     public static String FROM = "from";
@@ -64,6 +67,8 @@ public interface BaseConstants {
     public static String getCollection(String elementType){
         if(elementType.equals(ISSUE_CONSTANT)){
             return ISSUE_COLLECTION;
+        }else if(elementType.equals(MESSAGE)){
+            return MESSAGE;
         }else if(elementType.equals(AUDIT)){
             return AUDIT;
         }else {

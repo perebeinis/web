@@ -11,6 +11,11 @@
       "enableForRoles": "ADMIN,USER"
     },
     {
+      "name": "createNewMessage",
+      "title": "header.buttons.createNewMessage",
+      "enableForRoles": "ADMIN,USER"
+    },
+    {
       "name": "userData",
       "title": "header.buttons.userData",
       "type" : "header",

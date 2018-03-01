@@ -26,6 +26,7 @@ public class DataSearchFactory {
     static {
         map.put("element", DefaultSearcher::new);
         map.put("user", DefaultSearcher::new);
+        map.put("message", DefaultSearcher::new);
         map.put("issue", DefaultSearcher::new);
         map.put("audit", DefaultSearcher::new);
     }

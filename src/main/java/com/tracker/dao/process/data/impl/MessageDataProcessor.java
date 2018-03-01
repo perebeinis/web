@@ -3,7 +3,6 @@ package com.tracker.dao.process.data.impl;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.UpdateResult;
 import com.tracker.config.security.authentification.CustomUserObject;
 import com.tracker.config.security.authentification.impl.UserDetailsServiceImpl;
 import com.tracker.constants.BaseConstants;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SingleExecutorTaskDataProcessor implements DataProcessor {
+public class MessageDataProcessor implements DataProcessor {
 
     private Document createDataObject = new Document();
     private BasicDBObject updateDataObject = new BasicDBObject();

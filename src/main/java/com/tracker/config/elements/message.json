@@ -50,7 +50,7 @@
 
         {
           "name": "userAssoc",
-          "title": "constants.issue.userAssoc",
+          "title": "constants.message.userAssoc",
           "type": "userAssoc",
           "enableParams": [
             {

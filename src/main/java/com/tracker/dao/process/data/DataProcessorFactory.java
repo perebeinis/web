@@ -3,6 +3,7 @@ package com.tracker.dao.process.data;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.process.data.impl.DefaultDataProcessor;
+import com.tracker.dao.process.data.impl.MessageDataProcessor;
 import com.tracker.dao.process.data.impl.SingleExecutorTaskDataProcessor;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class DataProcessorFactory {
     static {
         map.put("default", DefaultDataProcessor::new);
         map.put("issue", SingleExecutorTaskDataProcessor::new);
+        map.put("message", MessageDataProcessor::new);
     }
 
     public String processData(String elementType, JSONArray incomingDataObject, String elementId){

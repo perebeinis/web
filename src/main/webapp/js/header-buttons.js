@@ -87,6 +87,10 @@ function HeaderButton(cardId, data, messages,userData) {
         window.open("/create-element?type=issue&mode=create", "_self");
     };
 
+    this.createNewMessage = function() {
+        window.open("/create-element?type=message&mode=create", "_self");
+    };
+
     this.createNewUser = function() {
         window.open("/create-element?type=user&mode=create", "_self");
     };

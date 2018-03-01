@@ -32,6 +32,7 @@ public class UserAuditElement implements AuditElement {
         WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
         UserDetailsServiceImpl userDetailsService = (UserDetailsServiceImpl) context.getBean(BaseConstants.CUSTOM_USER_DETAILS_SERVICE);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        authentication.getName();
         for (ObjectId usersId : usersIds) {
             CustomUserObject customUserObject = userDetailsService.loadUserById(usersId);
             JSONObject userData = customUserObject.getAllUserData();

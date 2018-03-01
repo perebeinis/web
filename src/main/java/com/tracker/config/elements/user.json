@@ -10,7 +10,12 @@
           "type": "textField",
           "mandatoryCondition": "*",
           "typeForSaving": "text",
-          "customClassName": "half"
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         },
         {
           "name": "user_pass",
@@ -18,7 +23,12 @@
           "type": "textField",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
-          "customClassName": "half"
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         },
         {
           "name": "firstName",
@@ -26,7 +36,12 @@
           "type": "textField",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
-          "customClassName": "half"
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         },
         {
           "name": "lastName",
@@ -34,7 +49,12 @@
           "type": "textField",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
-          "customClassName": "half"
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         },
         {
           "name": "roles",
@@ -42,7 +62,12 @@
           "type": "multiSelect",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
-          "customClassName": "half"
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         },
         {
           "name": "description",
@@ -50,7 +75,12 @@
           "type": "textArea",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
-          "customClassName": "fullString"
+          "customClassName": "fullString",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         }
       ]
     },
@@ -65,7 +95,12 @@
           "type": "userAssoc",
           "mandatoryCondition": "*",
           "typeForSaving": "userAssoc",
-          "customClassName": "half"
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         },
         {
           "name": "email",
@@ -73,7 +108,12 @@
           "type": "textField",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
-          "customClassName": "half"
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         },
         {
           "name": "avatar",
@@ -81,7 +121,12 @@
           "type": "image",
           "typeForSaving": "file",
           "mandatoryCondition": "*",
-          "customClassName": "half"
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         },
         {
           "name": "birthDay",
@@ -89,7 +134,12 @@
           "type": "date",
           "typeForSaving": "text",
           "mandatoryCondition": "*",
-          "customClassName": "half"
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
         }
       ]
     }

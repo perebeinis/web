@@ -9,6 +9,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.UpdateResult;
 import com.tracker.cards.CardDataProcessor;
+import com.tracker.config.security.authentification.CustomUserObject;
+import com.tracker.config.security.authentification.impl.UserDetailsServiceImpl;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.search.impl.DefaultSearcher;
 import com.tracker.dao.search.request.CreateRequestQuery;
@@ -18,6 +20,11 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -119,8 +126,19 @@ public abstract class AbstractDataSearch {
         BasicDBObject regexQuery = new BasicDBObject();
         while(keys.hasNext() ) {
             String key = (String)keys.next();
-            if(key.equals(BaseConstants.CURRENT_EXECUTOR)){
+            String value = (String) searchData.get(key);
+            if(key.equals(BaseConstants.CURRENT_EXECUTOR)) {
                 regexQuery.put(key, new ObjectId((String) searchData.get(key)));
+            }else if(value.equals(BaseConstants.MY_ID)){
+                WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+                UserDetailsServiceImpl userDetailsService = (UserDetailsServiceImpl) context.getBean(BaseConstants.CUSTOM_USER_DETAILS_SERVICE);
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                CustomUserObject customUserObject = userDetailsService.loadUserDataByUsername(authentication.getName());
+
+                List<ObjectId> ids = new ArrayList<>();
+                ids.add(customUserObject.getUserId());
+                regexQuery.put(key, new BasicDBObject(BaseConstants.IN, ids));
+
             }else if(key.equals(BaseConstants.AUDIT_DATA)){
                 Document regexQueryData = new Document(BaseConstants.DATA, new BasicDBObject(BaseConstants.REGEX, searchData.get(key)+".*").append(BaseConstants.OPTIONS, "i"));
                 regexQuery.put(BaseConstants.AUDIT_DATA, new Document(BaseConstants.ELEM_MATCH, regexQueryData));

@@ -166,7 +166,7 @@ FormElements.prototype.file = function (data, parentElementId, elementValue, add
 
     var hasEmptyFields = Utils.checkIfHasEmptyFiles(data[this.name]);
     if (!hasEmptyFields) {
-        if (!Utils.checkFieldEnabled(data)) {
+        if (Utils.checkFieldEnabled(data)) {
             var createdElement = $('<div>', {
                 class: "textField" + " " + data.customClassName + "  " + data.name
             }).append($('<span>', {

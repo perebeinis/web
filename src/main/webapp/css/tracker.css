@@ -530,6 +530,7 @@ navbar.less:
         float : left;
     }
 
+    .textField .input-group-btn .btn,
     .textField .input-group-btn:last-child {
         z-index: 2;
         margin-left: -1px;
@@ -539,6 +540,6 @@ navbar.less:
     }
 
     .card-attributes-container > div .half.filesList {
-        width: 7% !important;
+        width: 100px !important;
         vertical-align: top;
     }

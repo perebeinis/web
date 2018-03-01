@@ -51,6 +51,50 @@
               "type": "text"
             }
           ]
+        },
+
+        {
+          "name": "searchAllTasks",
+          "title": "header.buttons.searchAllTasks",
+          "searchColumns": "elementName,description",
+          "type": "subElement",
+          "mode": "view",
+          "searchParams": {"searchType" : "issue"},
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "elementName",
+              "title": "constants.elementName",
+              "type": "text"
+            },
+            {
+              "name": "description",
+              "title": "constants.description",
+              "type": "text"
+            }
+          ]
+        },
+
+        {
+          "name": "searchMyMessages",
+          "title": "header.buttons.searchMyMessages",
+          "searchColumns": "elementName,description",
+          "type": "subElement",
+          "mode": "view",
+          "searchParams": {"searchType" : "message", "searchData": {"userAssoc" : "MY_ID"}},
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "elementName",
+              "title": "constants.elementName",
+              "type": "text"
+            },
+            {
+              "name": "description",
+              "title": "constants.description",
+              "type": "text"
+            }
+          ]
         }
       ]
     },
