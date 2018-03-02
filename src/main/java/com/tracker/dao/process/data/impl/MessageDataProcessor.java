@@ -43,7 +43,6 @@ public class MessageDataProcessor implements DataProcessor {
     public String createData(JSONArray incomingDataObject, String elementType, String elementId) {
         WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
         MongoDatabase database = (MongoDatabase) context.getBean(BaseConstants.DATABASE);
-        UserDetailsServiceImpl userDetailsService = (UserDetailsServiceImpl) context.getBean(BaseConstants.CUSTOM_USER_DETAILS_SERVICE);
 
         MongoCollection<Document> collection = database.getCollection(BaseConstants.getCollection(elementType));
         for (Object formField : incomingDataObject) {
@@ -51,9 +50,6 @@ public class MessageDataProcessor implements DataProcessor {
             String fieldName = (String) formFieldElement.get(BaseConstants.NAME);
             String fieldType = (String) formFieldElement.get(BaseConstants.TYPE);
             String value = (String) formFieldElement.get(BaseConstants.DATA);
-
-            //Set currentTaskExecutor
-            processCurrentExecutor(fieldType,userDetailsService,value);
 
             Supplier<DataElement> element = DataProcessorService.getInstance().getSavingElementsType().get(fieldType);
             Object fieldValue = element != null ?
@@ -64,65 +60,18 @@ public class MessageDataProcessor implements DataProcessor {
             auditObjects.add(new AuditObject(fieldName, fieldType, fieldValue));
         }
 
-        ObjectId objectId = createDataObject.getObjectId(BaseConstants.DOCUMENT_ID);
+        ObjectId objectId = (ObjectId) createDataObject.get(BaseConstants.DOCUMENT_ID);
         collection.insertOne(createDataObject);
         AuditService.getInstance().auditData(BaseConstants.CREATE, auditObjects,elementType, objectId);
 
         System.out.println("created new element with type = " + elementType);
-        return createDataObject.getObjectId(BaseConstants.DOCUMENT_ID).toString();
+        return createDataObject.get(BaseConstants.DOCUMENT_ID).toString();
     }
 
     @Override
     public String updateData(JSONArray incomingDataObject, String elementType, String elementId) {
-        JSONObject currentElement = DataProcessorService.getInstance().getElementById(elementType, elementId);
-
-        WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
-        MongoDatabase database = (MongoDatabase) context.getBean(BaseConstants.DATABASE);
-        MongoCollection<Document> collection = database.getCollection(BaseConstants.getCollection(elementType));
-        UserDetailsServiceImpl userDetailsService = (UserDetailsServiceImpl) context.getBean(BaseConstants.CUSTOM_USER_DETAILS_SERVICE);
-
-        List<AuditObject> auditObjects = new ArrayList<>();
-        for (Object formField : incomingDataObject) {
-            JSONObject formFieldElement = (JSONObject) formField;
-            String fieldName = (String) formFieldElement.get(BaseConstants.NAME);
-            String fieldType = (String) formFieldElement.get(BaseConstants.TYPE);
-            String value = (String) formFieldElement.get(BaseConstants.DATA);
-            if (!value.equals(currentElement.get(fieldName).toString())) {
-                Supplier<DataElement> element = DataProcessorService.getInstance().getSavingElementsType().get(fieldType);
-
-                Object fieldValue = element != null ?
-                        DataProcessorService.getInstance().getSavingElementsType().get(fieldType).get().getData(database, formFieldElement) :
-                        DataProcessorService.getInstance().getSavingElementsType().get(BaseConstants.TEXT).get().getData(database, formFieldElement);
-
-                updateDataObject.put(fieldName, fieldValue);
-                auditObjects.add(new AuditObject(fieldName, fieldType, currentElement.get(fieldName).toString() +" = "+ fieldValue));
-
-                updateDataObject.put(BaseConstants.CURRENT_TASK_EXECUTOR, null);
-                CustomUserObject lastExecutorData = userDetailsService.loadUserById(new ObjectId(((JSONObject) currentElement.get(BaseConstants.CURRENT_TASK_EXECUTOR)).get(BaseConstants.MONGO_ID).toString()));
-                String userFullName = lastExecutorData.getAllUserData().get(BaseConstants.FIRST_NAME) + " "+lastExecutorData.getAllUserData().get(BaseConstants.LAST_NAME);
-                auditObjects.add(new AuditObject(BaseConstants.CURRENT_TASK_EXECUTOR, BaseConstants.TEXT, userFullName +" = "));
-            }
-        }
-
-        if (updateDataObject.size() > 0) {
-            Bson setData = new Document(BaseConstants.SET, updateDataObject);
-            collection.updateOne(new Document(BaseConstants.DOCUMENT_ID, new ObjectId(elementId)), setData);
-            AuditService.getInstance().auditData(BaseConstants.UPDATE, auditObjects, elementType, new ObjectId(elementId));
-            System.out.println("UPDATE DATA");
-        }
-
+        System.out.println("UPDATE message");
         return elementId;
-    }
-
-    private void processCurrentExecutor(String fieldType, UserDetailsServiceImpl userDetailsService, String value){
-        if (fieldType.equals(BaseConstants.USER_ASSOC) && createDataObject.get(BaseConstants.CURRENT_TASK_EXECUTOR) == null) {
-            String firstExecutorObjectId = value.split(",")[0];
-            CustomUserObject customUserObject = userDetailsService.loadUserById(new ObjectId(firstExecutorObjectId));
-            JSONObject userData = customUserObject.getAllUserData();
-            String userFullName = userData.get(BaseConstants.FIRST_NAME) + " " + userData.get(BaseConstants.LAST_NAME);
-            createDataObject.put(BaseConstants.CURRENT_TASK_EXECUTOR, new ObjectId(firstExecutorObjectId));
-            auditObjects.add(new AuditObject(BaseConstants.CURRENT_TASK_EXECUTOR, BaseConstants.TEXT, userFullName));
-        }
     }
 
     private void processFieldValue(Object fieldValue, String fieldType, String fieldName){

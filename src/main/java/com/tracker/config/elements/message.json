@@ -41,6 +41,7 @@
           "typeForSaving": "file",
           "mandatoryCondition": "*",
           "customClassName": "half",
+          "limit": 2,
           "enableParams": [
             {
               "mode": "create"

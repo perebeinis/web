@@ -165,8 +165,10 @@ FormElements.prototype.file = function (data, parentElementId, elementValue, add
     var elementValue = elementValue;
 
     var hasEmptyFields = Utils.checkIfHasEmptyFiles(data[this.name]);
-    if (!hasEmptyFields) {
-        if (Utils.checkFieldEnabled(data)) {
+    var filesCount = Utils.countAllFiles(data[this.name]);
+    var limitSame = addNew && data.limit ? data.limit-1 == filesCount: true;
+
+        if (Utils.checkFieldEnabled(data) && !hasEmptyFields && limitSame) {
             var createdElement = $('<div>', {
                 class: "textField" + " " + data.customClassName + "  " + data.name
             }).append($('<span>', {
@@ -262,7 +264,6 @@ FormElements.prototype.file = function (data, parentElementId, elementValue, add
             }
         }
 
-    }
 
     scope.countFormElements++;
 
