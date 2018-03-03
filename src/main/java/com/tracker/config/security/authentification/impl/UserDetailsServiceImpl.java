@@ -81,6 +81,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return user.get();
     }
 
+    @Override
+    public ObjectId loadUserIdByUsername(String username) throws UsernameNotFoundException {
+        Optional<CustomUserObject> user = users.stream()
+                .filter(u -> u.name.equals(username))
+                .findAny();
+        return user.get().getUserId();
+    }
+
     private UserDetails toUserDetails(CustomUserObject userObject) {
         return User.withUsername(userObject.name)
                 .password(userObject.password)

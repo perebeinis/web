@@ -25,6 +25,7 @@ public interface BaseConstants {
     public static String MATCH = "$match";
     public static String SET = "$set";
     public static String REGEX = "$regex";
+    public static String CREATOR = "creator";
     public static String ORDER_BY = "$orderby";
     public static String OPTIONS = "$options";
     public static String AS = "as";

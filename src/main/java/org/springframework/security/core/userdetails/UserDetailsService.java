@@ -8,4 +8,5 @@ public interface UserDetailsService {
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
     CustomUserObject loadUserById(ObjectId id) throws UsernameNotFoundException;
     CustomUserObject loadUserDataByUsername(String username) throws UsernameNotFoundException;
+    ObjectId loadUserIdByUsername(String username) throws UsernameNotFoundException;
 }

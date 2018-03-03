@@ -73,12 +73,22 @@
               "type": "text"
             }
           ]
-        },
-
+        }
+      ]
+    },
+    
+    {
+      "name": "messages",
+      "title": "header.buttons.messages",
+      "type": "header",
+      "mode": "view",
+      "enableForRoles": "ADMIN,USER",
+      "searchParams": {"searchType" : "issue"},
+      "elements": [
         {
           "name": "searchMyMessages",
           "title": "header.buttons.searchMyMessages",
-          "searchColumns": "elementName,description",
+          "searchColumns": "elementName,description,creator",
           "type": "subElement",
           "mode": "view",
           "searchParams": {"searchType" : "message", "searchData": {"userAssoc" : "MY_ID"}},
@@ -95,28 +105,28 @@
               "type": "text"
             }
           ]
-        }
-      ]
-    },
-    
-    {
-      "name": "searchNews",
-      "title": "header.buttons.searchNews",
-      "searchColumns": "issueName,issueDescription",
-      "type": "filter",
-      "mode": "view",
-      "enableForRoles": "ADMIN,USER",
-      "searchParams": {"searchType" : "issue"},
-      "searchers": [
-        {
-          "name": "elementName",
-          "title": "constants.elementName",
-          "type": "text"
         },
+
         {
-          "name": "description",
-          "title": "constants.description",
-          "type": "text"
+          "name": "searchMessagesImCreator",
+          "title": "header.buttons.searchMessagesImCreator",
+          "searchColumns": "elementName,description",
+          "type": "subElement",
+          "mode": "view",
+          "searchParams": {"searchType" : "message", "searchData": {"creator" : "MY_ID"}},
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "elementName",
+              "title": "constants.elementName",
+              "type": "text"
+            },
+            {
+              "name": "description",
+              "title": "constants.description",
+              "type": "text"
+            }
+          ]
         }
       ]
     },
