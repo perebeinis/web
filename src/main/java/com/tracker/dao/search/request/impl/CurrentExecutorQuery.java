@@ -14,32 +14,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Created by Perebeinis on 11.01.2018.
+ * Created by Perebeinis on 13.03.2018.
  */
-public class CreateRequestQueryUserAssoc implements CreateRequestQuery {
+public class CurrentExecutorQuery implements CreateRequestQuery {
     @Override
     public Bson createQueryForElement(String searchName, String searchValue) {
-        Bson request = new BsonDocument();
-        if (searchValue.equals(BaseConstants.MY_ID)) {
+//        Bson requestData = new Document(BaseConstants.MATCH, new Document(searchName, new ObjectId(searchValue)));
+        Bson requestData = new BsonDocument();
+
+        if(searchValue.equals(BaseConstants.MY_ID)){
             WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
             UserDetailsServiceImpl userDetailsService = (UserDetailsServiceImpl) context.getBean(BaseConstants.CUSTOM_USER_DETAILS_SERVICE);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             CustomUserObject customUserObject = userDetailsService.loadUserDataByUsername(authentication.getName());
-
-            List<ObjectId> ids = new ArrayList<>();
-            ids.add(customUserObject.getUserId());
-            request = new BasicDBObject(BaseConstants.MATCH, new BasicDBObject(searchName, new BasicDBObject(BaseConstants.IN, ids)));
-        } else {
-            request = new Document(BaseConstants.LOOKUP,
-                    new Document(BaseConstants.FROM, BaseConstants.USERS_COLLECTION)
-                            .append(BaseConstants.LOCAL_FIELD, searchName)
-                            .append(BaseConstants.FOREIGN_FIELD, BaseConstants.DOCUMENT_ID)
-                            .append(BaseConstants.AS, searchName));
+            requestData = new Document(BaseConstants.MATCH, new Document(searchName, customUserObject.getUserId()));
         }
-        return request;
+
+        return requestData;
     }
 }

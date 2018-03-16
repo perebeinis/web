@@ -19,8 +19,8 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
 
         var searchColumns = this.searchersArray.searchColumns.split(",");
         for (var i in searchColumns){
-            searchColumns[i] = this.messages["constants."+searchColumns[i]]!=undefined ?
-                this.messages["constants."+searchColumns[i]] : searchColumns[i];
+            var msg = this.messages["constants."+this.searchParams.searchType+"."+searchColumns[i]] == undefined ? this.messages["constants."+searchColumns[i]] : this.messages["constants."+this.searchParams.searchType+"."+searchColumns[i]];
+            searchColumns[i] = msg!=undefined ? msg : searchColumns[i];
         }
 
         var test = $("#"+tableDivId).append($('<thead>').append($('<tr>').append(
@@ -94,12 +94,15 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
         var copy = Object.assign({}, this.searchParams.searchData);
         searchParams.searchData = copy;
         var searchAttrsDiv = "search-attributes";
-        $('#'+searchAttrsDiv+' input:not([name=""])').each(function() {
+        //$('#'+searchAttrsDiv+' input:not([name=""])').each(function() {
+        $('#'+searchAttrsDiv+' input').each(function() {
             if(this.value!=""){
                 searchParams.searchData[this.name] = this.value;
-            }else if(searchParams.searchData[this.name]!=undefined && defaultSearchParams[this.name]!=undefined){
-                 searchParams.searchData[this.name] = defaultSearchParams[this.name]
-            }else if(searchParams.searchData[this.name]!=undefined){
+            }else if(searchParams.searchData[this.name]!=undefined && defaultSearchParams[this.name]!=undefined) {
+                searchParams.searchData[this.name] = defaultSearchParams[this.name]
+            } else if(this.value == ""){
+                searchParams.searchData[this.name] = "";
+            } else if(searchParams.searchData[this.name]!=undefined){
                 delete searchParams.searchData[this.name];
             }
         });

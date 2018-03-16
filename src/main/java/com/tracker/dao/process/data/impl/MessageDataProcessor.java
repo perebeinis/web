@@ -11,6 +11,7 @@ import com.tracker.dao.process.audit.AuditService;
 import com.tracker.dao.process.data.DataProcessor;
 import com.tracker.dao.process.data.DataProcessorService;
 import com.tracker.dao.process.data.elements.DataElement;
+import org.apache.log4j.helpers.ISO8601DateFormat;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -23,6 +24,7 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -99,6 +101,7 @@ public class MessageDataProcessor implements DataProcessor {
         List<ObjectId> objectIds = new ArrayList<>();
         objectIds.add(userId);
         createDataObject.put(BaseConstants.CREATOR, objectIds);
+        createDataObject.put(BaseConstants.CREATED,  ISO8601DateFormat.getDateTimeInstance().format(new Date()));
 
         String userFullName = userDetailsService.getUserDataById(userId).get(BaseConstants.LAST_NAME)+" "+userDetailsService.getUserDataById(userId).get(BaseConstants.FIRST_NAME);
         auditObjects.add(new AuditObject(BaseConstants.CREATOR, BaseConstants.CREATOR, userFullName));

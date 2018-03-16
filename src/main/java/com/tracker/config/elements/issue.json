@@ -60,6 +60,19 @@
           "typeForSaving": "userAssoc",
           "mandatoryCondition": "*",
           "customClassName": "fullString"
+        },
+
+        {
+          "name": "currentExecutor",
+          "title": "constants.currentExecutor",
+          "type": "textField",
+          "enableParams": [
+            {
+              "mode": "none"
+            }
+          ],
+          "typeForSaving": "text",
+          "customClassName": "fullString hidden"
         }
       ]
     }

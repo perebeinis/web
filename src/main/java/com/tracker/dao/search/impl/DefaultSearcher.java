@@ -10,10 +10,10 @@ import java.util.Date;
 /**
  * Created by Perebeinis on 19.12.2017.
  */
-public class DefaultSearcher  extends AbstractDataSearch implements DataSearcher{
+public class DefaultSearcher extends AbstractDataSearch implements DataSearcher {
     @Override
     public JSONObject searchData(MongoDatabase database, JSONObject searchDataObject) {
-        return getData(database,searchDataObject);
+        return getData(database, searchDataObject);
     }
 
     @Override

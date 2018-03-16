@@ -16,17 +16,26 @@ public interface BaseConstants {
     public static String DOCUMENTS_COLLECTION = "documents";
     public static String DOCUMENT_ID = "_id";
     public static String CURRENT_EXECUTOR = "currentExecutor";
+    public static String SEARCH_TEXT_QUERY = "searchTextQuery";
     public static String MY_ID = "MY_ID";
     public static String IN = "$in";
     public static String LOOKUP = "$lookup";
     public static String ELEM_MATCH = "$elemMatch";
     public static String FROM = "from";
     public static String MONGO_ID = "$oid";
+    public static String SKIP = "$skip";
+    public static String LIMIT = "$limit";
     public static String MATCH = "$match";
     public static String SET = "$set";
     public static String REGEX = "$regex";
-    public static String CREATOR = "creator";
+    public static String CREATOR = "creatorAssoc";
     public static String ORDER_BY = "$orderby";
+    public static String ORDER = "order";
+    public static String ASC = "asc";
+    public static String COLUMN = "column";
+    public static String COLUMNS = "columns";
+    public static String DIR = "dir";
+    public static String SORT = "$sort";
     public static String OPTIONS = "$options";
     public static String AS = "as";
     public static String CUSTOM_USER_DETAILS_SERVICE = "customUserDetailsService";
@@ -39,7 +48,8 @@ public interface BaseConstants {
     public static String USER_ID = "user_id";
     public static String FIRST_NAME = "firstName";
     public static String LAST_NAME = "lastName";
-    public static String USER_ASSOC= "userAssoc";
+    public static String USER_ASSOC = "userAssoc";
+    public static String ASSOC = "Assoc";
     public static String USER_PASS = "user_pass";
     public static String USER_ROLES = "roles";
     public static String NAME = "name";
@@ -59,6 +69,7 @@ public interface BaseConstants {
     public static String ACTOR = "actor";
     public static String DATABASE = "database";
     public static String FILE = "file";
+    public static String SEARCH_TYPE = "searchType";
 
     public static final Map<String, String> collectionsByType = new HashMap<>();
 

@@ -12,9 +12,13 @@ import com.tracker.cards.CardDataProcessor;
 import com.tracker.config.security.authentification.CustomUserObject;
 import com.tracker.config.security.authentification.impl.UserDetailsServiceImpl;
 import com.tracker.constants.BaseConstants;
+import com.tracker.dao.process.data.elements.impl.UserAssocDataElement;
 import com.tracker.dao.search.impl.DefaultSearcher;
 import com.tracker.dao.search.request.CreateRequestQuery;
 import com.tracker.dao.search.request.impl.*;
+import com.tracker.dao.search.response.SearchResponseElement;
+import com.tracker.dao.search.response.impl.DefaultDataResponseElement;
+import com.tracker.dao.search.response.impl.UsersAssocResponseElement;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -23,10 +27,12 @@ import org.json.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
 public abstract class AbstractDataSearch {
@@ -42,53 +48,120 @@ public abstract class AbstractDataSearch {
     public static final String name = "name";
     public static final String searchDataConst = "searchData";
 
-    final static Map<String, Supplier<CreateRequestQuery>> requestQueryMap = new HashMap<>();
+    final static Map<String, Supplier<CreateRequestQuery>> requestQueryForGetCardMap = new HashMap<>();
+    final static Map<String, Supplier<CreateRequestQuery>> requestQueryForSearchMap = new HashMap<>();
+    final static Map<String, Supplier<SearchResponseElement>> responseQueryForSearchMap = new HashMap<>();
     static {
-        requestQueryMap.put("file", CreateRequestQueryFile::new);
-        requestQueryMap.put("text", CreateRequestQueryText::new);
-        requestQueryMap.put(BaseConstants.CURRENT_EXECUTOR, CreateRequestQueryAddressee::new);
-        requestQueryMap.put("userAssoc", CreateRequestQueryUserAssoc::new);
-        requestQueryMap.put("auditData", CreateRequestQueryAuditData::new);
+        requestQueryForGetCardMap.put(BaseConstants.FILE, CreateRequestQueryFile::new);
+        requestQueryForGetCardMap.put(BaseConstants.TEXT, CreateRequestQueryText::new);
+        requestQueryForGetCardMap.put(BaseConstants.CURRENT_EXECUTOR, CreateRequestQueryAddressee::new);
+        requestQueryForGetCardMap.put(BaseConstants.USER_ASSOC, CreateRequestQueryUserAssoc::new);
+        requestQueryForGetCardMap.put(BaseConstants.AUDIT_DATA, CreateRequestQueryAuditData::new);
+
+        requestQueryForSearchMap.put(BaseConstants.FILE, CreateRequestQueryFile::new);
+        requestQueryForSearchMap.put(BaseConstants.TEXT, CreateRequestQueryText::new);
+        requestQueryForSearchMap.put(BaseConstants.USER_ASSOC, CreateRequestQueryUserAssoc::new);
+        requestQueryForSearchMap.put(BaseConstants.CREATOR, CreateRequestQueryUserAssoc::new);
+        requestQueryForSearchMap.put(BaseConstants.AUDIT_DATA, CreateRequestQueryAuditData::new);
+        requestQueryForSearchMap.put(BaseConstants.CURRENT_EXECUTOR, CurrentExecutorQuery::new);
+        requestQueryForSearchMap.put(BaseConstants.SEARCH_TEXT_QUERY, SearchTextQuery::new);
+
+        responseQueryForSearchMap.put(BaseConstants.CREATOR, UsersAssocResponseElement::new);
+        responseQueryForSearchMap.put(BaseConstants.USER_ASSOC, UsersAssocResponseElement::new);
+        responseQueryForSearchMap.put(BaseConstants.DEFAULT, DefaultDataResponseElement::new);
     }
 
-
-
-    public JSONObject getData(MongoDatabase mongoDatabase, JSONObject searchParams) {
+    public JSONObject getData(MongoDatabase mongoDatabase, JSONObject searchParams){
         Integer start = (Integer) searchParams.get(startConst);
         Integer length = (Integer) searchParams.get(lengthConst);
         Integer draw = (Integer) searchParams.get(drawConst);
-        ArrayList<Document> docs = new ArrayList();
-        JSONObject searchData = (JSONObject) ((JSONObject) searchParams.get(search)).get(searchDataConst);
-        String searchType = (String) ((JSONObject) searchParams.get(search)).get("searchType");
 
-        BasicDBObject query = createSearchData(searchData);
+        JSONObject searchData = (JSONObject) ((JSONObject) searchParams.get(search)).get(searchDataConst);
+        String searchType = (String) ((JSONObject) searchParams.get(search)).get(BaseConstants.SEARCH_TYPE);
+        Iterator<?> keys = searchData.keys();
+
+        List<Bson> filters = new ArrayList<>();
+
+        while(keys.hasNext() ) {
+            String key = (String) keys.next();
+            String value = (String) searchData.get(key);
+            if(!StringUtils.isEmpty(value)){
+                JSONObject fieldData = getFieldData(searchType,key);
+                Supplier<CreateRequestQuery> element = requestQueryForSearchMap.get(key);
+                if(element != null) {
+                    Bson result = element.get().createQueryForElement(key, value);
+                    if(result!=null) filters.add(result);
+                }else {
+                    Bson result = requestQueryForSearchMap.get(BaseConstants.SEARCH_TEXT_QUERY).get().createQueryForElement(key, value);
+                    if(result!=null) filters.add(result);
+                }
+            }
+        }
 
         MongoCollection<Document> collection = mongoDatabase.getCollection(BaseConstants.getCollection(searchType));
+        AtomicInteger counterAllDocs = new AtomicInteger(0);
+        collection.aggregate(filters).iterator().forEachRemaining(
+                key -> counterAllDocs.incrementAndGet()
+        );
 
-        FindIterable iteratorAll = collection.find(query).sort(new Document(BaseConstants.CREATED, -1));
-        iteratorAll.into(docs);
-        Integer count = docs.size();
-        docs = new ArrayList();
+        filters.add(new AggregateAdditionalParameterDataQuery().createQueryForElement(BaseConstants.SKIP, start));
+        filters.add(new AggregateAdditionalParameterDataQuery().createQueryForElement(BaseConstants.LIMIT, length));
 
-        FindIterable iterator = collection.find(query).skip(start).limit(length).sort(new Document(BaseConstants.CREATED, -1));
-        iterator.into(docs);
+        List<String> columns = new ArrayList<>();
+
+        if(searchParams.has(BaseConstants.COLUMNS)){
+            JSONArray columnsList = (JSONArray) searchParams.get(BaseConstants.COLUMNS);
+            for (Object object : columnsList) {
+                JSONObject data = (JSONObject) object;
+                if(((String) data.get(BaseConstants.DATA)).contains(BaseConstants.ASSOC)){
+                    filters.add(new CreateRequestQueryUserAssoc().createQueryForElement((String) data.get(BaseConstants.DATA), ""));
+                }
+                columns.add((String) data.get(BaseConstants.DATA));
+            }
+
+            JSONArray orderArray = (JSONArray) searchParams.get(BaseConstants.ORDER);
+            for (Object object : orderArray) {
+                JSONObject data = (JSONObject) object;
+                int sort = data.get(BaseConstants.DIR).equals(BaseConstants.ASC) ? 1 : -1;
+                filters.add(new AggregateAdditionalParameterDataQuery().createQueryForElement(BaseConstants.SORT,  new Document(columns.get((Integer) data.get(BaseConstants.COLUMN)), sort)));
+                break;
+            }
+        }
+
+        AggregateIterable<Document> iterator = collection.aggregate(filters);
+        ArrayList<Document> documents = new ArrayList();
+        iterator.into(documents);
 
         JSONArray jsonArray = new JSONArray();
-        docs.forEach((document) -> {
-            jsonArray.put(new JSONObject(new JsonParser().parse(document.toJson()).getAsJsonObject().toString()));
-        });
-
-
+        for (Document document : documents) {
+            JSONObject jsonObject = new JSONObject(new JsonParser().parse(document.toJson()).getAsJsonObject().toString());
+            Iterator<?> objectKeys = jsonObject.keys();
+            JSONObject result = jsonObject;
+            if(columns.size()>0){
+                while(objectKeys.hasNext()) {
+                    String key = (String)objectKeys.next();
+                    Object value = jsonObject.get(key);
+                    if(columns.contains(key)){
+                        Supplier<SearchResponseElement> element = responseQueryForSearchMap.get(key);
+                        if(element != null) {
+                            result.putOpt(key, element.get().getData(value));
+                        }else {
+                            result.putOpt(key, responseQueryForSearchMap.get(BaseConstants.DEFAULT).get().getData(value));
+                        }
+                    }
+                }
+            }
+            jsonArray.put(result);
+        }
 
         JSONObject result = new JSONObject();
         result.put(drawConst, draw);
-        result.put(recordsTotalConst, count);
-        result.put(recordsFilteredConst, count);
+        result.put(recordsTotalConst, counterAllDocs.get());
+        result.put(recordsFilteredConst, counterAllDocs.get());
         result.put(dataConst, jsonArray);
 
-        System.out.println("finish search users from query "+query);
-
         return result;
+
     }
 
     public JSONObject getDataById(MongoDatabase mongoDatabase, String elementType, String elementId){
@@ -165,13 +238,28 @@ public abstract class AbstractDataSearch {
         JSONArray jsonArray = CardDataProcessor.getInstance().getCardAttributes(elementType);
         for (Object object : jsonArray) {
             JSONObject cardData = (JSONObject) object;
-            Supplier<CreateRequestQuery> element = requestQueryMap.get(cardData.get(BaseConstants.TYPES_FOR_SAVING));
+            Supplier<CreateRequestQuery> element = requestQueryForGetCardMap.get(cardData.get(BaseConstants.TYPES_FOR_SAVING));
             if(element != null) {
                 Bson result = element.get().createQueryForElement((String) cardData.get(name),"");
                 if(result!=null) filters.add(result);
             }
         }
         return filters;
+    }
+
+    private JSONObject getFieldData(String elementType, String fieldName){
+        JSONArray jsonArray = CardDataProcessor.getInstance().getCardAttributes(elementType);
+        JSONObject result = new JSONObject();
+        for (Object object : jsonArray) {
+            JSONObject fieldElement = (JSONObject) object;
+            String name = (String) fieldElement.get(BaseConstants.NAME);
+            if(name.equals(fieldName)){
+                result = fieldElement;
+                break;
+            }
+        }
+        return result;
+
     }
 
 }

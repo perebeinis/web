@@ -117,7 +117,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
 
         if (!foundEmpty) {
             var postParams = [];
-
+            console.log("****");
             // inputs
             $('.card-attributes-container input').each(function (data) {
                 if (this.name != "" && this.name != "userAssoc") {
@@ -138,7 +138,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     }
                 }
             });
-
+            console.log("****");
             // textarea
             $('.card-attributes-container textarea').each(function (data) {
                 if (this.name != "") {
@@ -146,7 +146,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     postParams.push(postData);
                 }
             });
-
+            console.log("****");
             // select
             $(".card-attributes-container .multiSelect").each(function (data) {
                 if (this.innerHTML != "" && this.name != undefined) {
@@ -157,7 +157,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     postParams.push(postData);
                 }
             });
-
+            console.log("****");
             // userAssocs
             $('.card-attributes-container .userAssoc').each(function (data) {
                 if (this.name != undefined) {
@@ -168,7 +168,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     postParams.push(postData);
                 }
             });
-
+            console.log("****");
 
             $.ajax({
                 url: '/create-new-element?type=' + currentElementType,
@@ -181,6 +181,8 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
             });
         }
 
+        console.log("****");
+
 
     },
 
@@ -190,6 +192,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
 
             if (!foundEmpty) {
                 var postParams = [];
+                console.log("****");
 
                 // inputs
                 $('.card-attributes-container input').each(function (data) {
@@ -215,6 +218,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                         }
                     }
                 });
+                console.log("****");
 
                 // textarea
                 $('.card-attributes-container textarea').each(function (data) {
@@ -223,6 +227,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                         postParams.push(postData);
                     }
                 });
+                console.log("****");
 
                 // select
                 $(".card-attributes-container .multiSelect").each(function (data) {
@@ -235,6 +240,8 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     }
                 });
 
+                console.log("****");
+
                 // userAssocs
                 $('.card-attributes-container .userAssoc').each(function (data) {
                     if (this.name != undefined && this.readOnly == false) {
@@ -245,6 +252,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                         postParams.push(postData);
                     }
                 });
+                console.log("****");
 
                 $.ajax({
                     url: '/update-element?type=' + currentElementType+"&id="+Utils.getUrlParameter("id"),
@@ -255,6 +263,8 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                 }).done(function (data) {
                     window.open("/get-element?type=" + currentElementType + "&mode=view&id=" + data._id, "_self");
                 });
+
+                console.log("****");
             }
 
 
@@ -272,7 +282,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
             var condition = conditionsList[i];
             var attribute = $('*[name=\'' + fieldName + '\']')[0];
             var mandatoryFound = false;
-            if (attribute != undefined) {
+            if (attribute != undefined && condition!=undefined) {
                 if (condition == "*") {
                     if (attribute.attributes.customtype.nodeValue == "userAssoc" && $(attribute.parentNode).find(".added > tr").length == 0) {
                         mandatoryFound = true;

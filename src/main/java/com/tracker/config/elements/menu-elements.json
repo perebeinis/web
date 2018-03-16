@@ -29,15 +29,25 @@
               "type": "text"
             }
           ]
-        },
+        }
+      ]
+    },
 
+    {
+      "name": "tasks",
+      "title": "header.buttons.tasks",
+      "type": "header",
+      "mode": "view",
+      "enableForRoles": "ADMIN,USER",
+      "searchParams": {"searchType" : "issue"},
+      "elements": [
         {
-          "name": "searchMyTasks",
-          "title": "header.buttons.searchMyTasks",
-          "searchColumns": "elementName,description",
+          "name": "searchTasksWhereImAddressee",
+          "title": "header.buttons.searchTasksWhereImAddressee",
+          "searchColumns": "elementName,description,creatorAssoc,userAssoc,created",
           "type": "subElement",
-          "mode": "task",
-          "searchParams": {"searchType" : "issue", "searchMyTasks" : "true"},
+          "mode": "view",
+          "searchParams": {"searchType" : "issue", "searchData": {"userAssoc" : "MY_ID"}},
           "enableForRoles": "ADMIN,USER",
           "searchers": [
             {
@@ -54,12 +64,34 @@
         },
 
         {
-          "name": "searchAllTasks",
-          "title": "header.buttons.searchAllTasks",
-          "searchColumns": "elementName,description",
+          "name": "searchAllTasksImCreator",
+          "title": "header.buttons.searchAllTasksImCreator",
+          "searchColumns": "elementName,description,userAssoc",
           "type": "subElement",
           "mode": "view",
-          "searchParams": {"searchType" : "issue"},
+          "searchParams": {"searchType" : "issue", "searchData": {"creatorAssoc" : "MY_ID"}},
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "elementName",
+              "title": "constants.elementName",
+              "type": "text"
+            },
+            {
+              "name": "description",
+              "title": "constants.description",
+              "type": "text"
+            }
+          ]
+        },
+
+        {
+          "name": "searchAllTasksImExecutor",
+          "title": "header.buttons.searchAllTasksImExecutor",
+          "searchColumns": "elementName,description,creatorAssoc,userAssoc",
+          "type": "subElement",
+          "mode": "task",
+          "searchParams": {"searchType" : "issue", "searchData": {"currentExecutor" : "MY_ID"}},
           "enableForRoles": "ADMIN,USER",
           "searchers": [
             {
@@ -76,7 +108,8 @@
         }
       ]
     },
-    
+
+
     {
       "name": "messages",
       "title": "header.buttons.messages",
@@ -88,7 +121,7 @@
         {
           "name": "searchMyMessages",
           "title": "header.buttons.searchMyMessages",
-          "searchColumns": "elementName,description,creator",
+          "searchColumns": "elementName,description,creatorAssoc,userAssoc",
           "type": "subElement",
           "mode": "view",
           "searchParams": {"searchType" : "message", "searchData": {"userAssoc" : "MY_ID"}},
@@ -110,10 +143,10 @@
         {
           "name": "searchMessagesImCreator",
           "title": "header.buttons.searchMessagesImCreator",
-          "searchColumns": "elementName,description",
+          "searchColumns": "elementName,description,creatorAssoc,userAssoc",
           "type": "subElement",
           "mode": "view",
-          "searchParams": {"searchType" : "message", "searchData": {"creator" : "MY_ID"}},
+          "searchParams": {"searchType" : "message", "searchData": {"creatorAssoc" : "MY_ID"}},
           "enableForRoles": "ADMIN,USER",
           "searchers": [
             {
@@ -140,7 +173,7 @@
         {
           "name": "audit",
           "title": "header.buttons.audit",
-          "searchColumns": "actionName,time,actor,type,auditData",
+          "searchColumns": "time,actionName,actor,type,auditData",
           "type": "subElement",
           "mode": "view",
           "searchParams": {"searchType" : "audit"},
