@@ -16,6 +16,12 @@
       "enableForRoles": "ADMIN,USER"
     },
     {
+      "name": "createNewNews",
+      "title": "header.buttons.createNewNews",
+      "enableForRoles": "ADMIN,USER"
+    },
+
+    {
       "name": "userData",
       "title": "header.buttons.userData",
       "type" : "header",
@@ -24,6 +30,18 @@
         {
           "name": "myProfile",
           "title": "header.buttons.myProfile",
+          "enableForRoles": "ADMIN,USER"
+        },
+        {
+          "name": "UA",
+          "customClassName": "lang",
+          "title": "header.buttons.UA",
+          "enableForRoles": "ADMIN,USER"
+        },
+        {
+          "name": "ENG",
+          "customClassName": "lang",
+          "title": "header.buttons.ENG",
           "enableForRoles": "ADMIN,USER"
         },
         {

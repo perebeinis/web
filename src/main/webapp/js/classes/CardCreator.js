@@ -42,7 +42,7 @@ CardCreator.prototype.createCardElements = function () {
                 $(this).addClass("tab-selected");
                 $("#" + setId).addClass("set-selected").removeClass("hidden");
             }
-        }).html(this.messages[title]));
+        }).html(this.messages[title]!=undefined ? this.messages[title] : title));
 
         // Create set for tab
         var classNameSet = tabsCounter != 0 ? name + " hidden" : name + " set-selected";
@@ -104,11 +104,12 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
             .append($('<div>', {class: "card-button" + " " + data[this.customClassName]}).append($('<button>', {
                 value: data[this.title],
                 class: "btn btn-primary btn-md"
-            }).click(this, this[data[this.name]]).html(this.messages[data[this.title]])));
+            }).click(this, this[data[this.name]])
+                .html(this.messages[data[this.title]]!=undefined ? this.messages[data[this.title]] : data[this.title])));
     }
 
     this.sendNext = function (data, parentElementId) {
-        window.open("/welcome", "_self");
+        window.open("/search?filter=news", "_self");
     }
 
     this.save = function (e, data) {
@@ -117,7 +118,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
 
         if (!foundEmpty) {
             var postParams = [];
-            console.log("****");
+            
             // inputs
             $('.card-attributes-container input').each(function (data) {
                 if (this.name != "" && this.name != "userAssoc") {
@@ -138,7 +139,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     }
                 }
             });
-            console.log("****");
+            
             // textarea
             $('.card-attributes-container textarea').each(function (data) {
                 if (this.name != "") {
@@ -146,7 +147,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     postParams.push(postData);
                 }
             });
-            console.log("****");
+            
             // select
             $(".card-attributes-container .multiSelect").each(function (data) {
                 if (this.innerHTML != "" && this.name != undefined) {
@@ -157,7 +158,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     postParams.push(postData);
                 }
             });
-            console.log("****");
+            
             // userAssocs
             $('.card-attributes-container .userAssoc').each(function (data) {
                 if (this.name != undefined) {
@@ -168,7 +169,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     postParams.push(postData);
                 }
             });
-            console.log("****");
+            
 
             $.ajax({
                 url: '/create-new-element?type=' + currentElementType,
@@ -181,7 +182,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
             });
         }
 
-        console.log("****");
+        
 
 
     },
@@ -192,7 +193,6 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
 
             if (!foundEmpty) {
                 var postParams = [];
-                console.log("****");
 
                 // inputs
                 $('.card-attributes-container input').each(function (data) {
@@ -218,7 +218,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                         }
                     }
                 });
-                console.log("****");
+                
 
                 // textarea
                 $('.card-attributes-container textarea').each(function (data) {
@@ -227,7 +227,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                         postParams.push(postData);
                     }
                 });
-                console.log("****");
+                
 
                 // select
                 $(".card-attributes-container .multiSelect").each(function (data) {
@@ -240,7 +240,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     }
                 });
 
-                console.log("****");
+                
 
                 // userAssocs
                 $('.card-attributes-container .userAssoc').each(function (data) {
@@ -252,7 +252,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                         postParams.push(postData);
                     }
                 });
-                console.log("****");
+                
 
                 $.ajax({
                     url: '/update-element?type=' + currentElementType+"&id="+Utils.getUrlParameter("id"),
@@ -264,7 +264,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                     window.open("/get-element?type=" + currentElementType + "&mode=view&id=" + data._id, "_self");
                 });
 
-                console.log("****");
+                
             }
 
 
@@ -272,7 +272,7 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
 
 
     this.close = function () {
-        window.open("/welcome", "_self");
+        window.open("/search?filter=news", "_self");
     }
 
     this.mandatoryEventCheck = function () {

@@ -83,8 +83,10 @@ public interface BaseConstants {
             return MESSAGE;
         }else if(elementType.equals(AUDIT)){
             return AUDIT;
-        }else {
+        }else if(elementType.equals(USER_TYPE)){
             return USERS_COLLECTION;
+        }else {
+            return elementType;
         }
     }
 }

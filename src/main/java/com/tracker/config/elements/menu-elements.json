@@ -10,7 +10,7 @@
         {
           "name": "searchUsers",
           "title": "header.buttons.searchUsers",
-          "searchColumns": "firstName,lastName,birthDay",
+          "searchColumns": "firstName,lastName,birthDay,userAssoc",
           "type": "subElement",
           "mode": "view",
           "searchParams": {
@@ -147,6 +147,38 @@
           "type": "subElement",
           "mode": "view",
           "searchParams": {"searchType" : "message", "searchData": {"creatorAssoc" : "MY_ID"}},
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "elementName",
+              "title": "constants.elementName",
+              "type": "text"
+            },
+            {
+              "name": "description",
+              "title": "constants.description",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "name": "allNews",
+      "title": "header.buttons.news",
+      "type": "header",
+      "mode": "view",
+      "enableForRoles": "ADMIN,USER",
+      "searchParams": {"searchType" : "news"},
+      "elements": [
+        {
+          "name": "news",
+          "title": "header.buttons.news",
+          "searchColumns": "elementName,description,creatorAssoc",
+          "type": "subElement",
+          "mode": "view",
+          "searchParams": {"searchType" : "news"},
           "enableForRoles": "ADMIN,USER",
           "searchers": [
             {

@@ -57,7 +57,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login-error")
             .and()
                 .logout()
-                .logoutSuccessUrl("/welcome")
+                .logoutSuccessUrl("/login")
             .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")

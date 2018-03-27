@@ -7,6 +7,5 @@ import org.bson.conversions.Bson;
  * Created by Perebeinis on 11.01.2018.
  */
 public interface CreateRequestQuery {
-
-    public Bson createQueryForElement(String searchName, String searchValue);
+    Bson createQueryForElement(String searchName, String searchValue);
 }

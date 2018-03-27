@@ -60,8 +60,10 @@ function HeaderButton(cardId, data, messages,userData) {
         for (var i in subElements){
 
             $('#'+name)
-                .append($('<li>')
-                    .append($('<a>', {userId: this.userData._id["$oid"]}).click(this[subElements[i][this.name]]).html(this.messages[subElements[i][this.title]])));
+                .append($('<li>', { class : subElements[i].customClassName!=undefined ? subElements[i].customClassName : ""})
+                    .append($('<a>', {userId: this.userData._id["$oid"]})
+                        .click(this[subElements[i][this.name]])
+                        .html(this.messages[subElements[i][this.title]]!=undefined ? this.messages[subElements[i][this.title]] : subElements[i][this.title])));
 
         }
     }
@@ -70,10 +72,18 @@ function HeaderButton(cardId, data, messages,userData) {
         var name = data[this.name];
         $('#'+parentElement)
             .append($('<div>', {class: " navbar-header "+" "+name}).
-            append($('<a>' ,{class: "navbar-brand "}).click(this[name]).html(this.messages[data[this.title]])));
+            append($('<a>' ,{class: "navbar-brand "}).click(this[name])
+                .html(this.messages[data[this.title]]!=undefined ? this.messages[data[this.title]] : data[this.title])));
     }
 
 
+    this.UA = function() {
+        window.open("/?lang=uk", "_self");
+    };
+
+    this.ENG = function() {
+        window.open("/?lang=en", "_self");
+    };
 
     this.signOut = function() {
         window.open("/logout", "_self");
@@ -89,6 +99,10 @@ function HeaderButton(cardId, data, messages,userData) {
 
     this.createNewMessage = function() {
         window.open("/create-element?type=message&mode=create", "_self");
+    };
+
+    this.createNewNews = function() {
+        window.open("/create-element?type=news&mode=create", "_blank");
     };
 
     this.createNewUser = function() {

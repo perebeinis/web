@@ -43,20 +43,46 @@ function MenuElementsCretor(cardId, data, messages) {
             this.createFilterElement(subElements[i], data[this.name]);
         }
     }
-    
+
+
     this.createFilterElement = function (data, parentElement) {
         $('#'+parentElement)
             .append($('<li>').
             append($('<a>', {name: data[this.name], href : "#"}).html(
                 this.messages[data[this.title]]!=undefined ? this.messages[data[this.title]] : data[this.title])
                 .click(function() {
-                    localStorage.setItem('lastOpenedFilter', this.name);
                     window.open("/search?filter="+this.name, "_self");
                 })
 
             ));
     }
 
+
+    /*
+    this.createFilterElement = function (data, parentElement) {
+        $('#'+parentElement)
+            .append($('<li>').
+            append($('<a>', {name: data[this.name], href : "#"}).html(
+                this.messages[data[this.title]]!=undefined ? this.messages[data[this.title]] : data[this.title])
+                .click(function() {
+                    var link = "/search?filter="+this.name;
+                    $.ajax({
+                        url: link,
+                        type: "GET",
+                        contentType: "application/json",
+                        data: encodeURI(JSON.stringify(search)),
+                        dataType: 'json'
+                    }).done(function (data) {
+                        console.log("done");
+                    });
+
+
+                    history.pushState(null, null, link);
+                })
+
+            ));
+    }
+*/
 
 
     this.createMenuEvents = function () {
@@ -79,6 +105,10 @@ function MenuElementsCretor(cardId, data, messages) {
 
         if($(parent).hasClass("bullets")){
             $(parent).parent().children('ul.tree').toggle(200);
+        }
+
+        if(!$(menuItem).hasClass("selected")){
+            $(menuItem).addClass("selected");
         }
 
     }

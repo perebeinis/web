@@ -543,3 +543,18 @@ navbar.less:
         width: 100px !important;
         vertical-align: top;
     }
+
+
+    .dropdown-menu .lang > a {
+        width: initial;
+        padding-right: 0px
+    }
+
+    .dropdown-menu .lang {
+        display : inline-block;
+    }
+
+    .left-menu-tree .container a.selected {
+        background-color: #21465b;
+        color: #ffffffc7;
+    }

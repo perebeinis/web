@@ -272,9 +272,15 @@ FormElements.prototype.file = function (data, parentElementId, elementValue, add
 
 FormElements.prototype.userAssoc = function (data, parentElementId, elementValue) {
     var scope = this;
+    var maxElements = data.maxElements!=undefined ? data.maxElements : 100;
     var resultTable = ["firstName", "lastName"];
     $('#' + parentElementId)
-        .append($('<div>', {class: "textField" + " " + data[this.customClassName]}).append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"])).append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]])).append($('<input>', {
+        .append($('<div>', {class: "textField" + " " + data[this.customClassName]})
+            .append($('<span>', {class: "hidden popup"})
+                .html(this.messages["mandatory"]))
+            .append($('<label>', {value: data[this.title]})
+                .html(this.messages[data[this.title]])).append($('<input>', {
+                maxElements : maxElements,
             class: "form-control " + data[this.name], name: data[this.name],
             placeholder: "search ...",
             customType: data[this.typeForSaving] ? data[this.typeForSaving] : "",
@@ -309,6 +315,7 @@ FormElements.prototype.searchUsers = function (event, data) {
     var searchValue = data.value;
     var userAssocInput = data;
     var scope = this;
+    var maxElements = parseInt(data.attributes.maxelements.nodeValue);
     if (data.value != "") {
         // create headers
         /*
@@ -346,7 +353,8 @@ FormElements.prototype.searchUsers = function (event, data) {
                             return '<td>' + searchResultElement[elementName] + '</td>';
                         }).join()
                     ).click(function () {
-                        if ($(addedTable).find("#" + this.id).length == 0) {
+                        var addedRows = $(addedTable).find("tr").length;
+                        if (addedRows < maxElements &&  $(addedTable).find("#" + this.id).length == 0) {
                             $(addedTable).append($(this.outerHTML).click(function () {
                                 this.parentNode.removeChild(this);
                             }));

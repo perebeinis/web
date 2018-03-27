@@ -41,39 +41,12 @@
           "typeForSaving": "file",
           "mandatoryCondition": "*",
           "customClassName": "half",
+          "limit": 2,
           "enableParams": [
             {
               "mode": "create"
             }
           ]
-        },
-
-        {
-          "name": "userAssoc",
-          "title": "constants.issue.userAssoc",
-          "type": "userAssoc",
-          "maxElements" : 1,
-          "enableParams": [
-            {
-              "mode": "create"
-            }
-          ],
-          "typeForSaving": "userAssoc",
-          "mandatoryCondition": "*",
-          "customClassName": "fullString"
-        },
-
-        {
-          "name": "currentExecutor",
-          "title": "constants.currentExecutor",
-          "type": "textField",
-          "enableParams": [
-            {
-              "mode": "none"
-            }
-          ],
-          "typeForSaving": "text",
-          "customClassName": "fullString hidden"
         }
       ]
     }
@@ -86,17 +59,6 @@
       "enableParams": [
         {
           "mode": "create"
-        }
-      ],
-      "customClassName": "save"
-    },
-    {
-      "name": "sendNext",
-      "title": "constants.sendNext",
-      "type": "button",
-      "enableParams": [
-        {
-          "mode": "task"
         }
       ],
       "customClassName": "save"

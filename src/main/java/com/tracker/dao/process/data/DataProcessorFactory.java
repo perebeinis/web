@@ -23,6 +23,7 @@ public class DataProcessorFactory {
         map.put("default", DefaultDataProcessor::new);
         map.put("issue", SingleExecutorTaskDataProcessor::new);
         map.put("message", MessageDataProcessor::new);
+        map.put("news", MessageDataProcessor::new);
     }
 
     public String processData(String elementType, JSONArray incomingDataObject, String elementId){

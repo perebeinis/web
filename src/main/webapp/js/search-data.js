@@ -44,8 +44,10 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
         var openMode = this.mode;
 
         $("#"+tableDivId).on('click', 'tbody tr', function () {
-            currentSearchType = this.elementType? this.elementType : currentSearchType;
-            window.open("/get-element?type="+currentSearchType+"&mode="+openMode+"&id="+this.id, "_blank");
+            if(this.id!=""){
+                currentSearchType = this.elementType? this.elementType : currentSearchType;
+                window.open("/get-element?type="+currentSearchType+"&mode="+openMode+"&id="+this.id, "_blank");
+            }
         });
     }
 

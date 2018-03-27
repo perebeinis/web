@@ -47,7 +47,7 @@ public class MainController {
     @RequestMapping(value = "/welcome", method = RequestMethod.GET,  produces = "text/html; charset=UTF-8")
     public String printWelcome(Locale locale, ModelMap model, Authentication authentication) {
         model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
-        return "welcome";
+        return "redirect:/search?filter=news";
     }
 
 
