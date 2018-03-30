@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<div th:fragment="search">
+<div class="search-main-block  main-block" th:fragment="search">
     <!-- this is menu -->
 
         <div class="search-block">
@@ -17,10 +17,9 @@
 
 
             <script>
-                var searchers = "[[${searchers}]]";
-                var userData = "[[${userData}]]";
-                var messages = "[[${messages}]]";
-                var searchData = "[[${searchData}]]";
+                var searchers = [(${searchers})];
+                var userData = [(${userData})];
+                var messages = [(${messages})];
                 var dataComponent = new SearchDataComponent("search-result-table",searchers,messages, userData);
                 dataComponent.searchData();
 

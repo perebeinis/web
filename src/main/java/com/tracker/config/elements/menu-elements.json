@@ -66,7 +66,7 @@
         {
           "name": "searchAllTasksImCreator",
           "title": "header.buttons.searchAllTasksImCreator",
-          "searchColumns": "elementName,description,userAssoc",
+          "searchColumns": "elementName,description,userAssoc,state",
           "type": "subElement",
           "mode": "view",
           "searchParams": {"searchType" : "issue", "searchData": {"creatorAssoc" : "MY_ID"}},
@@ -175,7 +175,7 @@
         {
           "name": "news",
           "title": "header.buttons.news",
-          "searchColumns": "elementName,description,creatorAssoc",
+          "searchColumns": "elementName,description,creatorAssoc,created",
           "type": "subElement",
           "mode": "view",
           "searchParams": {"searchType" : "news"},
@@ -205,7 +205,7 @@
         {
           "name": "audit",
           "title": "header.buttons.audit",
-          "searchColumns": "time,actionName,actor,type,auditData",
+          "searchColumns": "created,actionName,actor,type,auditData",
           "type": "subElement",
           "mode": "view",
           "searchParams": {"searchType" : "audit"},

@@ -59,20 +59,23 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
             String value = (String) formFieldElement.get(BaseConstants.DATA);
 
             //Set currentTaskExecutor
-            processCurrentExecutor(fieldType,userDetailsService,value);
+            processCurrentExecutor(fieldType, userDetailsService, value);
 
             Supplier<DataElement> element = DataProcessorService.getInstance().getSavingElementsType().get(fieldType);
             Object fieldValue = element != null ?
                     DataProcessorService.getInstance().getSavingElementsType().get(fieldType).get().getData(database, formFieldElement) :
                     DataProcessorService.getInstance().getSavingElementsType().get(BaseConstants.TEXT).get().getData(database, formFieldElement);
 
-            processFieldValue(fieldValue,fieldType, fieldName);
+            processFieldValue(fieldValue, fieldType, fieldName);
             auditObjects.add(new AuditObject(fieldName, fieldType, fieldValue));
         }
 
+        createDataObject.put(BaseConstants.STATE, BaseConstants.IN_PROCESS);
+        auditObjects.add(new AuditObject(BaseConstants.STATE, BaseConstants.STRING_TYPE, BaseConstants.IN_PROCESS));
+
         ObjectId objectId = createDataObject.getObjectId(BaseConstants.DOCUMENT_ID);
         collection.insertOne(createDataObject);
-        AuditService.getInstance().auditData(BaseConstants.CREATE, auditObjects,elementType, objectId);
+        AuditService.getInstance().auditData(BaseConstants.CREATE, auditObjects, elementType, objectId);
 
         System.out.println("created new element with type = " + elementType);
         return createDataObject.getObjectId(BaseConstants.DOCUMENT_ID).toString();
@@ -101,14 +104,17 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
                         DataProcessorService.getInstance().getSavingElementsType().get(BaseConstants.TEXT).get().getData(database, formFieldElement);
 
                 updateDataObject.put(fieldName, fieldValue);
-                auditObjects.add(new AuditObject(fieldName, fieldType, currentElement.get(fieldName).toString() +" = "+ fieldValue));
+                auditObjects.add(new AuditObject(fieldName, fieldType, currentElement.get(fieldName).toString() + " = " + fieldValue));
 
                 updateDataObject.put(BaseConstants.CURRENT_TASK_EXECUTOR, null);
                 CustomUserObject lastExecutorData = userDetailsService.loadUserById(new ObjectId(((JSONObject) currentElement.get(BaseConstants.CURRENT_TASK_EXECUTOR)).get(BaseConstants.MONGO_ID).toString()));
-                String userFullName = lastExecutorData.getAllUserData().get(BaseConstants.FIRST_NAME) + " "+lastExecutorData.getAllUserData().get(BaseConstants.LAST_NAME);
-                auditObjects.add(new AuditObject(BaseConstants.CURRENT_TASK_EXECUTOR, BaseConstants.TEXT, userFullName +" = "));
+                String userFullName = lastExecutorData.getAllUserData().get(BaseConstants.FIRST_NAME) + " " + lastExecutorData.getAllUserData().get(BaseConstants.LAST_NAME);
+                auditObjects.add(new AuditObject(BaseConstants.CURRENT_TASK_EXECUTOR, BaseConstants.TEXT, userFullName + " = "));
             }
         }
+
+        updateDataObject.put(BaseConstants.STATE, BaseConstants.COMPLETE);
+        auditObjects.add(new AuditObject(BaseConstants.STATE, BaseConstants.STRING_TYPE, BaseConstants.COMPLETE));
 
         if (updateDataObject.size() > 0) {
             Bson setData = new Document(BaseConstants.SET, updateDataObject);
@@ -120,7 +126,7 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
         return elementId;
     }
 
-    private void processCurrentExecutor(String fieldType, UserDetailsServiceImpl userDetailsService, String value){
+    private void processCurrentExecutor(String fieldType, UserDetailsServiceImpl userDetailsService, String value) {
         if (fieldType.equals(BaseConstants.USER_ASSOC) && createDataObject.get(BaseConstants.CURRENT_TASK_EXECUTOR) == null) {
             String firstExecutorObjectId = value.split(",")[0];
             CustomUserObject customUserObject = userDetailsService.loadUserById(new ObjectId(firstExecutorObjectId));
@@ -131,16 +137,16 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
         }
     }
 
-    private void processFieldValue(Object fieldValue, String fieldType, String fieldName){
-        if(fieldType.equals(BaseConstants.FILE)){
-            if(createDataObject.get(fieldName)!=null){
+    private void processFieldValue(Object fieldValue, String fieldType, String fieldName) {
+        if (fieldType.equals(BaseConstants.FILE)) {
+            if (createDataObject.get(fieldName) != null) {
                 ((List<ObjectId>) createDataObject.get(fieldName)).add((ObjectId) fieldValue);
-            }else{
+            } else {
                 List<ObjectId> objectIds = new ArrayList<>();
                 objectIds.add((ObjectId) fieldValue);
                 createDataObject.put(fieldName, objectIds);
             }
-        }else{
+        } else {
             createDataObject.put(fieldName, fieldValue);
         }
     }
@@ -154,10 +160,13 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
         List<ObjectId> objectIds = new ArrayList<>();
         objectIds.add(userId);
         createDataObject.put(BaseConstants.CREATOR, objectIds);
-        createDataObject.put(BaseConstants.CREATED,  ISO8601DateFormat.getDateTimeInstance().format(new Date()));
+        createDataObject.put(BaseConstants.CREATED, ISO8601DateFormat.getDateTimeInstance().format(new Date()));
 
-        String userFullName = userDetailsService.getUserDataById(userId).get(BaseConstants.LAST_NAME)+" "+userDetailsService.getUserDataById(userId).get(BaseConstants.FIRST_NAME);
+        String userFullName = userDetailsService.getUserDataById(userId).get(BaseConstants.LAST_NAME) + " " + userDetailsService.getUserDataById(userId).get(BaseConstants.FIRST_NAME);
         auditObjects.add(new AuditObject(BaseConstants.CREATOR, BaseConstants.CREATOR, userFullName));
+        auditObjects.add(new AuditObject(BaseConstants.CREATED, BaseConstants.CREATED, ISO8601DateFormat.getDateTimeInstance().format(new Date())));
+
+
     }
 
     @Override

@@ -27,7 +27,8 @@ import com.tracker.config.localization.ExposedResourceMessageBundleSource;
 import com.tracker.config.localization.MessageResolveService;
 import com.tracker.config.localization.MessageResolverServiceImpl;
 import com.tracker.config.security.authentification.impl.UserDetailsServiceImpl;
-import com.tracker.controller.base.BaseControllerResponce;
+import com.tracker.constants.BaseConstants;
+import com.tracker.controller.base.BaseControllerResponse;
 import com.tracker.dao.process.audit.AuditService;
 import com.tracker.dao.process.data.DataProcessorFactory;
 import com.tracker.dao.process.data.DataProcessorService;
@@ -59,8 +60,6 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +90,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     public ExposedResourceMessageBundleSource messageSource() {
         ExposedResourceMessageBundleSource messageSource = new ExposedResourceMessageBundleSource();
         messageSource.setBasename("classpath:/messages/messages");
-        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setDefaultEncoding(BaseConstants.DEFAULT_ENCODING);
         messageSource.setCacheSeconds(10);
         return messageSource;
     }
@@ -125,10 +124,8 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
         templateResolver.setApplicationContext(this.applicationContext);
         templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
-        templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setCharacterEncoding(BaseConstants.DEFAULT_ENCODING);
         templateResolver.setTemplateMode(TemplateMode.HTML);
-        // Template cache is true by default. Set to false if you want
-        // templates to be automatically updated when modified.
         templateResolver.setCacheable(true);
         return templateResolver;
     }
@@ -146,7 +143,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setCharacterEncoding("UTF-8");
+        viewResolver.setCharacterEncoding(BaseConstants.DEFAULT_ENCODING);
         return viewResolver;
     }
 
@@ -174,7 +171,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
 
     @Bean
     public MongoDatabase database(){
-        MongoClient mongo = new MongoClient( "localhost" , 27017 );
+        MongoClient mongo = new MongoClient("localhost" , 27017 );
         MongoDatabase database = mongo.getDatabase("tracker");
         return database;
     }
@@ -189,15 +186,14 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
 
 
     @Bean
-    public BaseControllerResponce baseControllerResponce(UserDetailsService customUserDetailsService){
-        return new BaseControllerResponce(customUserDetailsService);
+    public BaseControllerResponse baseControllerResponse(UserDetailsService customUserDetailsService){
+        return new BaseControllerResponse(customUserDetailsService);
     }
 
 
     @Bean
     public SpringTemplateEngine thymeleafTemplateEngine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
-        // ...
         engine.setTemplateEngineMessageSource(databaseMessageSource);
         return engine;
     }
@@ -218,10 +214,8 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer properties(){
-        PropertySourcesPlaceholderConfigurer pspc =
-                new PropertySourcesPlaceholderConfigurer();
-        Resource[] resources = new ClassPathResource[ ]
-                { new ClassPathResource( "com/tracker/config/properties/paths.properties" ) };
+        PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
+        Resource[] resources = new ClassPathResource[ ]{new ClassPathResource("com/tracker/config/properties/paths.properties" )};
         pspc.setLocations( resources );
         pspc.setIgnoreUnresolvablePlaceholders( true );
         return pspc;

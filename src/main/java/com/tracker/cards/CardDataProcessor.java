@@ -124,7 +124,7 @@ public class CardDataProcessor {
 
     public JSONArray getMenuItemsForUser(String elementType) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        JSONArray jsonArray = ((JSONArray) cardElements.get(elementType).get(ELEMENTS));
+        JSONArray jsonArray = new JSONArray(((JSONArray) cardElements.get(elementType).get(ELEMENTS)).toString());
         jsonArray = loopData(jsonArray, authentication);
         return jsonArray;
     }

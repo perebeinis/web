@@ -20,10 +20,10 @@ public class DataProcessorFactory {
 
     final static Map<String, Supplier<DataProcessor>> map = new HashMap<>();
     static {
-        map.put("default", DefaultDataProcessor::new);
-        map.put("issue", SingleExecutorTaskDataProcessor::new);
-        map.put("message", MessageDataProcessor::new);
-        map.put("news", MessageDataProcessor::new);
+        map.put(BaseConstants.DEFAULT, DefaultDataProcessor::new);
+        map.put(BaseConstants.ISSUE, SingleExecutorTaskDataProcessor::new);
+        map.put(BaseConstants.MESSAGE, MessageDataProcessor::new);
+        map.put(BaseConstants.NEWS, MessageDataProcessor::new);
     }
 
     public String processData(String elementType, JSONArray incomingDataObject, String elementId){

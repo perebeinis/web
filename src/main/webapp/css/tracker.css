@@ -25,8 +25,8 @@
 
 .card-attributes {
     display: block;
-    float: left;
-    width: 80%;
+    float: right;
+    width: 78vw;
     padding: 0px 0 30px 10px;
 }
 
@@ -43,9 +43,7 @@
 .search-block,
 .card-attributes {
     margin-bottom: 20px !important;
-    width: 100%;
     padding: 5px;
-    /*background-color: #337ab7;*/
 }
 
 .card-attributes-tabs > span {
@@ -108,10 +106,10 @@ span.popup {
     color: white;
 }
 
-.left-menu-tree + div {
-    float: right;
+.search-main-block {
+    float: left;
     display: inline-block;
-    width: 79%;
+    width: 78vw;
 }
 
 .search-buttons,
@@ -557,4 +555,38 @@ navbar.less:
     .left-menu-tree .container a.selected {
         background-color: #21465b;
         color: #ffffffc7;
+    }
+
+    .left-menu-tree .news {
+        display: block;
+        float : left;
+        overflow-y: scroll;
+        width: inherit;
+        margin-left: 15px;
+        width: 92%;
+        transition: 0.5s;
+        height: 50px;
+    }
+
+    .left-menu-tree ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .news-items-list li span:first-child {
+        text-align: center;
+        padding-top: 10px;
+        font-weight: bold;
+        padding-left: 0px;
+        cursor: pointer;
+    }
+
+    .news-items-list li span {
+        width : 100%;
+        display: block;
+        padding-left: 15px;
+        padding-bottom: 10px;
+    }
+
+    .news-items-list li {
+        border-bottom: 3px solid #dee1e3;
     }

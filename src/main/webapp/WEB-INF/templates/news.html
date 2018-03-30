@@ -4,31 +4,14 @@
 <body>
 <div th:fragment="news">
 
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="well no-padding">
-                    <div>
-                        <ul id="menu-items-list" class="nav nav-list nav-menu-list-style">
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <ul id="news-items-list" class="nav nav-list news-items-list"></ul>
 
     <script>
-        var cardAttributes = "[[${menuList}]]";
-        var messages = "[[${messages}]]";
-        var menu = new MenuElementsCretor("menu-items-list",cardAttributes, messages);
-        menu.createMenuElements();
-        menu.createMenuEvents();
+        var newsListObj = [(${newsList})];
+        var messages = [(${messages})];
+        var news = new NewsListCretor("news-items-list",newsListObj, messages);
+        news.createNewsList();
     </script>
-
-
 
 </div>
 

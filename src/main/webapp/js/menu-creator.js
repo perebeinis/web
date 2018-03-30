@@ -1,13 +1,12 @@
 function MenuElementsCretor(cardId, data, messages) {
     this.cardId = cardId;
-    var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
-    this.dataArray = JSON.parse(dataStr);
+    this.dataArray = data;
     this.customClassName = "customClassName";
     this.title = "title";
     this.name = "name";
     this.type = "type";
     this.mandatoryCondition = "mandatoryCondition";
-    this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
+    this.messages = messages;
     this.mandatoryCondtitions = {};
     this.alreadyOpened = false;
 
@@ -51,9 +50,9 @@ function MenuElementsCretor(cardId, data, messages) {
             append($('<a>', {name: data[this.name], href : "#"}).html(
                 this.messages[data[this.title]]!=undefined ? this.messages[data[this.title]] : data[this.title])
                 .click(function() {
+                    localStorage.setItem("lastOpenedFilter",this.name);
                     window.open("/search?filter="+this.name, "_self");
                 })
-
             ));
     }
 
@@ -86,9 +85,15 @@ function MenuElementsCretor(cardId, data, messages) {
 
 
     this.createMenuEvents = function () {
-        $('.tree-toggle').click(function () {	$(this).parent().children('ul.tree').toggle(200);});
+        var scope = this;
+        $('.tree-toggle').click(function () {
+            $(this).parent().children('ul.tree').toggle(200);
+            scope.resizeNews();
+        });
+
         $(function(){
             $('.tree-toggle').parent().children('ul.tree').toggle(200);
+            scope.resizeNews();
         })
 
        if(!this.alreadyOpened){
@@ -96,6 +101,19 @@ function MenuElementsCretor(cardId, data, messages) {
            this.alreadyOpened = true;
        }
 
+    }
+
+    this.resizeNews = function(){
+        setTimeout(function() {
+            var menuHeight = $(".left-menu-tree > .menu .container").height();
+            var searcherMainBlockHeight = $(".main-block").height();
+            var windowHeight = $(window).height();
+            if(windowHeight > searcherMainBlockHeight) {
+                $(".left-menu-tree .news").height(windowHeight - (menuHeight+150));
+            }else {
+                $(".left-menu-tree .news").height(searcherMainBlockHeight - (menuHeight+100));
+            }
+        }, 250);
     }
     
     this.processLastOpenedMenuTree = function () {

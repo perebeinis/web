@@ -1,14 +1,13 @@
 function SearchDataComponent(tableDivId, data,messages, userData) {
     this.tableDivId = tableDivId;
-    var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
-    this.searchersArray = JSON.parse(dataStr);
+    this.searchersArray = data;
     this.searchParams = this.searchersArray.searchParams ? this.searchersArray.searchParams : "";
     this.mode = this.searchersArray.mode ? this.searchersArray.mode : "view";
     this.customClassName = "customClassName";
     this.title = "title";
     this.name = "name";
-    this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
-    this.userData = JSON.parse(userData.replace(new RegExp('&quot;', 'g'),'"'));
+    this.messages = messages;
+    this.userData = userData;
     this.type = "type";
     this.mandatoryCondition = "mandatoryCondition";
 
@@ -141,7 +140,8 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
                     }
                     td.innerHTML = div.innerHTML;
                 }
-            }});
+            },
+            "width" : 100/searchColumns.length + "%"});
         }
 
         $(document).ready(function(){

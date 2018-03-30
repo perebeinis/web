@@ -10,9 +10,14 @@
 <div th:replace="header :: header"/>
 
 <div class="left-menu-tree">
-    <div th:replace="menu :: menu"/>
-</div>
+    <div class="menu">
+        <div th:replace="menu :: menu"/>
+    </div>
 
+    <div class="news  well no-padding">
+        <div th:replace="news :: news"/>
+    </div>
+</div>
 
 <div th:replace="search :: search"/>
 

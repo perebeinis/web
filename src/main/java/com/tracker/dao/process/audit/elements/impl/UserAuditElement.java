@@ -38,7 +38,6 @@ public class UserAuditElement implements AuditElement {
             JSONObject userData = customUserObject.getAllUserData();
             String userFullName = userData.get(BaseConstants.FIRST_NAME) + " "+userData.get(BaseConstants.LAST_NAME);
             data.add(userFullName);
-            System.out.println("aaa");
         }
         Document jsonObject = new Document();
         jsonObject.put(BaseConstants.NAME, fieldName);

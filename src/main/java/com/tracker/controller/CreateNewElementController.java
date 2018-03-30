@@ -38,15 +38,15 @@ public class CreateNewElementController {
     @Autowired
     private UserDetailsService customUserDetailsService;
 
-    @RequestMapping(value = "/create-new-element", method = RequestMethod.POST , produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/create-new-element", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object> searchData(@RequestBody String postData, @RequestParam("type") String type) {
         JSONObject result = new JSONObject();
         try {
-            String encodeURL= URLDecoder.decode(postData, "UTF-8" );
+            String encodeURL = URLDecoder.decode(postData, BaseConstants.DEFAULT_ENCODING);
             JSONArray formData = new JSONArray(encodeURL);
-            String newElementId = dataProcessorFactory.processData(type, formData,"");
+            String newElementId = dataProcessorFactory.processData(type, formData, "");
             customUserDetailsService.reloadUsers();
-            result.put(BaseConstants.DOCUMENT_ID,newElementId);
+            result.put(BaseConstants.DOCUMENT_ID, newElementId);
             changingDataObserver.createEvent(type, formData, newElementId);
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
@@ -55,11 +55,11 @@ public class CreateNewElementController {
     }
 
 
-    @RequestMapping(value = "/update-element", method = RequestMethod.POST , produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/update-element", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object> updateElement(@RequestBody String postData, @RequestParam("type") String type, @RequestParam("id") String id) {
         JSONObject result = new JSONObject();
         try {
-            String encodeURL= URLDecoder.decode(postData, "UTF-8" );
+            String encodeURL = URLDecoder.decode(postData, BaseConstants.DEFAULT_ENCODING);
             JSONArray formData = new JSONArray(encodeURL);
             String newElementId = dataProcessorFactory.processData(type, formData, id);
             result.put(BaseConstants.DOCUMENT_ID, newElementId);

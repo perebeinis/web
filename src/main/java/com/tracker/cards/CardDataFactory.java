@@ -2,8 +2,7 @@ package com.tracker.cards;
 
 import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.impl.DefaultCardData;
-import com.tracker.cards.impl.IssueCardData;
-import com.tracker.cards.impl.UserCardData;
+import com.tracker.constants.BaseConstants;
 import com.tracker.dao.search.DataSearchFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -27,13 +26,10 @@ public class CardDataFactory {
 
     @Autowired
     private DataSearchFactory getElementFactory;
-    private static final String DEFAULT = "default";
 
     final static Map<String, Supplier<CardData>> map = new HashMap<>();
     static {
-//        map.put("user", UserCardData::new);
-//        map.put("issue", IssueCardData::new);
-        map.put("default", DefaultCardData::new);
+        map.put(BaseConstants.DEFAULT, DefaultCardData::new);
     }
 
     public ModelMap getCardData(String elementType, ModelMap model, String elementId){
@@ -41,7 +37,7 @@ public class CardDataFactory {
         if(element != null) {
             return element.get().getData(model, elementId, elementType, getElementFactory);
         }else{
-            return map.get(DEFAULT).get().getData(model, elementId, elementType, getElementFactory);
+            return map.get(BaseConstants.DEFAULT).get().getData(model, elementId, elementType, getElementFactory);
         }
     }
 }

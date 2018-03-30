@@ -29,8 +29,6 @@ public class FileDataElement implements DataElement{
         document.put(BaseConstants.FILE_NAME,fileName);
 
         collection.insertOne(document);
-
-        System.out.println("Document was created");
         return document.get(BaseConstants.DOCUMENT_ID);
     }
 }

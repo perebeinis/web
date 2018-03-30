@@ -1,15 +1,14 @@
 function CardCreator(cardId, data, tabsId, cardFiledValues, messages) {
     this.cardId = cardId;
     this.tabsId = tabsId;
-    this.cardFiledValues = cardFiledValues != undefined && cardFiledValues != null ? JSON.parse(cardFiledValues.replace(new RegExp('&quot;', 'g'), '"').replace(new RegExp('\r?\n', 'g'), '%')) : null;
-    var dataStr = data.replace(new RegExp('&quot;', 'g'), '"');
-    this.dataArray = JSON.parse(dataStr);
+    this.cardFiledValues = cardFiledValues != undefined && cardFiledValues != null ? cardFiledValues : null;
+    this.dataArray = data;
     this.customClassName = "customClassName";
     this.title = "title";
     this.name = "name";
     this.type = "type";
     this.mandatoryCondition = "mandatoryCondition";
-    this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'), '"'));
+    this.messages = messages;
     this.mandatoryCondtitions = {};
     this.typeForSaving = "typeForSaving";
     this.mode = this.getSearchParams("mode");
@@ -56,6 +55,7 @@ CardCreator.prototype.createCardElements = function () {
             var elementValue = this.cardFiledValues != null && this.cardFiledValues[attribute[this.name]] != null ? this.cardFiledValues[attribute[this.name]] : null;
             this[elementType](attribute, setId, elementValue);
         }
+        $('select').multipleSelect();
         tabsCounter++;
 
     }
@@ -73,16 +73,14 @@ CardCreator.prototype.getSearchParams = function getSearchParams(k) {
 function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode, elementType) {
 
     this.parentId = parentId;
-    var dataStr = data.replace(new RegExp('&quot;', 'g'), '"');
-    this.dataArray = JSON.parse(dataStr);
-
+    this.dataArray = data;
     this.customClassName = "customClassName";
     this.title = "title";
     this.name = "name";
     this.type = "type";
     this.elementType = elementType;
     this.mode = mode;
-    this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'), '"'));
+    this.messages = messages;
 
 
     this.createCardButtons = function () {

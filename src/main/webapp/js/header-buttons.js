@@ -1,14 +1,13 @@
 function HeaderButton(cardId, data, messages,userData) {
     this.cardId = cardId;
-    var dataStr = data.replace(new RegExp('&quot;', 'g'),'"');
-    this.dataArray = JSON.parse(dataStr);
+    this.dataArray = data;
     this.customClassName = "customClassName";
     this.title = "title";
     this.name = "name";
     this.type = "type";
     this.mandatoryCondition = "mandatoryCondition";
-    this.messages = JSON.parse(messages.replace(new RegExp('&quot;', 'g'),'"'));
-    this.userData = userData!=undefined && userData!="" ? JSON.parse(userData.replace(new RegExp('&quot;', 'g'),'"')) : undefined;
+    this.messages = messages;
+    this.userData = userData!=undefined && userData!="" ? userData : undefined;
     CUSTOM_MESSAGES = this.messages;
 
 

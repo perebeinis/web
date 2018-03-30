@@ -54,6 +54,8 @@ public interface BaseConstants {
     public static String USER_ROLES = "roles";
     public static String NAME = "name";
     public static String DEFAULT = "default";
+    public static String ISSUE = "issue";
+    public static String NEWS = "news";
     public static String TEXT = "text";
     public static String TYPE = "type";
     public static String AUDIT_ELEMENT_ID = "auditElementId";
@@ -70,11 +72,29 @@ public interface BaseConstants {
     public static String DATABASE = "database";
     public static String FILE = "file";
     public static String SEARCH_TYPE = "searchType";
+    public static String USER_DATA = "userData";
+    public static String MESSAGES = "messages";
+    public static String NEWS_LIST = "newsList";
+    public static String MENU_LIST = "menuList";
+    public static String HEADER_LIST = "headerList";
+    public static String DEFAULT_ENCODING = "UTF-8";
+    public static String MODE = "mode";
+    public static String MODE_CREATE = "create";
+    public static String MODE_VIEW = "view";
+    public static String ELEMENT_TYPE = "elementType";
+    public static String ELEMENT = "element";
+    public static String SEARCHERS = "searchers";
+    public static String STATE = "state";
+    public static String IN_PROCESS = "inProcess";
+    public static String COMPLETE = "complete";
+    public static String STRING_TYPE = "string";
+
 
     public static final Map<String, String> collectionsByType = new HashMap<>();
 
     /* TASKS*/
     public static String CURRENT_TASK_EXECUTOR = "currentExecutor";
+
 
     public static String getCollection(String elementType){
         if(elementType.equals(ISSUE_CONSTANT)){

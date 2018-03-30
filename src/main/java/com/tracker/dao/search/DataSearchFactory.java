@@ -1,20 +1,12 @@
 package com.tracker.dao.search;
 
-import com.google.gson.JsonArray;
 import com.mongodb.client.MongoDatabase;
-import com.tracker.cards.CardData;
-import com.tracker.cards.impl.IssueCardData;
-import com.tracker.cards.impl.UserCardData;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.search.impl.DefaultSearcher;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 

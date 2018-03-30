@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>TRACKER</title>
+    <title th:text="#{bug-tracker.title}" ></title>
     <div th:replace="header :: header-css"/>
 </head>
 <body>
@@ -9,13 +9,17 @@
 <div th:replace="header :: header"/>
 
 <div class="left-menu-tree">
-    <div th:replace="menu :: menu"/>
+    <div class="menu">
+        <div th:replace="menu :: menu"/>
+    </div>
+
+    <div class="news  well no-padding">
+        <div th:replace="news :: news"/>
+    </div>
 </div>
 
-<div class="card-attributes">
-    <div th:replace="card :: card"/>
-</div>
 
+<div th:replace="card :: card"/>
 
 <div th:replace="footer :: footer"/>
 

@@ -36,9 +36,9 @@ public class DataProcessorService {
     final static Map<String, Supplier<DataElement>> savingElementsType = new HashMap<>();
 
     static {
-        savingElementsType.put("file", FileDataElement::new);
-        savingElementsType.put("text", TextDataElement::new);
-        savingElementsType.put("userAssoc", UserAssocDataElement::new);
+        savingElementsType.put(BaseConstants.FILE, FileDataElement::new);
+        savingElementsType.put(BaseConstants.TEXT, TextDataElement::new);
+        savingElementsType.put(BaseConstants.USER_ASSOC, UserAssocDataElement::new);
     }
 
     private static DataProcessorService instance;
@@ -52,10 +52,6 @@ public class DataProcessorService {
             }
         }
         return instance;
-    }
-
-    public String processIncomingData() {
-        return "";
     }
 
     public String createData(String elementType, JSONArray incomingData) {

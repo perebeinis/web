@@ -1,13 +1,11 @@
 package com.tracker.controller;
 
-import com.mongodb.client.MongoDatabase;
 import com.tracker.cards.CardDataFactory;
 import com.tracker.cards.CardDataProcessor;
 import com.tracker.config.localization.MessageResolveService;
-import com.tracker.controller.base.BaseControllerResponce;
+import com.tracker.constants.BaseConstants;
+import com.tracker.controller.base.BaseControllerResponse;
 import com.tracker.dao.process.data.DataProcessorFactory;
-import com.tracker.dao.search.DataSearchFactory;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
@@ -27,7 +25,7 @@ public class GetElementCardController {
     private MessageSource messageSource;
 
     @Autowired
-    private BaseControllerResponce baseControllerResponce;
+    private BaseControllerResponse baseControllerResponce;
 
     @Autowired
     private CardDataFactory cardDataFactory;
@@ -41,25 +39,23 @@ public class GetElementCardController {
     @Autowired
     private MessageResolveService messageResolveService;
 
-    private static final String userType = "user";
-    private static final String RESPONSE_ELEMENT_TYPE = "create-user-card";
+    private static final String RESPONSE_ELEMENT_TYPE = "create-element-card";
 
-
-    @RequestMapping(value = "/create-element", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/create-element", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getElementCard(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type) {
-        model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
-        model = cardDataFactory.getCardData(type,model,null);
-        model.addAttribute("mode", "create");
-        model.addAttribute("elementType", type);
+        model = baseControllerResponce.getBaseResponseData(model, authentication, locale);
+        model = cardDataFactory.getCardData(type, model, null);
+        model.addAttribute(BaseConstants.MODE, BaseConstants.CREATE);
+        model.addAttribute(BaseConstants.ELEMENT_TYPE, type);
         return RESPONSE_ELEMENT_TYPE;
     }
 
-    @RequestMapping(value = "/get-element", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/get-element", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getElementCardExist(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type, @RequestParam("id") String id) {
-        model = baseControllerResponce.getBaseResponceData(model,authentication, locale);
+        model = baseControllerResponce.getBaseResponseData(model, authentication, locale);
         model = cardDataFactory.getCardData(type, model, id);
-        model.addAttribute("mode", "view");
-        model.addAttribute("elementType", type);
+        model.addAttribute(BaseConstants.MODE, BaseConstants.MODE_VIEW);
+        model.addAttribute(BaseConstants.ELEMENT_TYPE, type);
         return RESPONSE_ELEMENT_TYPE;
     }
 

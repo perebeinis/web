@@ -21,8 +21,8 @@
 
 
     <script>
-        var cardAttributes = "[[${menuList}]]";
-        var messages = "[[${messages}]]";
+        var cardAttributes = [(${menuList})];
+        var messages = [(${messages})];
         var menu = new MenuElementsCretor("menu-items-list",cardAttributes, messages);
         menu.createMenuElements();
         menu.createMenuEvents();

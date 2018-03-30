@@ -17,6 +17,7 @@
           ],
           "customClassName": "fullString"
         },
+
         {
           "name": "description",
           "title": "constants.description",
@@ -50,7 +51,7 @@
 
         {
           "name": "userAssoc",
-          "title": "constants.issue.userAssoc",
+          "title": "constants.issue.userAssocOne",
           "type": "userAssoc",
           "maxElements" : 1,
           "enableParams": [
