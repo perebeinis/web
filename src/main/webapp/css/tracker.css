@@ -590,3 +590,59 @@ navbar.less:
     .news-items-list li {
         border-bottom: 3px solid #dee1e3;
     }
+
+
+    .comments textarea {
+        width: 90% !important;
+        display : inline-block;
+        margin-right: 3%;
+    }
+
+
+
+    /********************/
+
+    .comments > div.comments-list {
+        margin-top: 25px;
+    }
+
+    .comment-data > .comment {
+        border-bottom: 1px solid #c2c4c6;
+        padding-top: 5px;
+    }
+
+    .comment input {
+        width: 30px;
+        height: 25px;
+        vertical-align: top;
+        margin-right: 5px;
+    }
+
+    .comments-list {
+        margin-left: 25px;
+    }
+
+
+    .comment-block,
+    .comment-data span{
+        display: inline-block;
+    }
+
+    .comment-data .created {
+        float: right;
+        margin-right: 2%;
+    }
+
+    .comment-data .creator {
+        padding-left: 15px;
+        display: block;
+        padding-bottom: 5px;
+    }
+
+    .comment-data .value {
+        width: 95%;
+    }
+
+    .comment-block {
+        width: 80%;
+    }

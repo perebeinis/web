@@ -35,7 +35,7 @@ public class MessageDataProcessor implements DataProcessor {
     private List<AuditObject> auditObjects = new ArrayList<>();
 
     @Override
-    public String processData(JSONArray incomingDataObject, String elementType, String elementId) {
+    public String processData(Object incomingDataObject, String elementType, String elementId) {
         if (StringUtils.isEmpty(elementId)) {
             return createData(incomingDataObject, elementType, elementId);
         } else {
@@ -44,12 +44,13 @@ public class MessageDataProcessor implements DataProcessor {
     }
 
     @Override
-    public String createData(JSONArray incomingDataObject, String elementType, String elementId) {
+    public String createData(Object incomingData, String elementType, String elementId) {
         WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
         MongoDatabase database = (MongoDatabase) context.getBean(BaseConstants.DATABASE);
 
         MongoCollection<Document> collection = database.getCollection(BaseConstants.getCollection(elementType));
         addDefaultData();
+        JSONArray incomingDataObject = (JSONArray) incomingData;
         for (Object formField : incomingDataObject) {
             JSONObject formFieldElement = (JSONObject) formField;
             String fieldName = (String) formFieldElement.get(BaseConstants.NAME);
@@ -73,7 +74,7 @@ public class MessageDataProcessor implements DataProcessor {
     }
 
     @Override
-    public String updateData(JSONArray incomingDataObject, String elementType, String elementId) {
+    public String updateData(Object incomingDataObject, String elementType, String elementId) {
         System.out.println("UPDATE message");
         return elementId;
     }
@@ -101,7 +102,7 @@ public class MessageDataProcessor implements DataProcessor {
         List<ObjectId> objectIds = new ArrayList<>();
         objectIds.add(userId);
         createDataObject.put(BaseConstants.CREATOR, objectIds);
-        createDataObject.put(BaseConstants.CREATED,  ISO8601DateFormat.getDateTimeInstance().format(new Date()));
+        createDataObject.put(BaseConstants.CREATED,  new Date());
 
         String userFullName = userDetailsService.getUserDataById(userId).get(BaseConstants.LAST_NAME)+" "+userDetailsService.getUserDataById(userId).get(BaseConstants.FIRST_NAME);
         auditObjects.add(new AuditObject(BaseConstants.CREATOR, BaseConstants.CREATOR, userFullName));

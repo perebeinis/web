@@ -1,5 +1,6 @@
 package com.tracker.config.security.authentification;
 
+import com.tracker.constants.BaseConstants;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
@@ -60,6 +61,10 @@ public class CustomUserObject {
 
     public JSONObject getAllUserData() {
         return allUserData;
+    }
+
+    public String getAllUserFullName() {
+        return allUserData.get(BaseConstants.LAST_NAME) + " "+allUserData.get(BaseConstants.FIRST_NAME);
     }
 
     public void setAllUserData(JSONObject allUserData) {

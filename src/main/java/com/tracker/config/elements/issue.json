@@ -77,6 +77,25 @@
           "customClassName": "fullString hidden"
         }
       ]
+    },
+    {
+      "name": "comments",
+      "title": "tabs.comments",
+      "properties": [
+        {
+          "name": "comments",
+          "title": "constants.comments",
+          "type": "comments",
+          "mandatoryCondition": "*",
+          "typeForSaving": "comments",
+          "enableParams": [
+            {
+              "mode": "task"
+            }
+          ],
+          "customClassName": "fullString"
+        }
+      ]
     }
   ],
   "buttons": [

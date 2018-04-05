@@ -22,13 +22,16 @@ public interface BaseConstants {
     public static String LOOKUP = "$lookup";
     public static String ELEM_MATCH = "$elemMatch";
     public static String FROM = "from";
+    public static String ROOT = "root";
     public static String MONGO_ID = "$oid";
     public static String SKIP = "$skip";
     public static String LIMIT = "$limit";
     public static String MATCH = "$match";
     public static String SET = "$set";
+    public static String PUSH = "$push";
     public static String REGEX = "$regex";
     public static String CREATOR = "creatorAssoc";
+    public static String CREATOR_USER = "creator";
     public static String ORDER_BY = "$orderby";
     public static String ORDER = "order";
     public static String ASC = "asc";
@@ -43,9 +46,12 @@ public interface BaseConstants {
     public static String FOREIGN_FIELD = "foreignField";
     public static final String HEADER_ELEMENT_CONSTANT = "header-element";
     public static final String MENU_ELEMENT_CONSTANT = "menu-element";
+    public static final String CARD_FILED_VALUES = "cardFiledValues";
+
 
     /* user constants*/
     public static String USER_ID = "user_id";
+    public static String COMMENT_ID = "comment_id";
     public static String FIRST_NAME = "firstName";
     public static String LAST_NAME = "lastName";
     public static String USER_ASSOC = "userAssoc";
@@ -56,6 +62,7 @@ public interface BaseConstants {
     public static String DEFAULT = "default";
     public static String ISSUE = "issue";
     public static String NEWS = "news";
+    public static String COMMENTS = "comments";
     public static String TEXT = "text";
     public static String TYPE = "type";
     public static String AUDIT_ELEMENT_ID = "auditElementId";
@@ -68,6 +75,7 @@ public interface BaseConstants {
     public static String CREATE = "create";
     public static String UPDATE = "update";
     public static String CREATED = "created";
+    public static String CHILD = "child";
     public static String ACTOR = "actor";
     public static String DATABASE = "database";
     public static String FILE = "file";
@@ -88,6 +96,11 @@ public interface BaseConstants {
     public static String IN_PROCESS = "inProcess";
     public static String COMPLETE = "complete";
     public static String STRING_TYPE = "string";
+    public static String DATE = "$date";
+    public static String PARENT = "parent";
+    public static String COMMENT_VALUE = "commentValue";
+    public static String COMMENT = "comment";
+    public static String COMMENT_DOCUMENT_ID = "documentId";
 
 
     public static final Map<String, String> collectionsByType = new HashMap<>();

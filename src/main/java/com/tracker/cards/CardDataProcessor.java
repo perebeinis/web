@@ -104,8 +104,17 @@ public class CardDataProcessor {
             for (Object property : ((JSONArray) (((JSONObject) tab).get(PROPERTIES)))) {
                 jsonArray.put(property);
             }
+
+            jsonArray.put(addDefaultParams());
         });
         return jsonArray;
+    }
+
+    private JSONObject addDefaultParams(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(BaseConstants.NAME, BaseConstants.CREATOR);
+        jsonObject.put(BaseConstants.TYPES_FOR_SAVING, BaseConstants.CREATOR);
+        return jsonObject;
     }
 
     private boolean containsAnyRole(Authentication authentication, String[] userRoles) {

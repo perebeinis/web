@@ -9,17 +9,17 @@ import org.json.JSONArray;
  */
 public class DefaultDataProcessor implements DataProcessor {
     @Override
-    public String processData(JSONArray incomingDataObject, String elementType, String elementId) {
+    public String processData(Object incomingDataObject, String elementType, String elementId) {
         return DataProcessorService.getInstance().createData(elementType,incomingDataObject);
     }
 
     @Override
-    public String createData(JSONArray incomingDataObject, String elementType, String elementId) {
+    public String createData(Object incomingDataObject, String elementType, String elementId) {
         return "";
     }
 
     @Override
-    public String updateData(JSONArray incomingDataObject, String elementType, String elementId) {
+    public String updateData(Object incomingDataObject, String elementType, String elementId) {
         return "";
     }
 

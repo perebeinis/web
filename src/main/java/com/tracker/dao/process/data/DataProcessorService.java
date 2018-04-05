@@ -54,12 +54,12 @@ public class DataProcessorService {
         return instance;
     }
 
-    public String createData(String elementType, JSONArray incomingData) {
+    public String createData(String elementType, Object incomingData) {
         MongoCollection<Document> collection = database.getCollection(BaseConstants.getCollection(elementType));
         Document document = new Document();
         List<AuditObject> auditObjects = new ArrayList<>();
-
-        for (Object formField : incomingData) {
+        JSONArray incomingDataObject = (JSONArray) incomingData;
+        for (Object formField : incomingDataObject) {
             JSONObject formFieldElement = (JSONObject) formField;
             String fieldName = (String) formFieldElement.get(BaseConstants.NAME);
             String fieldType = (String) formFieldElement.get(BaseConstants.TYPE);

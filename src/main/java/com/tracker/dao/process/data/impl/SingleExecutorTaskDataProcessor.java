@@ -36,7 +36,7 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
     private List<AuditObject> auditObjects = new ArrayList<>();
 
     @Override
-    public String processData(JSONArray incomingDataObject, String elementType, String elementId) {
+    public String processData(Object incomingDataObject, String elementType, String elementId) {
         if (StringUtils.isEmpty(elementId)) {
             return createData(incomingDataObject, elementType, elementId);
         } else {
@@ -45,13 +45,14 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
     }
 
     @Override
-    public String createData(JSONArray incomingDataObject, String elementType, String elementId) {
+    public String createData(Object incomingData, String elementType, String elementId) {
         WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
         MongoDatabase database = (MongoDatabase) context.getBean(BaseConstants.DATABASE);
         UserDetailsServiceImpl userDetailsService = (UserDetailsServiceImpl) context.getBean(BaseConstants.CUSTOM_USER_DETAILS_SERVICE);
 
         MongoCollection<Document> collection = database.getCollection(BaseConstants.getCollection(elementType));
         addDefaultData();
+        JSONArray incomingDataObject = (JSONArray) incomingData;
         for (Object formField : incomingDataObject) {
             JSONObject formFieldElement = (JSONObject) formField;
             String fieldName = (String) formFieldElement.get(BaseConstants.NAME);
@@ -82,7 +83,7 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
     }
 
     @Override
-    public String updateData(JSONArray incomingDataObject, String elementType, String elementId) {
+    public String updateData(Object incomingData, String elementType, String elementId) {
         JSONObject currentElement = DataProcessorService.getInstance().getElementById(elementType, elementId);
 
         WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
@@ -91,6 +92,7 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
         UserDetailsServiceImpl userDetailsService = (UserDetailsServiceImpl) context.getBean(BaseConstants.CUSTOM_USER_DETAILS_SERVICE);
 
         List<AuditObject> auditObjects = new ArrayList<>();
+        JSONArray incomingDataObject = (JSONArray) incomingData;
         for (Object formField : incomingDataObject) {
             JSONObject formFieldElement = (JSONObject) formField;
             String fieldName = (String) formFieldElement.get(BaseConstants.NAME);
@@ -160,11 +162,11 @@ public class SingleExecutorTaskDataProcessor implements DataProcessor {
         List<ObjectId> objectIds = new ArrayList<>();
         objectIds.add(userId);
         createDataObject.put(BaseConstants.CREATOR, objectIds);
-        createDataObject.put(BaseConstants.CREATED, ISO8601DateFormat.getDateTimeInstance().format(new Date()));
+        createDataObject.put(BaseConstants.CREATED, new Date());
 
         String userFullName = userDetailsService.getUserDataById(userId).get(BaseConstants.LAST_NAME) + " " + userDetailsService.getUserDataById(userId).get(BaseConstants.FIRST_NAME);
         auditObjects.add(new AuditObject(BaseConstants.CREATOR, BaseConstants.CREATOR, userFullName));
-        auditObjects.add(new AuditObject(BaseConstants.CREATED, BaseConstants.CREATED, ISO8601DateFormat.getDateTimeInstance().format(new Date())));
+        auditObjects.add(new AuditObject(BaseConstants.CREATED, BaseConstants.CREATED, new Date()));
 
 
     }

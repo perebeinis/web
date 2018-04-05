@@ -31,14 +31,14 @@ FormElements.prototype.textArea = function (data, parentElementId, elementValue)
             .append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"]))
             .append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]]))
             .append($('<textarea>', {
-            class: "form-control " + data[this.name],
-            name: data[this.name],
-            customType: data[this.typeForSaving] ? data[this.typeForSaving] : "",
-            type: 'text',
-            rows :"10",
-            value: elementValue != null ? elementValue.replace(new RegExp('%', 'g'), '\n') : "",
-            readonly: !Utils.checkFieldEnabled(data)
-        }).text(elementValue != null ? elementValue.replace(new RegExp('%', 'g'), '\n') : "")));
+                class: "form-control " + data[this.name],
+                name: data[this.name],
+                customType: data[this.typeForSaving] ? data[this.typeForSaving] : "",
+                type: 'text',
+                rows: "10",
+                value: elementValue != null ? elementValue.replace(new RegExp('%', 'g'), '\n') : "",
+                readonly: !Utils.checkFieldEnabled(data)
+            }).text(elementValue != null ? elementValue.replace(new RegExp('%', 'g'), '\n') : "")));
 
     if (data[this.mandatoryCondition] != "") {
         this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
@@ -88,23 +88,23 @@ FormElements.prototype.multiSelect = function (data, parentElementId, elementVal
             .append($('<span>', {class: "hidden popup"}).html(this.messages["mandatory"]))
             .append($('<label>', {value: data[this.title]}).html(this.messages[data[this.title]]))
             .append($('<select>', {
-            class: "multiSelect form-control " + data[this.name],
-            customType: data[this.typeForSaving] ? data[this.typeForSaving] : "",
-            name: data[this.name],
-            multiple: 'multiple',
-            value: elementValue != null ? elementValue : "",
-            disabled: !Utils.checkFieldEnabled(data)
-        })
-            .append(
-                $.map(defaultRoles, function (element, index) {
-                    if (element.selected) {
-                        return '<option value="' + element.role + '" selected="' + element.selected + '">' + element.role + '</option>';
-                    } else {
-                        return '<option value="' + element.role + '">' + element.role + '</option>';
-                    }
+                class: "multiSelect form-control " + data[this.name],
+                customType: data[this.typeForSaving] ? data[this.typeForSaving] : "",
+                name: data[this.name],
+                multiple: 'multiple',
+                value: elementValue != null ? elementValue : "",
+                disabled: !Utils.checkFieldEnabled(data)
+            })
+                .append(
+                    $.map(defaultRoles, function (element, index) {
+                        if (element.selected) {
+                            return '<option value="' + element.role + '" selected="' + element.selected + '">' + element.role + '</option>';
+                        } else {
+                            return '<option value="' + element.role + '">' + element.role + '</option>';
+                        }
 
-                }).join()
-            )));
+                    }).join()
+                )));
 
     if (data[this.mandatoryCondition] != "") {
         this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
@@ -173,103 +173,103 @@ FormElements.prototype.file = function (data, parentElementId, elementValue, add
 
     var hasEmptyFields = Utils.checkIfHasEmptyFiles(data[this.name]);
     var filesCount = Utils.countAllFiles(data[this.name]);
-    var limitSame = addNew && data.limit ? data.limit-1 == filesCount: true;
+    var limitSame = addNew && data.limit ? data.limit - 1 == filesCount : true;
 
-        if (Utils.checkFieldEnabled(data) && !hasEmptyFields && limitSame) {
-            var createdElement = $('<div>', {
-                class: "textField" + " " + data.customClassName + "  " + data.name
-            }).append($('<span>', {
-                class: "hidden popup",
-                html: this.messages["mandatory"]
-            })).append($('<label>', {
-                    value: data[this.title],
-                    html: this.messages[data[this.title]]
-                }))
+    if (Utils.checkFieldEnabled(data) && !hasEmptyFields && limitSame) {
+        var createdElement = $('<div>', {
+            class: "textField" + " " + data.customClassName + "  " + data.name
+        }).append($('<span>', {
+            class: "hidden popup",
+            html: this.messages["mandatory"]
+        })).append($('<label>', {
+                value: data[this.title],
+                html: this.messages[data[this.title]]
+            }))
+            .append($('<input>', {
+                class: "input-ghost",
+                id: this.name + "_" + scope.countFormElements,
+                customType: data[this.typeForSaving] ? data[this.typeForSaving] : "",
+                type: "file",
+                fileValue: "",
+                name: data[this.name]
+            }).change(function () {
+                $(this).next($(this)).find('input.form-control').val(($(this).val()).split('\\').pop());
+                var reader = new FileReader();
+                reader.readAsDataURL(this.files[0]);
+                reader.idFileelement = this.id;
+                var readerVar = (this, function (e, data) {
+                    $("#" + this.idFileelement)[0].fileValue = reader.result;
+                });
+                reader.onload = readerVar;
+                scope.file(data, parentElementId, elementValue, true);
+            }))
+            .append($('<div>', {
+                class: "input-group input-file"
+            }).append($('<span>',
+                {
+                    class: "input-group-btn"
+                }).append($('<button>', {
+                    class: "btn btn-default btn-choose",
+                    type: 'button'
+                }).click(function () {
+                    $(this).parents(".textField").find('.input-ghost').click();
+                }).html(this.messages["choose"])))
                 .append($('<input>', {
-                    class: "input-ghost",
-                    id: this.name+"_"+scope.countFormElements,
-                    customType: data[this.typeForSaving] ? data[this.typeForSaving] : "",
-                    type: "file",
-                    fileValue: "",
-                    name: data[this.name]
-                }).change(function () {
-                    $(this).next($(this)).find('input.form-control').val(($(this).val()).split('\\').pop());
-                    var reader = new FileReader();
-                    reader.readAsDataURL(this.files[0]);
-                    reader.idFileelement = this.id;
-                    var readerVar = (this, function (e, data) {
-                        $("#" + this.idFileelement)[0].fileValue = reader.result;
-                    });
-                    reader.onload = readerVar;
-                    scope.file(data, parentElementId, elementValue, true);
+                    class: "form-control",
+                    placeholder: this.messages["chooseFile"],
+                    type: 'text'
+                }).css("cursor", "pointer").mousedown(function () {
+                    $(this).parents('.input-file').prev().click();
                 }))
-                .append($('<div>', {
-                    class: "input-group input-file"
-                }).append($('<span>',
-                    {
-                        class: "input-group-btn"
-                    }).append($('<button>', {
-                        class: "btn btn-default btn-choose",
-                        type: 'button'
-                    }).click(function () {
-                        $(this).parents(".textField").find('.input-ghost').click();
-                    }).html(this.messages["choose"])))
-                    .append($('<input>', {
-                        class: "form-control",
-                        placeholder: this.messages["chooseFile"],
-                        type: 'text'
-                    }).css("cursor", "pointer").mousedown(function () {
-                        $(this).parents('.input-file').prev().click();
-                    }))
-                    .append($('<span>', {
-                        class: "input-group-btn"
-                    }).append($('<button>', {
-                        class: "btn btn-warning btn-reset",
-                        type: 'button'
-                    }).click(function () {
-                        var countEmptyFields = Utils.countEmptyFiles(data.name);
+                .append($('<span>', {
+                    class: "input-group-btn"
+                }).append($('<button>', {
+                    class: "btn btn-warning btn-reset",
+                    type: 'button'
+                }).click(function () {
+                    var countEmptyFields = Utils.countEmptyFiles(data.name);
 
-                        $(this).parents(".textField").find('.input-ghost').val(null);
-                        $(this).parents(".input-file").find('input').val('');
+                    $(this).parents(".textField").find('.input-ghost').val(null);
+                    $(this).parents(".input-file").find('input').val('');
 
-                        if (countEmptyFields > 1) {
-                            $(this).parents(".textField").remove()
-                        }
+                    if (countEmptyFields > 1) {
+                        $(this).parents(".textField").remove()
+                    }
 
-                    }).html(this.messages["reset"]))));
+                }).html(this.messages["reset"]))));
 
-            if (addNew) {
-                createdElement.insertAfter($("." + data[this.name] + "").last())
-            } else {
-                $('#' + parentElementId).append(createdElement);
+        if (addNew) {
+            createdElement.insertAfter($("." + data[this.name] + "").last())
+        } else {
+            $('#' + parentElementId).append(createdElement);
 
-                if (data[this.mandatoryCondition] != "") {
-                    this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
-                }
-            }
-
-        }
-
-        if (!addNew) {
-            for (var i in elementValue) {
-                $('#' + parentElementId)
-                    .append($('<div>', {class: "filesList textField" + " " + data[this.customClassName]})
-                        .append($('<span>', {class: "hidden popup"}).html(data[this.title]))
-                        .append($('<div>', {class: "fileSaver"})
-                            .append($('<a>', {
-                                fileData: elementValue[i]["data"].replace(" ", "+").replace(/\s/g, '+')
-                            }).click(function () {
-                                var element = document.createElement('a');
-                                element.setAttribute('href', this.attributes.filedata.value);
-                                element.setAttribute('download', this.innerHTML);
-
-                                element.style.display = 'none';
-                                document.body.appendChild(element);
-                                element.click();
-                                document.body.removeChild(element);
-                            }).html(elementValue[i]["fileName"]))));
+            if (data[this.mandatoryCondition] != "") {
+                this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
             }
         }
+
+    }
+
+    if (!addNew) {
+        for (var i in elementValue) {
+            $('#' + parentElementId)
+                .append($('<div>', {class: "filesList textField" + " " + data[this.customClassName]})
+                    .append($('<span>', {class: "hidden popup"}).html(data[this.title]))
+                    .append($('<div>', {class: "fileSaver"})
+                        .append($('<a>', {
+                            fileData: elementValue[i]["data"].replace(" ", "+").replace(/\s/g, '+')
+                        }).click(function () {
+                            var element = document.createElement('a');
+                            element.setAttribute('href', this.attributes.filedata.value);
+                            element.setAttribute('download', this.innerHTML);
+
+                            element.style.display = 'none';
+                            document.body.appendChild(element);
+                            element.click();
+                            document.body.removeChild(element);
+                        }).html(elementValue[i]["fileName"]))));
+        }
+    }
 
 
     scope.countFormElements++;
@@ -279,7 +279,7 @@ FormElements.prototype.file = function (data, parentElementId, elementValue, add
 
 FormElements.prototype.userAssoc = function (data, parentElementId, elementValue) {
     var scope = this;
-    var maxElements = data.maxElements!=undefined ? data.maxElements : 100;
+    var maxElements = data.maxElements != undefined ? data.maxElements : 100;
     var resultTable = ["firstName", "lastName"];
     $('#' + parentElementId)
         .append($('<div>', {class: "textField" + " " + data[this.customClassName]})
@@ -287,15 +287,15 @@ FormElements.prototype.userAssoc = function (data, parentElementId, elementValue
                 .html(this.messages["mandatory"]))
             .append($('<label>', {value: data[this.title]})
                 .html(this.messages[data[this.title]])).append($('<input>', {
-                maxElements : maxElements,
-            class: "form-control " + data[this.name], name: data[this.name],
-            placeholder: "search ...",
-            customType: data[this.typeForSaving] ? data[this.typeForSaving] : "",
-            type: 'text', value: "",
-            readonly: !Utils.checkFieldEnabled(data)
-        }).keyup(function (event) {
-            scope.searchUsers(event, this);
-        })).append($('<table>', {class: "added"})).append($('<table>', {class: "searchResult"})));
+                maxElements: maxElements,
+                class: "form-control " + data[this.name], name: data[this.name],
+                placeholder: "search ...",
+                customType: data[this.typeForSaving] ? data[this.typeForSaving] : "",
+                type: 'text', value: "",
+                readonly: !Utils.checkFieldEnabled(data)
+            }).keyup(function (event) {
+                scope.searchUsers(event, this);
+            })).append($('<table>', {class: "added"})).append($('<table>', {class: "searchResult"})));
 
     if (data[this.mandatoryCondition] != "") {
         this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
@@ -361,7 +361,7 @@ FormElements.prototype.searchUsers = function (event, data) {
                         }).join()
                     ).click(function () {
                         var addedRows = $(addedTable).find("tr").length;
-                        if (addedRows < maxElements &&  $(addedTable).find("#" + this.id).length == 0) {
+                        if (addedRows < maxElements && $(addedTable).find("#" + this.id).length == 0) {
                             $(addedTable).append($(this.outerHTML).click(function () {
                                 this.parentNode.removeChild(this);
                             }));
@@ -377,6 +377,102 @@ FormElements.prototype.searchUsers = function (event, data) {
 
     console.log("aaa");
 }
+
+
+FormElements.prototype.comments = function (data, parentElementId, elementValue) {
+    var scope = this;
+    this.commentsMainElemId = parentElementId;
+    this.commentsMainElemData = data;
+    $('#' + parentElementId)
+        .append($('<div>', {class: "comments" + " " + data[this.customClassName]})
+            .append($('<span>', {class: "hidden popup"})
+                .html(this.messages["mandatory"]))
+            .append($('<button>', {class: "btn btn-primary btn-md"}).click(function () {
+                scope.createCommentModalWindow("root");
+            }).html(scope.messages["constants.header.addComment"]))).append($('<div>', {class: "comments-list"}));
+
+    if(elementValue) {
+        this.createCommentsList(elementValue[0].child, $('#' + parentElementId).find('div.comments-list')[0]);
+    }
+
+    if (data[this.mandatoryCondition] != "") {
+        this.mandatoryCondtitions[data[this.name]] = data[this.mandatoryCondition];
+    }
+}
+
+FormElements.prototype.createCommentsList = function(commentsArr, parentElement){
+    var scope = this;
+    for (var i in commentsArr) {
+        var comment = commentsArr[i];
+        var subCommentsList = $('<div>', {class : "comments-list"});
+        $(parentElement)
+            .append($('<div>', {class : "comment-data"})
+                .append($('<div>', {class : "comment"})
+                .append($('<div>', {class : "comment-block", id : comment.comment_id["$oid"]})
+                .append($('<span>', {class : "creator"}).html(comment.creator))
+
+                .append($('<input>', {type : "image", alt: "submit", src: "images/comment.jpg"})
+                        .click((function () {
+                            scope.createCommentModalWindow(this.parentNode.id);
+                        })))
+
+                .append($('<span>', {class : "value"}).html(comment.commentValue)))
+                .append($('<span>', {class : "created"}).html(new Date(comment.created["$date"]).toLocaleString()))))
+            .append(subCommentsList);
+
+        this.createCommentsList(comment.child, subCommentsList);
+    }
+}
+
+FormElements.prototype.createCommentModalWindow = function(parentId){
+    var parentId = parentId;
+    var scope = this;
+    var modalWindowId = "dynamicModal";
+    $('body').append(
+        $('<div>', {id : "dynamicModal", class : "modal fade", tabindex : "-1" , role : "dialog", "aria-labelledby" : "confirm-modal", "aria-hidden" : "true"})
+            .append($('<div>', {class : "modal-dialog"})
+                .append($('<div>', {class : "modal-content"})
+                    .append($('<div>', {class : "modal-header"})
+                        .append($('<a>', {class : "close", "data-dismiss" : "modal"}).html("×"))
+                        .append($('<h4>').html(scope.messages["constants.header.newComment"])))
+                    .append($('<div>', {class : "modal-body"})
+                        .append($('<textarea>', {class: "form-control", rows : 6})))
+                    .append($('<div>', {class : "modal-footer"})
+                        .append($('<span>', {class : "btn btn-primary", "data-dismiss" : "modal"}).html(scope.messages["constants.save"]).click(function(){
+                            scope.postComment($("#"+modalWindowId).find('textarea')[0].value, parentId);
+                        }))
+                        .append($('<span>', {class : "btn btn-primary", "data-dismiss" : "modal"}).html(scope.messages["constants.close"]))
+                    )
+                )
+            )
+    );
+
+    $("#"+modalWindowId).modal();
+    $("#"+modalWindowId).modal('show');
+    $("#"+modalWindowId).on('hidden.bs.modal', function (e) {
+        $(this).remove();
+    });
+}
+
+FormElements.prototype.postComment = function(commentValue, parentElementId){
+    var scope = this;
+    var postData = new Object();
+    postData["commentValue"] = commentValue;
+    postData["documentId"] = scope.getSearchParams("id");
+    postData["parent"] = parentElementId;
+
+    $.ajax({
+        url: '/create-new-comment?type='+scope.getSearchParams("type"),
+        type: "POST",
+        contentType: "application/json",
+        data: encodeURI(JSON.stringify(postData)),
+        dataType: 'json'
+    }).done(function (data) {
+         $("#"+scope.commentsMainElemId).html("");
+          scope.comments(scope.commentsMainElemData, scope.commentsMainElemId, data);
+    });
+}
+
 
 
 FormElements.prototype.getSearchParams = function getSearchParams(k) {

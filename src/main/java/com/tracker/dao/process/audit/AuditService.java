@@ -64,8 +64,8 @@ public class AuditService {
         MongoCollection<Document> collection = database.getCollection(BaseConstants.getCollection(BaseConstants.AUDIT));
         Document auditDocument = new Document();
         auditDocument.put(BaseConstants.ACTION_NAME,actionName);
-        auditDocument.put(BaseConstants.TIME, ISO8601DateFormat.getDateTimeInstance().format(new Date()));
-        auditDocument.put(BaseConstants.CREATED, ISO8601DateFormat.getDateTimeInstance().format(new Date()));
+        auditDocument.put(BaseConstants.TIME, new Date());
+        auditDocument.put(BaseConstants.CREATED, new Date());
         auditDocument.put(BaseConstants.ACTOR, getCurrentActorFullName());
         auditDocument.put(BaseConstants.TYPE, elementType);
         auditDocument.put(BaseConstants.AUDIT_ELEMENT_ID, elementId);

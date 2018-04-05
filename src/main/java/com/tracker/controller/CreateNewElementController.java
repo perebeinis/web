@@ -68,5 +68,4 @@ public class CreateNewElementController {
         }
         return new ResponseEntity<Object>(result.toString(), HttpStatus.OK);
     }
-
 }

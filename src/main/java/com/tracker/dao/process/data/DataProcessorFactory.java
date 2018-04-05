@@ -2,6 +2,7 @@ package com.tracker.dao.process.data;
 
 import com.mongodb.client.MongoDatabase;
 import com.tracker.constants.BaseConstants;
+import com.tracker.dao.process.data.impl.CommentsDataProcessor;
 import com.tracker.dao.process.data.impl.DefaultDataProcessor;
 import com.tracker.dao.process.data.impl.MessageDataProcessor;
 import com.tracker.dao.process.data.impl.SingleExecutorTaskDataProcessor;
@@ -24,9 +25,10 @@ public class DataProcessorFactory {
         map.put(BaseConstants.ISSUE, SingleExecutorTaskDataProcessor::new);
         map.put(BaseConstants.MESSAGE, MessageDataProcessor::new);
         map.put(BaseConstants.NEWS, MessageDataProcessor::new);
+        map.put(BaseConstants.COMMENTS, CommentsDataProcessor::new);
     }
 
-    public String processData(String elementType, JSONArray incomingDataObject, String elementId){
+    public String processData(String elementType, Object incomingDataObject, String elementId){
         Supplier<DataProcessor> element = map.get(elementType);
         if(element != null) {
             return element.get().processData(incomingDataObject, elementType, elementId);

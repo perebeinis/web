@@ -167,8 +167,8 @@ function SearchDataComponent(tableDivId, data,messages, userData) {
                     "url": "/search-data",
                     "type": "POST",
                     "contentType": "application/json",
-                    data:function(d){
-                            d.search =  scope.searchData;
+                    data: function(d){
+                        d.search =  scope.searchData;
                         return encodeURI(JSON.stringify(d));
                     },
                     "dataType": 'json'
