@@ -44,8 +44,8 @@ public interface BaseConstants {
     public static String CUSTOM_USER_DETAILS_SERVICE = "customUserDetailsService";
     public static String LOCAL_FIELD = "localField";
     public static String FOREIGN_FIELD = "foreignField";
-    public static final String HEADER_ELEMENT_CONSTANT = "header-element";
-    public static final String MENU_ELEMENT_CONSTANT = "menu-element";
+    public static final String HEADER_ELEMENT_CONSTANT = "header-elements";
+    public static final String MENU_ELEMENT_CONSTANT = "menu-elements";
     public static final String CARD_FILED_VALUES = "cardFiledValues";
 
 
@@ -53,6 +53,9 @@ public interface BaseConstants {
     public static String USER_ID = "user_id";
     public static String COMMENT_ID = "comment_id";
     public static String FIRST_NAME = "firstName";
+    public static String TITLE_FIRST_NAME = "constants.firstName";
+    public static String TITLE_LAST_NAME = "constants.lastName";
+    public static String TITLE_EMAIL = "constants.email";
     public static String LAST_NAME = "lastName";
     public static String USER_ASSOC = "userAssoc";
     public static String ASSOC = "Assoc";
@@ -101,6 +104,24 @@ public interface BaseConstants {
     public static String COMMENT_VALUE = "commentValue";
     public static String COMMENT = "comment";
     public static String COMMENT_DOCUMENT_ID = "documentId";
+    public static String APP_TITLE = "bug-tracker.title";
+    public static String TAB_TITLE = "tabTitle";
+    public static String SIGN_IN_TITLE = "signInTitle";
+    public static String SIGN_IN = "signIn";
+    public static String REGISTER = "register";
+    public static String REGISTRATION_TITLE = "registration.title";
+    public static String USER_ALREADY_EXIST_IN_SYSTEM = "userAlreadyExistInSystem";
+    public static String LOGIN_ERROR = "loginError";
+    public static String LOGIN_MSG_TITLE = "loginMsg.title";
+    public static String PLACE_HOLDER_USERNAME = "placeholderUserName";
+    public static String USERNAME = "username";
+    public static String PASSWORD = "password";
+    public static String USER_EMAIL = "user_email";
+    public static String USER_GROUP = "user_group";
+    public static String PLACE_HOLDER_PASS = "placeholderPassword";
+    public static String JSON_EXTENSION = ".json";
+    public static String HTMl_LINE_BREAK = "<br>";
+
 
 
     public static final Map<String, String> collectionsByType = new HashMap<>();

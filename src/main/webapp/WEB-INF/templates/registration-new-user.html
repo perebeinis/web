@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<title th:text="#{bug-tracker.title}" ></title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" th:href="@{/css/main.css}" href="css/main.css" />
+</head>
+<body>
+
+<!--<div th:replace="header :: header"/>-->
+
+<div class="container registration-container">
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 login-form-div">
+            <form th:action="@{/registration-new-user}" method="post">
+                <fieldset>
+                    <h1 th:text="#{registration.title}"></h1>
+
+                    <div th:if="${userAlreadyExistInSystem}">
+                        <div class="alert alert-danger" th:text="#{userAlreadyExistInSystem}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input th:placeholder="#{constants.lastName}"  type="text" name="lastName" id="lastName" class="form-control input-lg"
+                               placeholder="" required="true" autofocus="true"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input th:placeholder="#{constants.firstName}"  type="text" name="firstName" id="firstName" class="form-control input-lg"
+                               placeholder="" required="true" autofocus="true"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input th:placeholder="#{placeholderUserName}"  type="text" name="username" id="username" class="form-control input-lg"
+                               placeholder="" required="true" autofocus="true"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" name="user_email" id="user_email" class="form-control input-lg"
+                               th:placeholder="#{constants.email}" placeholder="" required="true"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" name="user_group" id="user_group" class="form-control input-lg"
+                               th:placeholder="user_group" placeholder="" required="true"/>
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <input type="submit" class="btn btn-lg btn-primary btn-block" th:value="TEST" value=""/>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <input type="submit" class="btn btn-lg btn-primary btn-block" th:value="returnToLogin" value="" onclick="location.href = 'login';"/>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!--<div th:replace="footer :: footer"/>-->
+
+</body>
+</html>

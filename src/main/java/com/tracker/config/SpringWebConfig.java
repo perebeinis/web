@@ -21,8 +21,6 @@ package com.tracker.config;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
-import com.tracker.cards.CardDataFactory;
-import com.tracker.cards.CardDataProcessor;
 import com.tracker.config.localization.ExposedResourceMessageBundleSource;
 import com.tracker.config.localization.MessageResolveService;
 import com.tracker.config.localization.MessageResolverServiceImpl;
@@ -32,12 +30,14 @@ import com.tracker.controller.base.BaseControllerResponse;
 import com.tracker.dao.process.audit.AuditService;
 import com.tracker.dao.process.data.DataProcessorFactory;
 import com.tracker.dao.process.data.DataProcessorService;
-import com.tracker.dao.search.DataSearchFactory;
+import com.tracker.dao.search.execute.DataSearchFactory;
 import com.tracker.observer.ChangingDataObserver;
 import com.tracker.observer.Observer;
 import com.tracker.observer.impl.CreateHistoryDataSubscriber;
 import com.tracker.observer.impl.CreateNewsDataSubscriber;
 import com.tracker.observer.impl.TaskProcessDataSubscriber;
+import com.tracker.view.elements.ViewElementsDataFactory;
+import com.tracker.view.elements.impl.DefaultViewElementsData;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -70,12 +70,10 @@ import java.util.Locale;
 @ComponentScan({"com.tracker"})
 public class SpringWebConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
-
     private ApplicationContext applicationContext;
+
     @Autowired
     private DatabaseMessageSource databaseMessageSource;
-
-
 
     public SpringWebConfig() {
         super();
@@ -133,7 +131,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     @Bean
     public SpringTemplateEngine templateEngine(){
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setEnableSpringELCompiler(true); // Compiled SpringEL should speed up executions
+        templateEngine.setEnableSpringELCompiler(true);
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.addDialect(new SpringSecurityDialect());
         return templateEngine;
@@ -164,7 +162,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     @Bean
     public PropertiesFactoryBean pathsConfigProperties() throws IOException {
         PropertiesFactoryBean bean = new PropertiesFactoryBean();
-        bean.setLocation(new ClassPathResource("com/tracker/config/properties/paths.properties"));
+        bean.setLocation(new ClassPathResource("com/tracker/config/properties/config.properties"));
         return bean;
     }
 
@@ -187,7 +185,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
 
     @Bean
     public BaseControllerResponse baseControllerResponse(UserDetailsService customUserDetailsService){
-        return new BaseControllerResponse(customUserDetailsService);
+        return new BaseControllerResponse();
     }
 
 
@@ -201,21 +199,21 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
 
     @Bean(initMethod = "getInstance")
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-    public CardDataProcessor cardDataProcessor(PropertiesFactoryBean pathsConfigProperties) throws IOException {
-        CardDataProcessor cardDataProcessor = new CardDataProcessor().getInstance();
-        cardDataProcessor.setPathsConfigProperties(pathsConfigProperties);
-        return cardDataProcessor;
+    public DefaultViewElementsData defaultViewElementsData(PropertiesFactoryBean pathsConfigProperties) throws IOException {
+        DefaultViewElementsData defaultViewElementsData = new DefaultViewElementsData().getInstance();
+        defaultViewElementsData.setPathsConfigProperties(pathsConfigProperties);
+        return defaultViewElementsData;
     }
 
     @Bean
-    public CardDataFactory cardDataFactory(){
-        return new CardDataFactory();
+    public ViewElementsDataFactory viewElementsDataFactory(){
+        return new ViewElementsDataFactory();
     }
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer properties(){
         PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
-        Resource[] resources = new ClassPathResource[ ]{new ClassPathResource("com/tracker/config/properties/paths.properties" )};
+        Resource[] resources = new ClassPathResource[ ]{new ClassPathResource("com/tracker/config/properties/config.properties" )};
         pspc.setLocations( resources );
         pspc.setIgnoreUnresolvablePlaceholders( true );
         return pspc;
@@ -259,8 +257,9 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     }
 
     @Bean
-    public UserDetailsService customUserDetailsService(MongoDatabase database, CardDataProcessor cardDataProcessor){
-        return new UserDetailsServiceImpl(database, cardDataProcessor);
+    @DependsOn("defaultViewElementsData")
+    public UserDetailsService customUserDetailsService(MongoDatabase database, DefaultViewElementsData defaultViewElementsData){
+        return new UserDetailsServiceImpl(database);
     }
 
     @Bean(initMethod = "getInstance")

@@ -1,9 +1,9 @@
 package com.tracker.controller;
 
-import com.tracker.cards.CardDataProcessor;
 import com.tracker.constants.BaseConstants;
 import com.tracker.controller.base.BaseControllerResponse;
-import com.tracker.dao.search.DataSearchFactory;
+import com.tracker.dao.search.execute.DataSearchFactory;
+import com.tracker.view.elements.ViewElementsDataFactory;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -33,10 +32,13 @@ public class SearchInboxesController {
     @Autowired
     private DataSearchFactory dataSearchFactory;
 
+    @Autowired
+    private ViewElementsDataFactory viewElementsDataFactory;
+
     @RequestMapping(value = "/search", method = RequestMethod.GET, produces =  MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String search(Locale locale, ModelMap model, Authentication authentication, @RequestParam("filter") String filter) {
         model = baseControllerResponse.getBaseResponseData(model,authentication, locale);
-        model.addAttribute(BaseConstants.SEARCHERS, CardDataProcessor.getInstance().getFilterData(filter));
+        model.addAttribute(BaseConstants.SEARCHERS, viewElementsDataFactory.getDefaultViewElementData().getFilterData(filter));
         return "search-data";
     }
 

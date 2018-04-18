@@ -18,9 +18,8 @@ public class UsersAssocResponseElement implements SearchResponseElement{
         StringBuilder result = new StringBuilder();
         for (Object assocObject : incomingDataObjArray) {
             JSONObject data = (JSONObject) assocObject;
-            result.append(data.get(BaseConstants.LAST_NAME)).append(" ").append(data.get(BaseConstants.LAST_NAME)).append("<br>");
+            result.append(data.get(BaseConstants.LAST_NAME)).append(" ").append(data.get(BaseConstants.LAST_NAME)).append(BaseConstants.HTMl_LINE_BREAK);
         }
-
         return result;
     }
 }

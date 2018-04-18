@@ -1,14 +1,10 @@
 package com.tracker.dao.process.data;
 
-import com.mongodb.client.MongoDatabase;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.process.data.impl.CommentsDataProcessor;
 import com.tracker.dao.process.data.impl.DefaultDataProcessor;
 import com.tracker.dao.process.data.impl.MessageDataProcessor;
-import com.tracker.dao.process.data.impl.SingleExecutorTaskDataProcessor;
-import org.json.JSONArray;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
+import com.tracker.dao.process.data.impl.TaskWithSingleExecutorDataProcessor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +18,7 @@ public class DataProcessorFactory {
     final static Map<String, Supplier<DataProcessor>> map = new HashMap<>();
     static {
         map.put(BaseConstants.DEFAULT, DefaultDataProcessor::new);
-        map.put(BaseConstants.ISSUE, SingleExecutorTaskDataProcessor::new);
+        map.put(BaseConstants.ISSUE, TaskWithSingleExecutorDataProcessor::new);
         map.put(BaseConstants.MESSAGE, MessageDataProcessor::new);
         map.put(BaseConstants.NEWS, MessageDataProcessor::new);
         map.put(BaseConstants.COMMENTS, CommentsDataProcessor::new);

@@ -17,6 +17,25 @@ var Utils = {
     },
 
 
+    checkFieldCanDisplay: function checkFieldCanDisplay(fieldData) {
+        var display = false;
+        if (fieldData.viewParams) {
+            var viewParams = fieldData.viewParams;
+            for (var i in viewParams) {
+                var parameter = viewParams[i];
+                if (parameter.mode && Utils.getUrlParameter("mode") == parameter.mode) {
+                    display = true;
+                    break;
+                }
+
+            }
+        } else {
+            display = true;
+        }
+
+        return display;
+    },
+
     getUrlParameter: function getUrlParameter(k) {
         var p = {};
         location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (s, k, v) {
@@ -25,29 +44,29 @@ var Utils = {
         return k ? p[k] : p;
     },
 
-    checkIfHasEmptyFiles: function checkIfHasEmptyFiles(className){
+    checkIfHasEmptyFiles: function checkIfHasEmptyFiles(className) {
         var hasEmptyFiles = false;
-        $("."+className+" input[type=file]").each(function (data) {
-            if(this.files.length == 0){
+        $("." + className + " input[type=file]").each(function (data) {
+            if (this.files.length == 0) {
                 hasEmptyFiles = true;
             }
         });
         return hasEmptyFiles;
     },
 
-    countEmptyFiles: function countEmptyFiles(className){
+    countEmptyFiles: function countEmptyFiles(className) {
         var hasEmptyFiles = 0;
-        $("."+className+" input[type=file]").each(function (data) {
-            if(this.files.length == 0){
+        $("." + className + " input[type=file]").each(function (data) {
+            if (this.files.length == 0) {
                 hasEmptyFiles++;
             }
         });
         return hasEmptyFiles;
     },
 
-    countAllFiles: function countEmptyFiles(className){
+    countAllFiles: function countEmptyFiles(className) {
         var filesCount = 0;
-        $("."+className+" input[type=file]").each(function (data) {
+        $("." + className + " input[type=file]").each(function (data) {
             filesCount++;
         });
         return filesCount;

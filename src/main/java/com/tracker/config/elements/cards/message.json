@@ -1,0 +1,97 @@
+{
+  "tabs": [
+    {
+      "name": "common",
+      "title": "tabs.common",
+      "properties": [
+        {
+          "name": "elementName",
+          "title": "constants.elementName",
+          "type": "textField",
+          "mandatoryCondition": "*",
+          "typeForSaving": "text",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ],
+          "customClassName": "fullString"
+        },
+        {
+          "name": "description",
+          "title": "constants.description",
+          "type": "textArea",
+          "enableParams": [
+            {
+              "mode": "create"
+            },
+            {
+              "mode": "task"
+            }
+          ],
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "fullString"
+        },
+
+        {
+          "name": "document",
+          "title": "constants.document",
+          "type": "file",
+          "typeForSaving": "file",
+          "customClassName": "half",
+          "limit": 2,
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
+        },
+
+        {
+          "name": "userAssoc",
+          "title": "constants.message.userAssoc",
+          "type": "userAssoc",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ],
+          "typeForSaving": "userAssoc",
+          "mandatoryCondition": "*",
+          "customClassName": "fullString"
+        }
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "name": "save",
+      "title": "constants.save",
+      "type": "button",
+      "enableParams": [
+        {
+          "mode": "create"
+        }
+      ],
+      "customClassName": "save"
+    },
+    {
+      "name": "sendNext",
+      "title": "constants.sendNext",
+      "type": "button",
+      "enableParams": [
+        {
+          "mode": "task"
+        }
+      ],
+      "customClassName": "save"
+    },
+    {
+      "name": "close",
+      "title": "constants.close",
+      "type": "button",
+      "customClassName": "save"
+    }
+  ]
+}

@@ -1,16 +1,15 @@
 package com.tracker.controller;
 
-import com.tracker.cards.CardDataFactory;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.process.data.DataProcessorFactory;
-import com.tracker.dao.search.DataSearchFactory;
+import com.tracker.mail.send.impl.GmailSender;
+import com.tracker.view.elements.ViewElementsDataFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Locale;
 
 /**
  * Created by Perebeinis on 02.04.2018.
@@ -31,10 +29,7 @@ public class CommentsController {
     private DataProcessorFactory dataProcessorFactory;
 
     @Autowired
-    private DataSearchFactory dataSearchFactory;
-
-    @Autowired
-    private CardDataFactory cardDataFactory;
+    private ViewElementsDataFactory viewElementsDataFactory;
 
     @RequestMapping(value = "/create-new-comment", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object> createNewComment(@RequestBody String postData,  ModelMap model, @RequestParam("type") String type) {
@@ -43,7 +38,7 @@ public class CommentsController {
             String encodeURL = URLDecoder.decode(postData, BaseConstants.DEFAULT_ENCODING);
             JSONObject formData = new JSONObject(encodeURL);
             String newElementId = dataProcessorFactory.processData(BaseConstants.COMMENTS, formData, "");
-            model = cardDataFactory.getCardData(type, model, newElementId);
+            model = viewElementsDataFactory.getViewData(type, model, newElementId);
             JSONArray jsonArray = (JSONArray) ((JSONObject)model.get(BaseConstants.CARD_FILED_VALUES)).get(BaseConstants.COMMENTS);
             return new ResponseEntity<Object>(jsonArray.toString(), HttpStatus.OK);
         } catch (UnsupportedEncodingException e) {

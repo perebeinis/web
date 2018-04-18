@@ -13,13 +13,23 @@ function CardCreator(cardId, data, tabsId, cardFiledValues, messages) {
     this.typeForSaving = "typeForSaving";
     this.mode = this.getSearchParams("mode");
     this.countFormElements = 0;
+
+    // Add components
+    Object.assign(this, CommentsComponent.prototype);
+    Object.assign(this, DateComponent.prototype);
+    Object.assign(this, FileComponent.prototype);
+    Object.assign(this, ImageComponent.prototype);
+    Object.assign(this, MultiSelectComponent.prototype);
+    Object.assign(this, TextAreaComponent.prototype);
+    Object.assign(this, TextFieldComponent.prototype);
+    Object.assign(this, UserAssocComponent.prototype);
+
     return this;
 }
 
-CardCreator.prototype = Object.create(FormElements.prototype);
 CardCreator.prototype.constructor = CardCreator;
-
 CardCreator.prototype.createCardElements = function () {
+
     var tabsCounter = 0;
     //create set for tabs
     var tabs = this.dataArray.tabs;
@@ -179,10 +189,6 @@ function CardButtonsCreator(parentId, data, cardAttributesObject, messages, mode
                 window.open("/get-element?type=" + currentElementType + "&mode=view&id=" + data._id, "_self");
             });
         }
-
-        
-
-
     },
 
         this.sendNext = function (e, data) {

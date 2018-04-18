@@ -66,16 +66,16 @@ public class AuditService {
         auditDocument.put(BaseConstants.ACTION_NAME,actionName);
         auditDocument.put(BaseConstants.TIME, new Date());
         auditDocument.put(BaseConstants.CREATED, new Date());
-        auditDocument.put(BaseConstants.ACTOR, getCurrentActorFullName());
+//        auditDocument.put(BaseConstants.ACTOR, getCurrentActorFullName());
         auditDocument.put(BaseConstants.TYPE, elementType);
         auditDocument.put(BaseConstants.AUDIT_ELEMENT_ID, elementId);
 
         JSONArray jsonArray = new JSONArray();
         for (AuditObject auditObject : auditObjects) {
-            Supplier<AuditElement> element = auditElementsType.get(auditObject.getFieldType());
-            jsonArray.put(element != null ?
-            element.get().createAuditData(auditObject.getFieldName(),auditObject.getFieldValue()) :
-            auditElementsType.get(BaseConstants.DEFAULT).get().createAuditData(auditObject.getFieldName(), auditObject.getFieldValue()));
+//            Supplier<AuditElement> element = auditElementsType.get(auditObject.getFieldType());
+//            jsonArray.put(element != null ?
+//            element.get().createAuditData(auditObject.getFieldName(),auditObject.getFieldValue()) :
+//            auditElementsType.get(BaseConstants.DEFAULT).get().createAuditData(auditObject.getFieldName(), auditObject.getFieldValue()));
         }
 
         auditDocument.put(BaseConstants.AUDIT_DATA,jsonArray);

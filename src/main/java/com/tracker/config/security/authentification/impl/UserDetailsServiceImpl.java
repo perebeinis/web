@@ -2,16 +2,13 @@ package com.tracker.config.security.authentification.impl;
 
 import com.google.gson.JsonParser;
 import com.mongodb.client.AggregateIterable;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
-import com.tracker.cards.CardDataProcessor;
-import com.tracker.config.security.authentification.CustomUserObject;;
+import com.tracker.config.security.authentification.CustomUserObject;
 import com.tracker.constants.BaseConstants;
-import com.tracker.dao.search.AbstractDataSearch;
+import com.tracker.dao.search.execute.DataSearchUtil;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,13 +18,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private MongoDatabase database;
     private static List<CustomUserObject> users = new ArrayList();
-    private static Map<ObjectId,JSONObject> userListCacheData = new HashMap<>();
+    private static Map<ObjectId, JSONObject> userListCacheData = new HashMap<>();
 
-    public UserDetailsServiceImpl(MongoDatabase database, CardDataProcessor cardDataProcessor) {
+    public UserDetailsServiceImpl(MongoDatabase database) {
         this.database = database;
         reloadUsers();
     }
@@ -35,9 +34,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     /*
     * Authentificate user from database
     */
-    public void reloadUsers(){
+    public void reloadUsers() {
         List<Bson> filters = new ArrayList<>();
-        filters = AbstractDataSearch.searchDataByParams(filters, BaseConstants.USER_TYPE);
+        filters = DataSearchUtil.searchDataByParams(filters, BaseConstants.USER_TYPE);
 
         AggregateIterable<Document> iterator = this.database.getCollection(BaseConstants.USERS_COLLECTION).aggregate(filters);
         ArrayList<Document> usersList = new ArrayList();
@@ -45,19 +44,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         users = new ArrayList<>();
 //        this.users.add(new CustomUserObject(new ObjectId(), "admin", "admin", "ADMIN,USER", new JSONObject()));
         usersList.forEach((document) -> {
-           JSONObject userData = new JSONObject(new JsonParser().parse(document.toJson()).getAsJsonObject().toString());
-           userListCacheData.put((ObjectId) document.get(BaseConstants.DOCUMENT_ID), userData);
-           this.users.add(new CustomUserObject((ObjectId) document.get(BaseConstants.DOCUMENT_ID), (String) document.get(BaseConstants.USER_ID), (String) document.get(BaseConstants.USER_PASS), (String) document.get(BaseConstants.USER_ROLES), userData));
+            JSONObject userData = new JSONObject(new JsonParser().parse(document.toJson()).getAsJsonObject().toString());
+            userListCacheData.put((ObjectId) document.get(BaseConstants.DOCUMENT_ID), userData);
+            this.users.add(
+                    new CustomUserObject(
+                            (ObjectId) document.get(BaseConstants.DOCUMENT_ID),
+                            (String) document.get(BaseConstants.USER_ID),
+                            (String) document.get(BaseConstants.USER_PASS),
+                            (String) document.get(BaseConstants.USER_ROLES),
+                            userData));
         });
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<CustomUserObject> user = users.stream()
-                .filter(u -> u.name.equals(username))
+                .filter(u -> u.getName().equals(username))
                 .findAny();
         if (!user.isPresent()) {
-            throw new UsernameNotFoundException("User not found by name: " + username);
+//            throw new UsernameNotFoundException("User not found by name: " + username);
+            return null;
         }
         return toUserDetails(user.get());
     }
@@ -65,7 +71,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public CustomUserObject loadUserById(ObjectId id) throws UsernameNotFoundException {
         Optional<CustomUserObject> user = users.stream()
-                .filter(u -> u.userId.equals(id))
+                .filter(u -> u.getName().equals(id))
                 .findAny();
         if (!user.isPresent()) {
             throw new UsernameNotFoundException("User not found by id: " + id);
@@ -76,7 +82,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public CustomUserObject loadUserDataByUsername(String username) throws UsernameNotFoundException {
         Optional<CustomUserObject> user = users.stream()
-                .filter(u -> u.name.equals(username))
+                .filter(u -> u.getName().equals(username))
                 .findAny();
         return user.get();
     }
@@ -84,7 +90,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public ObjectId loadUserIdByUsername(String username) throws UsernameNotFoundException {
         Optional<CustomUserObject> user = users.stream()
-                .filter(u -> u.name.equals(username))
+                .filter(u -> u.getName().equals(username))
                 .findAny();
         return user.get().getUserId();
     }
@@ -95,7 +101,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .roles(userObject.roles.split(",")).build();
     }
 
-    public JSONObject getUserDataById(ObjectId userId){
+    public JSONObject getUserDataById(ObjectId userId) {
         return userListCacheData.get(userId);
     }
 

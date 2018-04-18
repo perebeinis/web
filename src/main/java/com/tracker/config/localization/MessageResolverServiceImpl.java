@@ -30,6 +30,5 @@ public class MessageResolverServiceImpl implements MessageResolveService{
 
     @Override
     public void setMessageSource(MessageSource messageSource) {
-
     }
 }

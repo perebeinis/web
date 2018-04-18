@@ -1,11 +1,10 @@
 package com.tracker.controller;
 
-import com.tracker.cards.CardDataFactory;
-import com.tracker.cards.CardDataProcessor;
 import com.tracker.config.localization.MessageResolveService;
 import com.tracker.constants.BaseConstants;
 import com.tracker.controller.base.BaseControllerResponse;
 import com.tracker.dao.process.data.DataProcessorFactory;
+import com.tracker.view.elements.ViewElementsDataFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
@@ -22,29 +21,17 @@ import java.util.Locale;
 public class GetElementCardController {
 
     @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
     private BaseControllerResponse baseControllerResponce;
 
     @Autowired
-    private CardDataFactory cardDataFactory;
-
-    @Autowired
-    protected CardDataProcessor cardDataProcessor;
-
-    @Autowired
-    private DataProcessorFactory dataProcessorFactory;
-
-    @Autowired
-    private MessageResolveService messageResolveService;
+    private ViewElementsDataFactory viewElementsDataFactory;
 
     private static final String RESPONSE_ELEMENT_TYPE = "create-element-card";
 
     @RequestMapping(value = "/create-element", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getElementCard(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type) {
         model = baseControllerResponce.getBaseResponseData(model, authentication, locale);
-        model = cardDataFactory.getCardData(type, model, null);
+        model = viewElementsDataFactory.getViewData(type, model, null);
         model.addAttribute(BaseConstants.MODE, BaseConstants.CREATE);
         model.addAttribute(BaseConstants.ELEMENT_TYPE, type);
         return RESPONSE_ELEMENT_TYPE;
@@ -53,7 +40,7 @@ public class GetElementCardController {
     @RequestMapping(value = "/get-element", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getElementCardExist(Locale locale, ModelMap model, Authentication authentication, @RequestParam("type") String type, @RequestParam("id") String id) {
         model = baseControllerResponce.getBaseResponseData(model, authentication, locale);
-        model = cardDataFactory.getCardData(type, model, id);
+        model = viewElementsDataFactory.getViewData(type, model, id);
         model.addAttribute(BaseConstants.MODE, BaseConstants.MODE_VIEW);
         model.addAttribute(BaseConstants.ELEMENT_TYPE, type);
         return RESPONSE_ELEMENT_TYPE;

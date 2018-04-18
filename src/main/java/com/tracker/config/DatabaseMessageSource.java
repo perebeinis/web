@@ -11,7 +11,6 @@ import java.util.Locale;
 @Component
 public class DatabaseMessageSource implements MessageSource {
 
-
     @Override
     public String getMessage(String code, Object[] args, String defaultMessage, Locale locale) {
         return resolveMessage(code, args, locale);

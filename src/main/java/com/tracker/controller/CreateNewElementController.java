@@ -45,7 +45,6 @@ public class CreateNewElementController {
             String encodeURL = URLDecoder.decode(postData, BaseConstants.DEFAULT_ENCODING);
             JSONArray formData = new JSONArray(encodeURL);
             String newElementId = dataProcessorFactory.processData(type, formData, "");
-            customUserDetailsService.reloadUsers();
             result.put(BaseConstants.DOCUMENT_ID, newElementId);
             changingDataObserver.createEvent(type, formData, newElementId);
         } catch (UnsupportedEncodingException e) {
