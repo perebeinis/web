@@ -70,5 +70,35 @@ var Utils = {
             filesCount++;
         });
         return filesCount;
+    },
+
+
+    createInfoPopup : function createInfoPopup(parentId, message){
+        var modalWindowId = "infoPopup";
+        $('body').append(
+            $('<div>', {
+                id: modalWindowId,
+                class: "modal fade",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "confirm-modal",
+                "aria-hidden": "false"
+            })
+                .append($('<div>', {class: "modal-dialog"})
+                    .append($('<div>', {class: "modal-content"})
+                        .append($('<div>', {class: "modal-body"})
+                            .append($('<span>', {class: "form-control info-popup"}).html(CUSTOM_MESSAGES[message])))
+                    )
+                )
+        );
+
+        $("#" + modalWindowId).modal();
+        $("#" + modalWindowId).modal('show');
+
+        setTimeout(function() {
+            $("#" + modalWindowId).remove();
+            $(".modal-backdrop").remove();
+        }, 3000);
+
     }
 }

@@ -19,7 +19,7 @@ public class GmailSender implements MailSender {
     private static final String emailHost = "smtp.gmail.com";
 
     private static final String fromEmail = "sanok.perebeynis@gmail.com";
-    private static final String fromPassword = "************";
+    private static final String fromPassword = "sanok16011993";
     private static final String SMTP = "smtp";
     private static final String SMTP_PORT = "mail.smtp.port";
     private static final String SMTP_AUTH = "mail.smtp.auth";

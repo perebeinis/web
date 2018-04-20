@@ -45,7 +45,7 @@ function HeaderButton(cardId, data, messages,userData) {
         var name = set[this.name];
         var title = set[this.title];
         var functionName = this[name] == undefined ? "defaultClick" : name;
-        var avatar = avatar && this.userData!=undefined && this.userData.avatar!=undefined ? "<img src='"+this.userData.avatar[0].data.toString().replace(/\s/g, '+')+"'/>" : "";
+        var avatar = avatar && this.userData!=undefined && this.userData.avatar!=undefined && this.userData.avatar.length>0 ? "<img src='"+this.userData.avatar[0].data.toString().replace(/\s/g, '+')+"'/>" : "";
         var userFullName = useUserFullName && this.userData!=undefined ? avatar + this.userData.firstName + " "+ this.userData.lastName : this.messages[set[this.title]];
 
         $('#'+parentElement)
@@ -90,6 +90,12 @@ function HeaderButton(cardId, data, messages,userData) {
 
     this.myProfile = function() {
         window.open("/get-element?type=user&mode=view&id="+this.attributes.userid.nodeValue , "_self");
+    };
+
+    this.changePass = function() {
+        var changePass = new ChangePasswordComponent();
+        changePass.messages = CUSTOM_MESSAGES;
+        changePass.createChangePassModalWindow();
     };
 
     this.createNewTask = function() {

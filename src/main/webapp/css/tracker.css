@@ -646,3 +646,7 @@ navbar.less:
     .comment-block {
         width: 80%;
     }
+
+    .form-control.new-pass-first {
+         margin-bottom: 15px;
+    }

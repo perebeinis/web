@@ -117,6 +117,7 @@ public interface BaseConstants {
     public static String USERNAME = "username";
     public static String PASSWORD = "password";
     public static String USER_EMAIL = "user_email";
+    public static String EMAIL = "email";
     public static String USER_GROUP = "user_group";
     public static String PLACE_HOLDER_PASS = "placeholderPassword";
     public static String JSON_EXTENSION = ".json";

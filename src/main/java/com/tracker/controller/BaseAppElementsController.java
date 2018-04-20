@@ -3,19 +3,27 @@ package com.tracker.controller;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.process.data.DataProcessorFactory;
 import com.tracker.mail.send.impl.GmailSender;
+import org.apache.commons.lang.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -43,37 +51,51 @@ public class BaseAppElementsController {
 
     @RequestMapping(value = "/registration-new-user",  method = RequestMethod.GET)
     public String registration(Locale locale, ModelMap model) {
-        model.addAttribute(BaseConstants.REGISTRATION_TITLE, messageSource.getMessage(BaseConstants.REGISTRATION_TITLE, new Object[]{""}, locale));
-        model.addAttribute(BaseConstants.FIRST_NAME, messageSource.getMessage(BaseConstants.TITLE_FIRST_NAME, new Object[]{""}, locale));
-        model.addAttribute(BaseConstants.LAST_NAME, messageSource.getMessage(BaseConstants.TITLE_LAST_NAME, new Object[]{""}, locale));
-        model.addAttribute(BaseConstants.USER_EMAIL, messageSource.getMessage(BaseConstants.TITLE_EMAIL, new Object[]{""}, locale));
+        model.addAttribute("newUser", new NewUser());
         return "registration-new-user";
     }
 
+    @RequestMapping(value = "/change-my-pass",  method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Object> changeMyPass(@RequestBody String postData, Authentication authentication, ModelMap model) {
+        model.addAttribute("newUser", new NewUser());
+        JSONObject result = new JSONObject();
+        try {
+            String encodeURL = URLDecoder.decode(postData, BaseConstants.DEFAULT_ENCODING);
+            JSONObject formData = new JSONObject(encodeURL);
+            String newPass = formData.getString(BaseConstants.PASSWORD);
+            String userEmail =  customUserDetailsService.loadUserDataByUsername(authentication.getName()).getAllUserData().getString(BaseConstants.EMAIL);
+            new GmailSender().sendMail("TRACKER", "your password = "+ newPass, userEmail);
+            return new ResponseEntity<Object>(HttpStatus.OK, HttpStatus.OK);
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("error");
+        }
+        return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @RequestMapping(value = "/registration-new-user",  method = RequestMethod.POST)
-    public String registrationPost(Locale locale, ModelMap model, @RequestBody MultiValueMap<String,String> formData) {
-        String userName = formData.get(BaseConstants.USERNAME).get(0);
+    public String registrationPost(Locale locale, ModelMap model, @ModelAttribute NewUser newUser) {
+        String userName = newUser.getUsername();
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(userName);
         if(userDetails != null){
             model.addAttribute(BaseConstants.USER_ALREADY_EXIST_IN_SYSTEM, messageSource.getMessage(BaseConstants.USER_ALREADY_EXIST_IN_SYSTEM, new Object[]{""}, locale));
         } else {
             JSONArray userData = new JSONArray();
             userData.put(createElementData(BaseConstants.USER_ID, userName));
-            UUID uuid = UUID.randomUUID();
-            String pass = "test123";
-            userData.put(createElementData(BaseConstants.USER_PASS, pass));
-            userData.put(createElementData(BaseConstants.USER_EMAIL, formData.get(BaseConstants.USER_EMAIL).get(0)));
+            String userEmail = newUser.getUser_email();
+
+            String randomUserPassword = RandomStringUtils.random(10, true, false);
+            userData.put(createElementData(BaseConstants.USER_PASS, randomUserPassword));
+            userData.put(createElementData(BaseConstants.FIRST_NAME,  newUser.getFirstName()));
+            userData.put(createElementData(BaseConstants.LAST_NAME,  newUser.getLastName()));
+            userData.put(createElementData(BaseConstants.EMAIL, newUser.getUser_email()));
             userData.put(createElementData(BaseConstants.USER_ROLES, "USER"));
             dataProcessorFactory.processData(BaseConstants.USER_TYPE, userData,"");
             customUserDetailsService.reloadUsers();
-            new GmailSender().sendMail("TEST_THEME", "your password = "+ pass,"oleksandr.perebeinis@gmail.com");
+            new GmailSender().sendMail("TRACKER", "your password = "+ randomUserPassword, userEmail);
 
         }
 
-        model.addAttribute(BaseConstants.REGISTRATION_TITLE, messageSource.getMessage(BaseConstants.REGISTRATION_TITLE, new Object[]{""}, locale));
-        model.addAttribute(BaseConstants.FIRST_NAME, messageSource.getMessage(BaseConstants.TITLE_FIRST_NAME, new Object[]{""}, locale));
-        model.addAttribute(BaseConstants.LAST_NAME, messageSource.getMessage(BaseConstants.TITLE_LAST_NAME, new Object[]{""}, locale));
-        model.addAttribute(BaseConstants.USER_EMAIL, messageSource.getMessage(BaseConstants.TITLE_EMAIL, new Object[]{""}, locale));
+        model.addAttribute("newUser", new NewUser());
         return "registration-new-user";
     }
 

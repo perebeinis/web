@@ -45,6 +45,12 @@
           "enableForRoles": "ADMIN,USER"
         },
         {
+          "name": "changePass",
+          "customClassName": "changePass",
+          "title": "header.buttons.changePass",
+          "enableForRoles": "ADMIN,USER"
+        },
+        {
           "name": "signOut",
           "title": "header.buttons.signOut",
           "enableForRoles": "ADMIN,USER"
