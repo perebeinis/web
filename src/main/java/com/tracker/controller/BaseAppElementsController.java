@@ -1,12 +1,19 @@
 package com.tracker.controller;
 
+import com.tracker.config.elements.user.registration.RegistrationUserCard;
 import com.tracker.constants.BaseConstants;
+import com.tracker.dao.groups.ProcessUserGroups;
 import com.tracker.dao.process.data.DataProcessorFactory;
+import com.tracker.mail.factory.SendVelocityEmailFactory;
 import com.tracker.mail.send.impl.GmailSender;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,12 +23,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Locale;
@@ -29,15 +42,26 @@ import java.util.UUID;
 
 @Controller
 public class BaseAppElementsController {
+    private static final String REGISTRATION_USER_CARD = "registrationUserCard";
+    private static final String ALL_SYSTEM_GROUPS = "ALL_SYSTEM_GROUPS";
 
     @Autowired
     private MessageSource messageSource;
+
+    @Autowired
+    private VelocityEngine velocityEngine;
+
+    @Autowired
+    private SendVelocityEmailFactory sendVelocityEmailFactory;
 
     @Autowired
     private UserDetailsService customUserDetailsService;
 
     @Autowired
     private DataProcessorFactory dataProcessorFactory;
+
+    @Autowired
+    private ProcessUserGroups processUserGroups;
 
     @RequestMapping("/")
     public String root(Locale locale) {
@@ -49,22 +73,32 @@ public class BaseAppElementsController {
         return "login";
     }
 
-    @RequestMapping(value = "/registration-new-user",  method = RequestMethod.GET)
+
+    @RequestMapping(value = "/registration-new-user", method = RequestMethod.GET)
     public String registration(Locale locale, ModelMap model) {
-        model.addAttribute("newUser", new NewUser());
+        model.addAttribute(REGISTRATION_USER_CARD, new RegistrationUserCard());
+        model.addAttribute(ALL_SYSTEM_GROUPS, processUserGroups.getAllGroups());
         return "registration-new-user";
     }
 
-    @RequestMapping(value = "/change-my-pass",  method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
+    @RequestMapping(value = "/change-my-pass", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object> changeMyPass(@RequestBody String postData, Authentication authentication, ModelMap model) {
-        model.addAttribute("newUser", new NewUser());
         JSONObject result = new JSONObject();
         try {
             String encodeURL = URLDecoder.decode(postData, BaseConstants.DEFAULT_ENCODING);
             JSONObject formData = new JSONObject(encodeURL);
             String newPass = formData.getString(BaseConstants.PASSWORD);
-            String userEmail =  customUserDetailsService.loadUserDataByUsername(authentication.getName()).getAllUserData().getString(BaseConstants.EMAIL);
-            new GmailSender().sendMail("TRACKER", "your password = "+ newPass, userEmail);
+            String userEmail = customUserDetailsService.loadUserDataByUsername(authentication.getName()).getAllUserData().getString(BaseConstants.EMAIL);
+            JSONArray userData = new JSONArray();
+            userData.put(createElementData(BaseConstants.USER_PASS, newPass));
+            String currentUserId = customUserDetailsService.loadUserDataByUsername(authentication.getName()).getUserId().toString();
+            dataProcessorFactory.processData(BaseConstants.USER_TYPE, userData, currentUserId);
+            customUserDetailsService.reloadUsers();
+
+            ModelMap modelMap = new ModelMap();
+            modelMap.put(BaseConstants.USER_PASS, newPass);
+            boolean messageSent = sendVelocityEmailFactory.sendVelocityEmail(BaseConstants.USER_CHANGE_PASS_VM, userEmail, modelMap);
             return new ResponseEntity<Object>(HttpStatus.OK, HttpStatus.OK);
         } catch (UnsupportedEncodingException e) {
             System.out.println("error");
@@ -72,33 +106,36 @@ public class BaseAppElementsController {
         return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @RequestMapping(value = "/registration-new-user",  method = RequestMethod.POST)
-    public String registrationPost(Locale locale, ModelMap model, @ModelAttribute NewUser newUser) {
-        String userName = newUser.getUsername();
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(userName);
-        if(userDetails != null){
-            model.addAttribute(BaseConstants.USER_ALREADY_EXIST_IN_SYSTEM, messageSource.getMessage(BaseConstants.USER_ALREADY_EXIST_IN_SYSTEM, new Object[]{""}, locale));
-        } else {
-            JSONArray userData = new JSONArray();
-            userData.put(createElementData(BaseConstants.USER_ID, userName));
-            String userEmail = newUser.getUser_email();
+    @RequestMapping(value = "/registration-new-user", method = RequestMethod.POST)
+    public String registrationPost(Locale locale, ModelMap model, @Valid RegistrationUserCard registrationUserCard, BindingResult bindingResult) {
+        String userName = registrationUserCard.getUsername();
 
-            String randomUserPassword = RandomStringUtils.random(10, true, false);
-            userData.put(createElementData(BaseConstants.USER_PASS, randomUserPassword));
-            userData.put(createElementData(BaseConstants.FIRST_NAME,  newUser.getFirstName()));
-            userData.put(createElementData(BaseConstants.LAST_NAME,  newUser.getLastName()));
-            userData.put(createElementData(BaseConstants.EMAIL, newUser.getUser_email()));
-            userData.put(createElementData(BaseConstants.USER_ROLES, "USER"));
-            dataProcessorFactory.processData(BaseConstants.USER_TYPE, userData,"");
-            customUserDetailsService.reloadUsers();
-            new GmailSender().sendMail("TRACKER", "your password = "+ randomUserPassword, userEmail);
-
+        if (bindingResult.hasErrors()) {
+            return "registration-new-user";
         }
 
-        model.addAttribute("newUser", new NewUser());
-        return "registration-new-user";
-    }
+        JSONArray userData = new JSONArray();
+        userData.put(createElementData(BaseConstants.USER_ID, userName));
+        String userEmail = registrationUserCard.getUser_email();
 
+
+        String randomUserPassword = RandomStringUtils.random(10, true, false);
+        userData.put(createElementData(BaseConstants.USER_PASS, randomUserPassword));
+        userData.put(createElementData(BaseConstants.FIRST_NAME, registrationUserCard.getFirstName()));
+        userData.put(createElementData(BaseConstants.LAST_NAME, registrationUserCard.getLastName()));
+        userData.put(createElementData(BaseConstants.EMAIL, registrationUserCard.getUser_email()));
+        userData.put(createElementData(BaseConstants.USER_ROLES, "USER"));
+        dataProcessorFactory.processData(BaseConstants.USER_TYPE, userData, "");
+        customUserDetailsService.reloadUsers();
+
+        ModelMap modelMap = new ModelMap();
+        modelMap.put(BaseConstants.USERNAME, userName);
+        modelMap.put(BaseConstants.USER_PASS, randomUserPassword);
+        boolean messageSent = sendVelocityEmailFactory.sendVelocityEmail(BaseConstants.USER_REGISTRATION_VM, userEmail, modelMap);
+
+        model.addAttribute(BaseConstants.REGISTERED_SUCCESSFUL, messageSent);
+        return "login";
+    }
 
 
     @RequestMapping("/login-error")
@@ -120,7 +157,7 @@ public class BaseAppElementsController {
     }
 
 
-    private JSONObject createElementData(String elementName, String elementValue){
+    private JSONObject createElementData(String elementName, String elementValue) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(BaseConstants.DATA, elementValue);
         jsonObject.put(BaseConstants.TYPE, BaseConstants.TEXT);

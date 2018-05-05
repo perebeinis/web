@@ -45,7 +45,10 @@ function HeaderButton(cardId, data, messages,userData) {
         var name = set[this.name];
         var title = set[this.title];
         var functionName = this[name] == undefined ? "defaultClick" : name;
-        var avatar = avatar && this.userData!=undefined && this.userData.avatar!=undefined && this.userData.avatar.length>0 ? "<img src='"+this.userData.avatar[0].data.toString().replace(/\s/g, '+')+"'/>" : "";
+        var avatar = avatar && this.userData!=undefined && this.userData.avatar!=undefined && this.userData.avatar.length>0 ?
+        "<img src='"+this.userData.avatar[0].data.toString().replace(/\s/g, '+')+"'/>"
+            : "<img src='/images/default-user-avatar.png'/>";
+
         var userFullName = useUserFullName && this.userData!=undefined ? avatar + this.userData.firstName + " "+ this.userData.lastName : this.messages[set[this.title]];
 
         $('#'+parentElement)

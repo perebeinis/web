@@ -13,6 +13,7 @@ public interface BaseConstants {
     public static String ISSUE_COLLECTION = "tasks";
     public static String ISSUE_CONSTANT = "issue";
     public static String USER_TYPE = "user";
+    public static String GROUPS = "groups";
     public static String DOCUMENTS_COLLECTION = "documents";
     public static String DOCUMENT_ID = "_id";
     public static String CURRENT_EXECUTOR = "currentExecutor";
@@ -58,6 +59,7 @@ public interface BaseConstants {
     public static String TITLE_EMAIL = "constants.email";
     public static String LAST_NAME = "lastName";
     public static String USER_ASSOC = "userAssoc";
+    public static String GROUP_TYPE = "group";
     public static String ASSOC = "Assoc";
     public static String USER_PASS = "user_pass";
     public static String USER_ROLES = "roles";
@@ -122,6 +124,11 @@ public interface BaseConstants {
     public static String PLACE_HOLDER_PASS = "placeholderPassword";
     public static String JSON_EXTENSION = ".json";
     public static String HTMl_LINE_BREAK = "<br>";
+    public static String USER_REGISTRATION_VM = "user-registration";
+    public static String USER_CHANGE_PASS_VM = "user-change-pass";
+    public static String PATH = "path";
+    public static String THEME = "theme";
+    public static String REGISTERED_SUCCESSFUL = "registeredSuccessful";
 
 
 

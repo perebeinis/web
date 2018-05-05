@@ -1,5 +1,6 @@
 package com.tracker.mail.send.impl;
 
+import com.tracker.constants.BaseConstants;
 import com.tracker.mail.send.MailSender;
 
 import javax.mail.Message;
@@ -24,7 +25,7 @@ public class GmailSender implements MailSender {
     private static final String SMTP_PORT = "mail.smtp.port";
     private static final String SMTP_AUTH = "mail.smtp.auth";
     private static final String SMTP_START_TTLS = "mail.smtp.starttls.enable";
-    private static final String HTML_ENCODING = "text/html";
+    private static final String HTML_ENCODING = "html";
 
     @Override
     public boolean sendMail(String theme, String text, String toEmail) {
@@ -41,7 +42,7 @@ public class GmailSender implements MailSender {
             emailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 
             emailMessage.setSubject(theme);
-            emailMessage.setContent(text, HTML_ENCODING);
+            emailMessage.setText(text, BaseConstants.DEFAULT_ENCODING, HTML_ENCODING);
 
             Transport transport = mailSession.getTransport(SMTP);
             transport.connect(emailHost, fromEmail, fromPassword);

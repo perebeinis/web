@@ -1,13 +1,18 @@
-package com.tracker.controller;
+package com.tracker.config.elements.user.registration;
+
+import com.tracker.config.validation.username.UserNameConstraint;
 
 /**
- * Created by Perebeinis on 19.04.2018.
+ * Created by Perebeinis on 04.05.2018.
  */
-public class NewUser {
+public class RegistrationUserCard {
 
     private String firstName;
     private String lastName;
+
+    @UserNameConstraint
     private String username;
+
     private String user_email;
     private String user_group;
 

@@ -27,10 +27,12 @@ import com.tracker.config.localization.MessageResolverServiceImpl;
 import com.tracker.config.security.authentification.impl.UserDetailsServiceImpl;
 import com.tracker.constants.BaseConstants;
 import com.tracker.controller.base.BaseControllerResponse;
+import com.tracker.dao.groups.ProcessUserGroups;
 import com.tracker.dao.process.audit.AuditService;
 import com.tracker.dao.process.data.DataProcessorFactory;
 import com.tracker.dao.process.data.DataProcessorService;
 import com.tracker.dao.search.execute.DataSearchFactory;
+import com.tracker.mail.factory.SendVelocityEmailFactory;
 import com.tracker.observer.ChangingDataObserver;
 import com.tracker.observer.Observer;
 import com.tracker.observer.impl.CreateHistoryDataSubscriber;
@@ -38,6 +40,8 @@ import com.tracker.observer.impl.CreateNewsDataSubscriber;
 import com.tracker.observer.impl.TaskProcessDataSubscriber;
 import com.tracker.view.elements.ViewElementsDataFactory;
 import com.tracker.view.elements.impl.DefaultViewElementsData;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.VelocityException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -52,6 +56,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -66,6 +71,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
@@ -287,5 +293,26 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     public StringHttpMessageConverter stringHttpMessageConverter() {
         return new StringHttpMessageConverter(Charset.forName("UTF-8"));
     }
+
+    @Bean
+    public VelocityEngine velocityEngine() throws VelocityException, IOException{
+        VelocityEngineFactoryBean factory = new VelocityEngineFactoryBean();
+        Properties props = new Properties();
+        props.put("resource.loader", "class");
+        props.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader." + "ClasspathResourceLoader");
+        factory.setVelocityProperties(props);
+        return factory.createVelocityEngine();
+    }
+
+    @Bean
+    public SendVelocityEmailFactory sendVelocityEmailFactory(PropertiesFactoryBean pathsConfigProperties) throws IOException {
+        return new SendVelocityEmailFactory(pathsConfigProperties);
+    }
+
+    @Bean
+    public ProcessUserGroups processUserGroups() {
+        return new ProcessUserGroups();
+    }
+
 
 }
