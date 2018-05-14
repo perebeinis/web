@@ -23,6 +23,7 @@ function CardCreator(cardId, data, tabsId, cardFiledValues, messages) {
     Object.assign(this, TextAreaComponent.prototype);
     Object.assign(this, TextFieldComponent.prototype);
     Object.assign(this, UserAssocComponent.prototype);
+    Object.assign(this, UserGroupAssocComponent.prototype);
 
     return this;
 }

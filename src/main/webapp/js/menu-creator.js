@@ -45,9 +45,10 @@ function MenuElementsCretor(cardId, data, messages) {
 
 
     this.createFilterElement = function (data, parentElement) {
+        var currentFilterData = data;
         $('#'+parentElement)
             .append($('<li>').
-            append($('<a>', {name: data[this.name], href : "#"}).html(
+             append($('<a>', {name: data[this.name], href : "#"}).html(
                 this.messages[data[this.title]]!=undefined ? this.messages[data[this.title]] : data[this.title])
                 .click(function() {
                     localStorage.setItem("lastOpenedFilter",this.name);
@@ -118,17 +119,18 @@ function MenuElementsCretor(cardId, data, messages) {
     
     this.processLastOpenedMenuTree = function () {
         var itemName = localStorage.getItem('lastOpenedFilter');
-        var menuItem =  $('.container a[name="'+itemName+'"]')[0];
-        var parent = menuItem.parentNode.parentNode;
+        if(itemName){
+            var menuItem =  $('.container a[name="'+itemName+'"]')[0];
+            var parent = menuItem.parentNode.parentNode;
 
-        if($(parent).hasClass("bullets")){
-            $(parent).parent().children('ul.tree').toggle(200);
+            if($(parent).hasClass("bullets")){
+                $(parent).parent().children('ul.tree').toggle(200);
+            }
+
+            if(!$(menuItem).hasClass("selected")){
+                $(menuItem).addClass("selected");
+            }
         }
-
-        if(!$(menuItem).hasClass("selected")){
-            $(menuItem).addClass("selected");
-        }
-
     }
 
 

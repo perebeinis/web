@@ -18,6 +18,7 @@ public interface BaseConstants {
     public static String DOCUMENT_ID = "_id";
     public static String CURRENT_EXECUTOR = "currentExecutor";
     public static String SEARCH_TEXT_QUERY = "searchTextQuery";
+    public static String SEARCH_TEXT_QUERY_OR = "searchTextQueryOR";
     public static String MY_ID = "MY_ID";
     public static String IN = "$in";
     public static String LOOKUP = "$lookup";
@@ -28,6 +29,7 @@ public interface BaseConstants {
     public static String SKIP = "$skip";
     public static String LIMIT = "$limit";
     public static String MATCH = "$match";
+    public static String OR = "$or";
     public static String SET = "$set";
     public static String PUSH = "$push";
     public static String REGEX = "$regex";
@@ -61,11 +63,13 @@ public interface BaseConstants {
     public static String USER_ASSOC = "userAssoc";
     public static String GROUP_TYPE = "group";
     public static String ASSOC = "Assoc";
+    public static String GROUP = "GROUP_";
     public static String USER_PASS = "user_pass";
     public static String USER_ROLES = "roles";
     public static String NAME = "name";
     public static String DEFAULT = "default";
     public static String ISSUE = "issue";
+    public static String MULTI_ISSUE = "multiIssue";
     public static String NEWS = "news";
     public static String COMMENTS = "comments";
     public static String TEXT = "text";
@@ -81,6 +85,8 @@ public interface BaseConstants {
     public static String UPDATE = "update";
     public static String CREATED = "created";
     public static String CHILD = "child";
+    public static String GROUP_ADMINS = "GROUP_ADMINS";
+    public static String GROUP_USERS = "GROUP_USERS";
     public static String ACTOR = "actor";
     public static String DATABASE = "database";
     public static String FILE = "file";
@@ -129,6 +135,7 @@ public interface BaseConstants {
     public static String PATH = "path";
     public static String THEME = "theme";
     public static String REGISTERED_SUCCESSFUL = "registeredSuccessful";
+    public static String DEFAULT_USER_ROLE = "USER";
 
 
 

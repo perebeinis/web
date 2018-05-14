@@ -1,0 +1,61 @@
+{
+  "tabs": [
+    {
+      "name": "common",
+      "title": "tabs.common",
+      "properties": [
+        {
+          "name": "GROUP_ADMINS",
+          "title": "constants.user.userAssoc",
+          "type": "userAssoc",
+          "mandatoryCondition": "*",
+          "typeForSaving": "userAssoc",
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ],
+          "viewParams": [
+            {
+              "mode": "create"
+            }
+          ]
+        },
+        {
+          "name": "GROUP_USERS",
+          "title": "constants.user.userAssoc",
+          "type": "userAssoc",
+          "mandatoryCondition": "*",
+          "typeForSaving": "userAssoc",
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ],
+          "viewParams": [
+            {
+              "mode": "create"
+            }
+          ]
+        }
+      ]
+    }
+    ],
+  "buttons": [
+        {
+          "name": "save",
+          "title": "constants.save",
+          "type": "button",
+          "viewParams": {"mode" : "create"},
+          "customClassName": "save"
+        },
+        {
+          "name": "close",
+          "title": "constants.close",
+          "type": "button",
+          "customClassName": "save"
+        }
+  ]
+}

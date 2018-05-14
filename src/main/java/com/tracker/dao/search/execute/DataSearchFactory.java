@@ -3,6 +3,7 @@ package com.tracker.dao.search.execute;
 import com.mongodb.client.MongoDatabase;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.search.execute.impl.DefaultSearcher;
+import com.tracker.dao.search.execute.impl.MultiIssueSearcher;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +20,7 @@ public class DataSearchFactory {
 
     static {
         map.put(BaseConstants.DEFAULT, DefaultSearcher::new);
+        map.put(BaseConstants.MULTI_ISSUE, MultiIssueSearcher::new);
     }
 
     public JSONObject searchData(String elementType, JSONObject searchDataObject) {

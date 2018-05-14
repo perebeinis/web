@@ -1,10 +1,14 @@
 package com.tracker.dao.search.execute;
 
 import com.google.gson.JsonParser;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 import com.tracker.constants.BaseConstants;
 import com.tracker.dao.search.request.CreateRequestQuery;
@@ -38,6 +42,7 @@ public abstract class DataSearchUtil {
     public static final String search = "search";
     public static final String name = "name";
     public static final String searchDataConst = "searchData";
+    public static final String searchByOrConst = "searchByOr";
 
     final static Map<String, Supplier<CreateRequestQuery>> requestQueryForGetCardMap = new HashMap<>();
     final static Map<String, Supplier<CreateRequestQuery>> requestQueryForSearchMap = new HashMap<>();
@@ -55,9 +60,14 @@ public abstract class DataSearchUtil {
         requestQueryForSearchMap.putAll(requestQueryForGetCardMap);
         requestQueryForSearchMap.put(BaseConstants.CURRENT_EXECUTOR, RequestQueryCurrentExecutor::new);
         requestQueryForSearchMap.put(BaseConstants.SEARCH_TEXT_QUERY, RequestQuerySearchText::new);
+        requestQueryForSearchMap.put(BaseConstants.SEARCH_TEXT_QUERY_OR, RequestQuerySearchTextOr::new);
+        requestQueryForSearchMap.put(BaseConstants.GROUP_ADMINS, RequestQueryUserAssoc::new);
+        requestQueryForSearchMap.put(BaseConstants.GROUP_USERS, RequestQueryUserAssoc::new);
 
         responseQueryForSearchMap.put(BaseConstants.CREATOR, UsersAssocResponseElement::new);
         responseQueryForSearchMap.put(BaseConstants.USER_ASSOC, UsersAssocResponseElement::new);
+        responseQueryForSearchMap.put(BaseConstants.GROUP_ADMINS, UsersAssocResponseElement::new);
+        responseQueryForSearchMap.put(BaseConstants.GROUP_USERS, UsersAssocResponseElement::new);
         responseQueryForSearchMap.put(BaseConstants.DEFAULT, DefaultDataResponseElement::new);
     }
 
@@ -67,6 +77,10 @@ public abstract class DataSearchUtil {
         Integer draw = (Integer) searchParams.get(drawConst);
 
         JSONObject searchData = (JSONObject) ((JSONObject) searchParams.get(search)).get(searchDataConst);
+        boolean searchByOr = !((JSONObject) searchParams.get(search)).isNull(searchByOrConst);
+
+        if(searchByOr) return searchUser(mongoDatabase, searchData);
+
         String searchType = (String) ((JSONObject) searchParams.get(search)).get(BaseConstants.SEARCH_TYPE);
         Iterator<?> keys = searchData.keys();
         List<Bson> filters = new ArrayList<>();
@@ -96,7 +110,7 @@ public abstract class DataSearchUtil {
             JSONArray columnsList = (JSONArray) searchParams.get(BaseConstants.COLUMNS);
             for (Object object : columnsList) {
                 JSONObject data = (JSONObject) object;
-                if (((String) data.get(BaseConstants.DATA)).contains(BaseConstants.ASSOC)) {
+                if (((String) data.get(BaseConstants.DATA)).contains(BaseConstants.ASSOC) || ((String) data.get(BaseConstants.DATA)).contains(BaseConstants.GROUP)) {
                     filters.add(new RequestQueryUserAssoc().createQueryForElement((String) data.get(BaseConstants.DATA), ""));
                 }
                 columns.add((String) data.get(BaseConstants.DATA));
@@ -115,10 +129,46 @@ public abstract class DataSearchUtil {
         filters.add(new RequestQueryAggregateAdditionalParameterData().createQueryForElement(BaseConstants.SKIP, start));
         filters.add(new RequestQueryAggregateAdditionalParameterData().createQueryForElement(BaseConstants.LIMIT, length));
 
-        AggregateIterable<Document> iterator = collection.aggregate(filters);
+        AggregateIterable<Document> aggregate = collection.aggregate(filters);
         ArrayList<Document> documents = new ArrayList();
-        iterator.into(documents);
+        aggregate.into(documents);
 
+        JSONObject result = new JSONObject();
+        result.put(drawConst, draw);
+        result.put(recordsTotalConst, counterAllDocs.get());
+        result.put(recordsFilteredConst, counterAllDocs.get());
+        result.put(dataConst, processSearchResponseData(documents, columns));
+
+        return result;
+    }
+
+    private JSONObject searchUser(MongoDatabase mongoDatabase, JSONObject searchData) {
+
+        BasicDBList orStatement = new BasicDBList();
+        Iterator<?> keys = searchData.keys();
+
+        while (keys.hasNext()) {
+            String key = (String) keys.next();
+            String value = (String) searchData.get(key);
+            DBObject searchParameter = new BasicDBObject(key, new BasicDBObject(BaseConstants.REGEX, value+".*").append(BaseConstants.OPTIONS, "i"));
+            orStatement.add(searchParameter);
+        }
+
+        FindIterable<Document> users = mongoDatabase.getCollection(BaseConstants.USERS_COLLECTION).find(new BasicDBObject(BaseConstants.OR, orStatement));
+        ArrayList<Document> documents = new ArrayList();
+        users.into(documents);
+
+        JSONObject result = new JSONObject();
+        result.put(drawConst, documents.size());
+        result.put(recordsTotalConst, documents.size());
+        result.put(recordsFilteredConst, documents.size());
+        result.put(dataConst, processSearchResponseData(documents, new ArrayList<>()));
+
+        return result;
+    }
+
+
+    public JSONArray processSearchResponseData( ArrayList<Document> documents, List<String> columns){
         JSONArray jsonArray = new JSONArray();
         for (Document document : documents) {
             JSONObject jsonObject = new JSONObject(new JsonParser().parse(document.toJson()).getAsJsonObject().toString());
@@ -144,14 +194,7 @@ public abstract class DataSearchUtil {
             jsonArray.put(result);
         }
 
-        JSONObject result = new JSONObject();
-        result.put(drawConst, draw);
-        result.put(recordsTotalConst, counterAllDocs.get());
-        result.put(recordsFilteredConst, counterAllDocs.get());
-        result.put(dataConst, jsonArray);
-
-        return result;
-
+        return jsonArray;
     }
 
     public JSONObject getDataById(MongoDatabase mongoDatabase, String elementType, String elementId) {

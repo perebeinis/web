@@ -130,7 +130,7 @@ span.popup {
 }
 
 .search-attributes > div > label {
-    width: inherit;
+    /*width: inherit;*/
     display: block;
 }
 
@@ -649,4 +649,15 @@ navbar.less:
 
     .form-control.new-pass-first {
          margin-bottom: 15px;
+    }
+
+    .fullString .userGroupAssoc {
+        width: 90% !important;
+        display: inline-block;
+    }
+
+
+    .checkAllUsersInGroup {
+        display: inline-block;
+        width: 5% !important;
     }

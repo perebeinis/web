@@ -227,6 +227,40 @@
               "type": "text"
             }
           ]
+        },
+
+        {
+          "name": "groups",
+          "title": "header.buttons.groups",
+          "searchColumns": "name,GROUP_ADMINS,GROUP_USERS",
+          "type": "subElement",
+          "mode": "view",
+          "searchParams": {"searchType" : "groups"},
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "name",
+              "title": "constants.groups.name",
+              "type": "text"
+            }
+          ]
+        },
+
+        {
+          "name": "groupsMy",
+          "title": "header.buttons.groupsMy",
+          "searchColumns": "name,GROUP_ADMINS,GROUP_USERS",
+          "type": "subElement",
+          "mode": "view",
+          "searchParams": {"searchType" : "groups", "searchData": {"GROUP_USERS" : "MY_ID"}},
+          "enableForRoles": "ADMIN,USER",
+          "searchers": [
+            {
+              "name": "name",
+              "title": "constants.groups.name",
+              "type": "text"
+            }
+          ]
         }
       ]
     }

@@ -60,6 +60,7 @@ UserAssocComponent.prototype.searchUsers = function(event, data) {
         var search = {};
         var searchParams = {};
         searchParams.searchType = "user";
+        searchParams.searchByOr = true;
         searchParams.searchData = {};
         for (var index in resultTable) {
             searchParams.searchData[resultTable[index]] = searchValue;

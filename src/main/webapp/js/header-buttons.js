@@ -105,6 +105,10 @@ function HeaderButton(cardId, data, messages,userData) {
         window.open("/create-element?type=issue&mode=create", "_self");
     };
 
+    this.createNewMultiTask = function() {
+        window.open("/create-element?type=multiIssue&mode=create", "_self");
+    };
+
     this.createNewMessage = function() {
         window.open("/create-element?type=message&mode=create", "_self");
     };

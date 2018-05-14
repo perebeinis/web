@@ -6,6 +6,11 @@
       "enableForRoles": "ADMIN,USER"
     },
     {
+      "name": "createNewMultiTask",
+      "title": "header.buttons.createNewMultiTask",
+      "enableForRoles": "ADMIN,USER"
+    },
+    {
       "name": "createNewUser",
       "title": "header.buttons.createNewUser",
       "enableForRoles": "ADMIN,USER"

@@ -1,0 +1,137 @@
+{
+  "tabs": [
+    {
+      "name": "common",
+      "title": "tabs.common",
+      "properties": [
+        {
+          "name": "elementName",
+          "title": "constants.elementName",
+          "type": "textField",
+          "mandatoryCondition": "*",
+          "typeForSaving": "text",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ],
+          "customClassName": "fullString"
+        },
+
+        {
+          "name": "description",
+          "title": "constants.description",
+          "type": "textArea",
+          "enableParams": [
+            {
+              "mode": "create"
+            },
+            {
+              "mode": "task"
+            }
+          ],
+          "typeForSaving": "text",
+          "mandatoryCondition": "*",
+          "customClassName": "fullString"
+        },
+
+        {
+          "name": "document",
+          "title": "constants.document",
+          "type": "file",
+          "typeForSaving": "file",
+          "customClassName": "half",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ]
+        },
+
+        {
+          "name": "userGroupAssoc",
+          "title": "constants.issue.userAssocMulti",
+          "type": "userGroupAssoc",
+          "enableParams": [
+            {
+              "mode": "create"
+            }
+          ],
+          "typeForSaving": "userAssoc",
+          "mandatoryCondition": "*",
+          "customClassName": "fullString"
+        },
+
+        {
+          "name": "currentExecutor",
+          "title": "constants.currentExecutor",
+          "type": "textField",
+          "enableParams": [
+            {
+              "mode": "none"
+            }
+          ],
+          "typeForSaving": "text",
+          "customClassName": "fullString hidden"
+        }
+      ]
+    },
+    {
+      "name": "comments",
+      "title": "tabs.comments",
+      "properties": [
+        {
+          "name": "comments",
+          "title": "constants.comments",
+          "type": "comments",
+          "mandatoryCondition": "*",
+          "typeForSaving": "comments",
+          "enableParams": [
+            {
+              "mode": "task"
+            }
+          ],
+          "viewParams": [
+            {
+              "mode": "task"
+            },
+            {
+              "mode": "view"
+            }
+          ],
+          "customClassName": "fullString"
+        }
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "name": "save",
+      "title": "constants.save",
+      "type": "button",
+      "enableParams": [
+        {
+          "mode": "create"
+        }
+      ],
+      "customClassName": "save"
+    },
+    {
+      "name": "sendNext",
+      "title": "constants.sendNext",
+      "type": "button",
+      "enableParams": [
+        {
+          "mode": "task"
+        }
+      ],
+      "customClassName": "save"
+    },
+    {
+      "name": "close",
+      "title": "constants.close",
+      "type": "button",
+      "customClassName": "save"
+    }
+  ]
+}

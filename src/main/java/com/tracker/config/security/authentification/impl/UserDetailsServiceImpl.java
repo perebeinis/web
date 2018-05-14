@@ -71,7 +71,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public CustomUserObject loadUserById(ObjectId id) throws UsernameNotFoundException {
         Optional<CustomUserObject> user = users.stream()
-                .filter(u -> u.getName().equals(id))
+                .filter(u -> u.getUserId().equals(id))
                 .findAny();
         if (!user.isPresent()) {
             throw new UsernameNotFoundException("User not found by id: " + id);

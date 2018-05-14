@@ -114,6 +114,8 @@ public class BaseAppElementsController {
             return "registration-new-user";
         }
 
+        boolean userGroupAlreadyExist = processUserGroups.getAllGroups().containsKey(registrationUserCard.getUser_group());
+
         JSONArray userData = new JSONArray();
         userData.put(createElementData(BaseConstants.USER_ID, userName));
         String userEmail = registrationUserCard.getUser_email();
@@ -124,9 +126,13 @@ public class BaseAppElementsController {
         userData.put(createElementData(BaseConstants.FIRST_NAME, registrationUserCard.getFirstName()));
         userData.put(createElementData(BaseConstants.LAST_NAME, registrationUserCard.getLastName()));
         userData.put(createElementData(BaseConstants.EMAIL, registrationUserCard.getUser_email()));
-        userData.put(createElementData(BaseConstants.USER_ROLES, "USER"));
+        String systemGroup = userGroupAlreadyExist ? BaseConstants.GROUP_USERS : BaseConstants.GROUP_ADMINS;
+        userData.put(createElementData(BaseConstants.USER_ROLES, BaseConstants.DEFAULT_USER_ROLE+","+registrationUserCard.getUser_group()+","+systemGroup));
         dataProcessorFactory.processData(BaseConstants.USER_TYPE, userData, "");
         customUserDetailsService.reloadUsers();
+
+        String currentUserId = customUserDetailsService.loadUserDataByUsername(userName).getUserId().toString();
+        processUserGroups.processUserGroup(registrationUserCard.getUser_group(), userGroupAlreadyExist, currentUserId);
 
         ModelMap modelMap = new ModelMap();
         modelMap.put(BaseConstants.USERNAME, userName);

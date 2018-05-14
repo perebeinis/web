@@ -51,14 +51,13 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="text" name="user_group" id="user_group" th:field="*{user_group}" class="form-control input-lg"
-                               th:placeholder="user_group" placeholder="" required="true"/>
+                        <!--<input type="text" name="user_group" id="user_group" th:field="*{user_group}" class="form-control input-lg" th:placeholder="user_group" placeholder="" required="true"/>-->
 
-                        <input list="groupsList" id="groups" name="groups" />
+                        <input list="groupsList" id="user_group" name="user_group" required="true" th:field="*{user_group}" th:placeholder="#{user_group}" class="form-control input-lg" autocomplete="off"/>
 
                         <datalist id="groupsList">
                             <th:block th:each="group : ${ALL_SYSTEM_GROUPS}">
-                                <option th:value="${group}" th:text="${group}">UU</option>
+                                <option th:value="${group.key}"></option>
                             </th:block>
                         </datalist>
                     </div>
